@@ -32,36 +32,22 @@
         </section>
         <div class="access-mark" aria-hidden="true">01</div>
     </main>
-    <script>
-        const accessForm = document.getElementById("siteAccessForm");
-        const accessMessage = document.getElementById("siteAccessMessage");
+   <script>
+    const accessForm = document.getElementById("siteAccessForm");
+    const accessMessage = document.getElementById("siteAccessMessage");
 
-        accessForm.addEventListener("submit", async event => {
-            event.preventDefault();
-            accessMessage.textContent = "Vérification...";
+    accessForm.addEventListener("submit", event => {
+        event.preventDefault();
 
-            try {
-                const response = await fetch("/api/site-access", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    credentials: "same-origin",
-                    body: JSON.stringify({
-                        username: document.getElementById("siteUsername").value.trim(),
-                        password: document.getElementById("sitePassword").value
-                    })
-                });
-                const data = await response.json();
+        const username = document.getElementById("siteUsername").value.trim();
+        const password = document.getElementById("sitePassword").value;
 
-                if (!response.ok) {
-                    accessMessage.textContent = data.message;
-                    return;
-                }
-
-                window.location.href = "entrainement.html";
-            } catch (error) {
-                accessMessage.textContent = "Le serveur est momentanément indisponible.";
-            }
-        });
-    </script>
+        if (username === "luxa" && password === "luxa") {
+            window.location.href = "entrainement.html";
+        } else {
+            accessMessage.textContent = "Identifiant ou mot de passe incorrect.";
+        }
+    });
+</script>
 </body>
 </html>
