@@ -252,3 +252,245 @@ function update() {
 
 document.getElementById("date").value = new Date().toISOString().split("T")[0];
 update();
+
+// ========================================
+// CONNEXION / INSCRIPTION LUXA_FIT
+// ========================================
+
+
+// ========================================
+// RÉCUPÉRATION DES ÉLÉMENTS
+// ========================================
+
+const loginSection = document.getElementById("loginSection");
+const registerSection = document.getElementById("registerSection");
+
+const showRegister = document.getElementById("showRegister");
+const showLogin = document.getElementById("showLogin");
+
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+
+const loginMessage = document.getElementById("loginMessage");
+const registerMessage = document.getElementById("registerMessage");
+
+
+// ========================================
+// AFFICHER "CRÉER UN COMPTE"
+// ========================================
+
+if (showRegister) {
+
+    showRegister.addEventListener("click", () => {
+
+        loginSection.style.display = "none";
+        registerSection.style.display = "block";
+
+        loginMessage.textContent = "";
+        registerMessage.textContent = "";
+
+    });
+
+}
+
+
+// ========================================
+// AFFICHER "SE CONNECTER"
+// ========================================
+
+if (showLogin) {
+
+    showLogin.addEventListener("click", () => {
+
+        registerSection.style.display = "none";
+        loginSection.style.display = "block";
+
+        loginMessage.textContent = "";
+        registerMessage.textContent = "";
+
+    });
+
+}
+
+
+// ========================================
+// CRÉATION DU COMPTE
+// ========================================
+
+if (registerForm) {
+
+    registerForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+
+        const prenom =
+            document.getElementById("registerPrenom").value.trim();
+
+        const nom =
+            document.getElementById("registerNom").value.trim();
+
+        const password =
+            document.getElementById("registerPassword").value;
+
+        const passwordConfirm =
+            document.getElementById("registerPasswordConfirm").value;
+
+
+        // Vérification des mots de passe
+
+        if (password !== passwordConfirm) {
+
+            registerMessage.textContent =
+                "Les mots de passe ne correspondent pas.";
+
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch("/api/register", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    prenom: prenom,
+                    nom: nom,
+                    password: password
+
+                })
+
+            });
+
+
+            const data = await response.json();
+
+
+            if (data.success) {
+
+                registerMessage.textContent =
+                    "Compte créé avec succès !";
+
+                registerForm.reset();
+
+
+                // Retour à la connexion après 1,5 seconde
+
+                setTimeout(() => {
+
+                    registerSection.style.display = "none";
+                    loginSection.style.display = "block";
+
+                    registerMessage.textContent = "";
+
+                }, 1500);
+
+
+            } else {
+
+                registerMessage.textContent =
+                    data.message;
+
+            }
+
+
+        } catch (error) {
+
+            console.error("Erreur :", error);
+
+            registerMessage.textContent =
+                "Impossible de contacter le serveur.";
+
+        }
+
+    });
+
+}
+
+
+// ========================================
+// CONNEXION
+// ========================================
+
+if (loginForm) {
+
+    loginForm.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+
+        const prenom =
+            document.getElementById("loginPrenom").value.trim();
+
+        const nom =
+            document.getElementById("loginNom").value.trim();
+
+        const password =
+            document.getElementById("loginPassword").value;
+
+
+        try {
+
+            const response = await fetch("/api/login", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    prenom: prenom,
+                    nom: nom,
+                    password: password
+
+                })
+
+            });
+
+
+            const data = await response.json();
+
+
+            if (data.success) {
+
+                // Sauvegarde temporaire de l'utilisateur connecté
+
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(data.user)
+                );
+
+
+                // Aller vers l'accueil
+
+                window.location.href = "index.html";
+
+
+            } else {
+
+                loginMessage.textContent =
+                    data.message;
+
+            }
+
+
+        } catch (error) {
+
+            console.error("Erreur :", error);
+
+            loginMessage.textContent =
+                "Impossible de contacter le serveur.";
+
+        }
+
+    });
+
+}
