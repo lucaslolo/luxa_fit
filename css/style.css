@@ -67,9 +67,100 @@ header {
 }
 
 .logo {
+	color: var(--ink);
 	font-size: 17px;
 	font-weight: 700;
 	letter-spacing: .12em;
+	text-decoration: none;
+}
+
+.logo span {
+	color: var(--lime);
+}
+
+.site-nav {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.nav-dropdown {
+	position: relative;
+}
+
+.nav-trigger,
+.nav-login {
+	display: block;
+	padding: 9px 12px;
+	color: var(--muted);
+	font-family: "DM Mono", monospace;
+	font-size: 11px;
+	text-decoration: none;
+	letter-spacing: .05em;
+}
+
+.nav-trigger span {
+	margin-left: 4px;
+	color: var(--lime);
+}
+
+.nav-trigger:hover,
+.nav-login:hover,
+.nav-dropdown:focus-within .nav-trigger {
+	color: var(--lime);
+}
+
+.nav-menu {
+	position: absolute;
+	top: calc(100% + 12px);
+	right: 0;
+	display: grid;
+	min-width: 245px;
+	padding: 7px;
+	border: 1px solid var(--line);
+	background: rgba(23, 25, 24, .98);
+	box-shadow: 0 18px 40px rgba(0, 0, 0, .28);
+	opacity: 0;
+	pointer-events: none;
+	transform: translateY(-6px);
+	transition: opacity .2s ease, transform .2s ease;
+}
+
+.nav-menu::before {
+	position: absolute;
+	top: -13px;
+	right: 0;
+	width: 100%;
+	height: 13px;
+	content: "";
+}
+
+.nav-dropdown:hover .nav-menu,
+.nav-dropdown:focus-within .nav-menu {
+	opacity: 1;
+	pointer-events: auto;
+	transform: translateY(0);
+}
+
+.nav-menu a {
+	display: grid;
+	gap: 5px;
+	padding: 12px;
+	color: var(--ink);
+	font-size: 13px;
+	text-decoration: none;
+}
+
+.nav-menu a:hover {
+	color: var(--lime);
+	background: rgba(234, 255, 63, .07);
+}
+
+.nav-menu small {
+	color: var(--muted);
+	font-family: "DM Mono", monospace;
+	font-size: 9px;
+	letter-spacing: .04em;
 }
 
 .program-page header {
@@ -550,6 +641,117 @@ footer {
 
 .home-footer {
 	margin-top: 72px;
+}
+
+.resource-page {
+	max-width: var(--max-width);
+	margin: auto;
+	padding: 64px 24px 80px;
+}
+
+.resource-hero {
+	max-width: 800px;
+	padding: 30px 0 58px;
+	border-bottom: 1px solid var(--line);
+}
+
+.resource-kicker {
+	margin-bottom: 20px;
+	color: var(--lime);
+	font-family: "DM Mono", monospace;
+	font-size: 11px;
+	letter-spacing: .1em;
+}
+
+.resource-hero h1 {
+	font-size: clamp(52px, 9vw, 112px);
+	font-weight: 600;
+	line-height: .9;
+	letter-spacing: -.07em;
+}
+
+.resource-hero h1 span {
+	color: var(--lime);
+}
+
+.resource-hero p {
+	max-width: 600px;
+	margin-top: 26px;
+	color: var(--muted);
+	font-size: 17px;
+	line-height: 1.6;
+}
+
+.resource-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+	margin-top: 42px;
+}
+
+.resource-card {
+	min-height: 310px;
+	padding: 25px;
+	border: 1px solid var(--line);
+	background: var(--panel);
+}
+
+.resource-card:target {
+	border-color: var(--lime);
+	box-shadow: inset 0 3px 0 var(--lime);
+}
+
+.resource-card-label {
+	color: var(--orange);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .1em;
+}
+
+.resource-card h2 {
+	margin-top: 38px;
+	font-size: clamp(28px, 4vw, 46px);
+	font-weight: 500;
+	letter-spacing: -.06em;
+}
+
+.resource-card p {
+	max-width: 440px;
+	margin-top: 14px;
+	color: var(--muted);
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.resource-list {
+	display: grid;
+	gap: 10px;
+	margin-top: 28px;
+	padding: 0;
+	list-style: none;
+}
+
+.resource-list li {
+	padding-top: 10px;
+	border-top: 1px solid var(--line);
+	color: var(--ink);
+	font-size: 13px;
+}
+
+.resource-list li::before {
+	margin-right: 8px;
+	color: var(--lime);
+	content: "↗";
+}
+
+.resource-note {
+	margin-top: 42px;
+	padding: 20px 22px;
+	border-left: 3px solid var(--lime);
+	color: var(--muted);
+	background: rgba(234, 255, 63, .04);
+	font-size: 13px;
+	line-height: 1.6;
 }
 
 .program-main {
@@ -1382,5 +1584,48 @@ footer {
 	.split-row .split-time,
 	.split-row .split-cumulative {
 		min-width: 58px;
+	}
+}
+
+@media (max-width: 760px) {
+	header {
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 14px;
+	padding: 16px 18px;
+	}
+
+	.site-nav {
+		align-items: stretch;
+		flex-wrap: wrap;
+		gap: 2px;
+	}
+
+	.nav-trigger,
+	.nav-login {
+		padding: 7px 8px;
+		font-size: 10px;
+	}
+
+	.nav-menu {
+		left: 0;
+		right: auto;
+		min-width: 220px;
+	}
+
+	.resource-page {
+		padding: 38px 18px 55px;
+	}
+
+	.resource-hero {
+		padding-top: 20px;
+	}
+
+	.resource-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.resource-card {
+		min-height: auto;
 	}
 }
