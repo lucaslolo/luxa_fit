@@ -486,6 +486,7 @@ footer {
 	text-decoration: none;
 	overflow: hidden;
 	transition: transform .25s ease, border-color .25s ease;
+	color: var(--lime);
 }
 
 .discipline-card::after {
@@ -523,10 +524,6 @@ footer {
 	font-size: clamp(30px, 4vw, 48px);
 	font-weight: 500;
 	letter-spacing: -.07em;
-}
-
-.discipline-hyrox h3 {
-	color: var(--lime);
 }
 
 .discipline-card p {
@@ -836,9 +833,6 @@ footer {
 	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .02);
 }
 
-.hybrid-main {
-	padding-top: 54px;
-}
 
 .hybrid-intro {
 	max-width: 900px;
