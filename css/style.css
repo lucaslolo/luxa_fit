@@ -47,6 +47,137 @@ body::before {
 		linear-gradient(115deg, transparent 0 47%, rgba(234, 255, 63, .025) 47.1% 47.4%, transparent 47.5% 100%);
 }
 
+.access-page {
+	display: block;
+	min-height: 100vh;
+	padding: 24px;
+}
+
+.access-header {
+	position: relative;
+	max-width: var(--max-width);
+	margin: 0 auto;
+	padding: 14px 0;
+	background: transparent;
+}
+
+.access-shell {
+	position: relative;
+	width: min(100%, 560px);
+	margin: 8vh auto 0;
+}
+
+.access-panel {
+	position: relative;
+	z-index: 1;
+	padding: clamp(30px, 7vw, 64px);
+	border: 1px solid var(--line);
+	border-top: 3px solid var(--lime);
+	background: rgba(23, 25, 24, .94);
+	box-shadow: 0 24px 80px rgba(0, 0, 0, .35);
+}
+
+.access-brand {
+	color: var(--ink);
+	font-size: 17px;
+	font-weight: 700;
+	letter-spacing: .12em;
+}
+
+.access-brand span,
+.access-panel h1 span {
+	color: var(--lime);
+}
+
+.access-kicker {
+	margin-top: 58px;
+	color: var(--orange);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .1em;
+}
+
+.access-panel h1 {
+	margin-top: 17px;
+	font-size: clamp(46px, 9vw, 80px);
+	font-weight: 600;
+	line-height: .9;
+	letter-spacing: -.07em;
+}
+
+.access-intro {
+	max-width: 390px;
+	margin-top: 22px;
+	color: var(--muted);
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.access-form {
+	display: grid;
+	gap: 9px;
+	margin-top: 34px;
+}
+
+.access-form label {
+	margin-top: 8px;
+	color: var(--muted);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+}
+
+.access-form input {
+	min-height: 46px;
+	border: 1px solid var(--line);
+	border-radius: 0;
+	padding: 12px;
+	color: var(--ink);
+	background: var(--canvas);
+	font: inherit;
+	outline: none;
+}
+
+.access-form input:focus {
+	border-color: var(--lime);
+	box-shadow: 0 0 0 2px rgba(234, 255, 63, .1);
+}
+
+.access-form button {
+	margin-top: 14px;
+	text-align: left;
+}
+
+.access-form button span {
+	float: right;
+	font-size: 17px;
+}
+
+.access-message {
+	min-height: 17px;
+	color: var(--orange);
+	font-size: 12px;
+}
+
+.access-footer {
+	margin-top: 48px;
+	color: #666b65;
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .08em;
+}
+
+.access-mark {
+	position: absolute;
+	right: -34px;
+	bottom: -34px;
+	color: rgba(234, 255, 63, .18);
+	font-family: "DM Mono", monospace;
+	font-size: 100px;
+	line-height: 1;
+}
+
 .home-page > main:not(.home-main) {
 	display: none;
 }
@@ -82,14 +213,6 @@ header {
 	display: flex;
 	align-items: center;
 	gap: 6px;
-}
-
-.site-nav .nav-dropdown {
-	display: none;
-}
-
-body.authenticated .site-nav .nav-dropdown {
-	display: block;
 }
 
 .auth-only {

@@ -20,11 +20,30 @@ app.use(
         saveUninitialized: false,
         cookie: {
             httpOnly: true,
-            maxAge: 1000 * 60 * 60 * 24 * 7,
             sameSite: "lax"
         }
     })
 );
+
+const publicPages = new Set([
+    "/",
+    "/index.html",
+    "/connexion.html"
+]);
+
+app.use((req, res, next) => {
+
+    if (
+        req.method === "GET" &&
+        req.path.endsWith(".html") &&
+        !publicPages.has(req.path) &&
+        !req.session.siteAccess
+    ) {
+        return res.redirect("/index.html");
+    }
+
+    next();
+});
 
 app.use(express.static(__dirname));
 
@@ -35,6 +54,30 @@ app.use(express.static(__dirname));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
+});
+
+
+// ========================================
+// ACCES AU SITE
+// ========================================
+
+app.post("/api/site-access", (req, res) => {
+
+    const { username, password } = req.body;
+
+    if (username !== "luxa" || password !== "luxa") {
+        return res.status(401).json({
+            success: false,
+            message: "Identifiant ou mot de passe incorrect."
+        });
+    }
+
+    req.session.siteAccess = true;
+
+    res.json({
+        success: true,
+        message: "Accès autorisé."
+    });
 });
 
 
