@@ -1,266 +1,100 @@
-// -------------------------
-// DONNÉES
-// -------------------------
+/* =========================================================
+   LUXA_FIT - APP.JS
+   ========================================================= */
 
-let data = JSON.parse(localStorage.getItem("hyroxData")) || {
-    weight: [
-        { date: "2026-09-19", value: 73 }
-    ],
-    run: [
-        { date: "2026-09-19", value: 20 * 60 + 23 }
-    ],
-    hyrox: [
-        { date: "2026-09-19", value: 1 * 60 + 32 }
-    ],
-    km: [
-        { date: "2026-09-19", value: 30 }
-    ]
-};
 
-// -------------------------
-// UTILITAIRES
-// -------------------------
-
-function save() {
-    localStorage.setItem("hyroxData", JSON.stringify(data));
-}
+/* =========================================================
+   OUTILS
+   ========================================================= */
 
 function formatTime(seconds) {
-    let minutes = Math.floor(seconds / 60);
-    let secs = Math.round(seconds % 60);
-    return `${minutes}:${secs.toString().padStart(2, "0")}`;
-}
 
-function parseTime(value) {
-    let parts = value.split(":");
-    if (parts.length !== 2) {
-        return Number(value);
-    }
-    return Number(parts[0]) * 60 + Number(parts[1]);
-}
+    seconds = Number(seconds);
 
-function typeName(type) {
-    const names = {
-        weight: "Poids",
-        run: "5 KM",
-        hyrox: "HYROX",
-        km: "Running"
-    };
-    return names[type];
-}
-
-function displayValue(type, value) {
-    if (type === "weight") return value + " kg";
-    if (type === "km") return value + " km";
-    if (type === "run" || type === "hyrox") {
-        return formatTime(value);
-    }
-    return value;
-}
-
-// -------------------------
-// AJOUT
-// -------------------------
-
-function addPerformance() {
-    const type = document.getElementById("type").value;
-    const valueInput = document.getElementById("value").value;
-    const date = document.getElementById("date").value;
-
-    if (!valueInput || !date) {
-        alert("Remplis la date et la performance.");
-        return;
+    if (!Number.isFinite(seconds)) {
+        return "--:--";
     }
 
-    let value;
-    if (type === "run" || type === "hyrox") {
-        value = parseTime(valueInput);
-    } else {
-        value = Number(valueInput);
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    if (hours > 0) {
+        return (
+            String(hours).padStart(2, "0") +
+            ":" +
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(secs).padStart(2, "0")
+        );
     }
 
-    data[type].push({ date: date, value: value });
-    save();
-    document.getElementById("value").value = "";
-    update();
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(secs).padStart(2, "0")
+    );
 }
 
-// -------------------------
-// HISTORIQUE
-// -------------------------
 
-function renderHistory() {
-    const history = document.getElementById("history");
-    history.innerHTML = "";
-    let all = [];
+function timeToSeconds(value) {
 
-    Object.keys(data).forEach(type => {
-        data[type].forEach((item, index) => {
-            all.push({ type, index, ...item });
-        });
-    });
+    const parts = value.split(":").map(Number);
 
-    all.sort((a, b) => new Date(b.date) - new Date(a.date));
+    if (parts.some(number => !Number.isFinite(number))) {
+        return NaN;
+    }
 
-    all.forEach(item => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${item.date}</td>
-            <td>${typeName(item.type)}</td>
-            <td>${displayValue(item.type, item.value)}</td>
-            <td>
-                <button class="delete"
-                onclick="deletePerformance('${item.type}', ${item.index})">
-                ×
-                </button>
-            </td>
-        `;
-        history.appendChild(row);
-    });
+    if (parts.length === 2) {
+
+        const minutes = parts[0];
+        const seconds = parts[1];
+
+        if (seconds >= 60) {
+            return NaN;
+        }
+
+        return minutes * 60 + seconds;
+    }
+
+
+    if (parts.length === 3) {
+
+        const hours = parts[0];
+        const minutes = parts[1];
+        const seconds = parts[2];
+
+        if (minutes >= 60 || seconds >= 60) {
+            return NaN;
+        }
+
+        return hours * 3600 + minutes * 60 + seconds;
+    }
+
+
+    return NaN;
 }
 
-function deletePerformance(type, index) {
-    data[type].splice(index, 1);
-    save();
-    update();
+
+function formatDate(date) {
+
+    if (!date) {
+        return "-";
+    }
+
+    const d = new Date(date);
+
+    if (Number.isNaN(d.getTime())) {
+        return date;
+    }
+
+    return d.toLocaleDateString("fr-BE");
 }
 
-function clearData() {
-    if (!confirm("Supprimer toutes les données ?")) return;
-    localStorage.removeItem("hyroxData");
-    location.reload();
-}
 
-// -------------------------
-// DASHBOARD
-// -------------------------
-
-function updateDashboard() {
-    const latestWeight = data.weight[data.weight.length - 1];
-    const latestRun = data.run[data.run.length - 1];
-    const latestHyrox = data.hyrox[data.hyrox.length - 1];
-    const latestKm = data.km[data.km.length - 1];
-
-    if (latestWeight) document.getElementById("weight").textContent = latestWeight.value + " kg";
-    if (latestRun) document.getElementById("run5k").textContent = formatTime(latestRun.value);
-    if (latestHyrox) document.getElementById("hyrox").textContent = formatTime(latestHyrox.value);
-    if (latestKm) document.getElementById("weeklyKm").textContent = latestKm.value + " km";
-    updateProgress();
-}
-
-// -------------------------
-// PROGRESSION
-// -------------------------
-
-function updateProgress() {
-    const weight = data.weight[data.weight.length - 1]?.value || 73;
-    const run = data.run[data.run.length - 1]?.value || 1223;
-    const hyrox = data.hyrox[data.hyrox.length - 1]?.value || 5520;
-
-    let weightProgress = ((weight - 73) / (78 - 73)) * 100;
-    weightProgress = Math.max(0, Math.min(100, weightProgress));
-    document.getElementById("weightProgress").style.width = weightProgress + "%";
-
-    let runProgress = ((1223 - run) / (1223 - 1139)) * 100;
-    runProgress = Math.max(0, Math.min(100, runProgress));
-    document.getElementById("runProgress").style.width = runProgress + "%";
-
-    let hyroxProgress = ((5520 - hyrox) / (5520 - 4200)) * 100;
-    hyroxProgress = Math.max(0, Math.min(100, hyroxProgress));
-    document.getElementById("hyroxProgress").style.width = hyroxProgress + "%";
-}
-
-// -------------------------
-// GRAPHIQUES
-// -------------------------
-
-function drawChart(canvasId, values, labels, invert = false) {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext("2d");
-    const width = canvas.width = canvas.offsetWidth * 2;
-    const height = canvas.height = 220 * 2;
-    ctx.scale(2, 2);
-
-    const w = width / 2;
-    const h = height / 2;
-    ctx.clearRect(0, 0, w, h);
-    if (values.length < 1) return;
-
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const range = max - min || 1;
-    ctx.beginPath();
-
-    values.forEach((value, index) => {
-        const x = 25 + (index / Math.max(values.length - 1, 1)) * (w - 50);
-        let normalized = (value - min) / range;
-        if (invert) normalized = 1 - normalized;
-        const y = h - 30 - normalized * (h - 60);
-        if (index === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    });
-
-    ctx.strokeStyle = "#ff3b30";
-    ctx.lineWidth = 3;
-    ctx.stroke();
-
-    values.forEach((value, index) => {
-        const x = 25 + (index / Math.max(values.length - 1, 1)) * (w - 50);
-        let normalized = (value - min) / range;
-        if (invert) normalized = 1 - normalized;
-        const y = h - 30 - normalized * (h - 60);
-        ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = "#ff3b30";
-        ctx.fill();
-    });
-}
-
-function drawCharts() {
-    const weights = data.weight.map(x => x.value);
-    const runs = data.run.map(x => x.value);
-
-    drawChart("weightChart", weights, data.weight.map(x => x.date));
-    drawChart("runChart", runs, data.run.map(x => x.date), true);
-}
-
-// -------------------------
-// COUNTDOWN
-// -------------------------
-
-function countdown() {
-    const target = new Date("2027-01-28T00:00:00");
-    const now = new Date();
-    const diff = target - now;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-    document.getElementById("countdown").textContent = days > 0
-        ? `${days} jours`
-        : "C'est aujourd'hui 🔥";
-}
-
-// -------------------------
-// UPDATE GLOBAL
-// -------------------------
-
-function update() {
-    updateDashboard();
-    renderHistory();
-    drawCharts();
-    countdown();
-}
-
-document.getElementById("date").value = new Date().toISOString().split("T")[0];
-update();
-
-// ========================================
-// CONNEXION / INSCRIPTION LUXA_FIT
-// ========================================
-
-
-// ========================================
-// RÉCUPÉRATION DES ÉLÉMENTS
-// ========================================
+/* =========================================================
+   CONNEXION / INSCRIPTION
+   ========================================================= */
 
 const loginSection = document.getElementById("loginSection");
 const registerSection = document.getElementById("registerSection");
@@ -268,58 +102,41 @@ const registerSection = document.getElementById("registerSection");
 const showRegister = document.getElementById("showRegister");
 const showLogin = document.getElementById("showLogin");
 
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
 
-const loginMessage = document.getElementById("loginMessage");
-const registerMessage = document.getElementById("registerMessage");
+if (showRegister && loginSection && registerSection) {
 
-
-// ========================================
-// AFFICHER "CRÉER UN COMPTE"
-// ========================================
-
-if (showRegister) {
-
-    showRegister.addEventListener("click", () => {
+    showRegister.addEventListener("click", function () {
 
         loginSection.style.display = "none";
         registerSection.style.display = "block";
 
-        loginMessage.textContent = "";
-        registerMessage.textContent = "";
-
     });
 
 }
 
 
-// ========================================
-// AFFICHER "SE CONNECTER"
-// ========================================
+if (showLogin && loginSection && registerSection) {
 
-if (showLogin) {
-
-    showLogin.addEventListener("click", () => {
+    showLogin.addEventListener("click", function () {
 
         registerSection.style.display = "none";
         loginSection.style.display = "block";
 
-        loginMessage.textContent = "";
-        registerMessage.textContent = "";
-
     });
 
 }
 
 
-// ========================================
-// CRÉATION DU COMPTE
-// ========================================
+/* =========================================================
+   INSCRIPTION
+   ========================================================= */
+
+const registerForm = document.getElementById("registerForm");
+
 
 if (registerForm) {
 
-    registerForm.addEventListener("submit", async (event) => {
+    registerForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
@@ -336,12 +153,13 @@ if (registerForm) {
         const passwordConfirm =
             document.getElementById("registerPasswordConfirm").value;
 
+        const message =
+            document.getElementById("registerMessage");
 
-        // Vérification des mots de passe
 
         if (password !== passwordConfirm) {
 
-            registerMessage.textContent =
+            message.textContent =
                 "Les mots de passe ne correspondent pas.";
 
             return;
@@ -359,11 +177,9 @@ if (registerForm) {
                 },
 
                 body: JSON.stringify({
-
                     prenom: prenom,
                     nom: nom,
                     password: password
-
                 })
 
             });
@@ -372,39 +188,31 @@ if (registerForm) {
             const data = await response.json();
 
 
-            if (data.success) {
+            if (!response.ok) {
 
-                registerMessage.textContent =
-                    "Compte créé avec succès !";
+                message.textContent =
+                    data.message || "Erreur lors de l'inscription.";
 
-                registerForm.reset();
-
-
-                // Retour à la connexion après 1,5 seconde
-
-                setTimeout(() => {
-
-                    registerSection.style.display = "none";
-                    loginSection.style.display = "block";
-
-                    registerMessage.textContent = "";
-
-                }, 1500);
-
-
-            } else {
-
-                registerMessage.textContent =
-                    data.message;
-
+                return;
             }
+
+
+            message.textContent =
+                "Compte créé ! Connexion en cours...";
+
+
+            setTimeout(function () {
+
+                window.location.href = "connexion.html";
+
+            }, 1000);
 
 
         } catch (error) {
 
-            console.error("Erreur :", error);
+            console.error(error);
 
-            registerMessage.textContent =
+            message.textContent =
                 "Impossible de contacter le serveur.";
 
         }
@@ -414,13 +222,16 @@ if (registerForm) {
 }
 
 
-// ========================================
-// CONNEXION
-// ========================================
+/* =========================================================
+   CONNEXION
+   ========================================================= */
+
+const loginForm = document.getElementById("loginForm");
+
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", async (event) => {
+    loginForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
@@ -434,6 +245,9 @@ if (loginForm) {
         const password =
             document.getElementById("loginPassword").value;
 
+        const message =
+            document.getElementById("loginMessage");
+
 
         try {
 
@@ -446,11 +260,9 @@ if (loginForm) {
                 },
 
                 body: JSON.stringify({
-
                     prenom: prenom,
                     nom: nom,
                     password: password
-
                 })
 
             });
@@ -459,34 +271,48 @@ if (loginForm) {
             const data = await response.json();
 
 
-            if (data.success) {
+            if (!response.ok) {
 
-                // Sauvegarde temporaire de l'utilisateur connecté
+                message.textContent =
+                    data.message || "Identifiants incorrects.";
 
-                localStorage.setItem(
-                    "user",
-                    JSON.stringify(data.user)
-                );
-
-
-                // Aller vers l'accueil
-
-                window.location.href = "index.html";
-
-
-            } else {
-
-                loginMessage.textContent =
-                    data.message;
-
+                return;
             }
+
+
+            /*
+
+                On garde les informations de base
+                côté navigateur uniquement pour
+                l'affichage rapide.
+
+                La vraie authentification est assurée
+                par la session Express.
+
+            */
+
+            localStorage.setItem(
+                "user",
+                JSON.stringify(data.user)
+            );
+
+
+            message.textContent =
+                "Connexion réussie !";
+
+
+            setTimeout(function () {
+
+                window.location.href = "dashboard.html";
+
+            }, 500);
 
 
         } catch (error) {
 
-            console.error("Erreur :", error);
+            console.error(error);
 
-            loginMessage.textContent =
+            message.textContent =
                 "Impossible de contacter le serveur.";
 
         }
@@ -494,3 +320,1502 @@ if (loginForm) {
     });
 
 }
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+const performanceForm =
+    document.getElementById("performanceForm");
+
+
+const historyElement =
+    document.getElementById("history");
+
+
+const userNameElement =
+    document.getElementById("userName");
+
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+
+let performances = [];
+
+
+/* =========================================================
+   CHARGER L'UTILISATEUR
+   ========================================================= */
+
+async function loadUser() {
+
+    try {
+
+        const response = await fetch("/api/me");
+
+        const data = await response.json();
+
+
+        if (!data.success) {
+
+            window.location.href = "connexion.html";
+
+            return null;
+        }
+
+
+        const user = data.user;
+
+
+        if (userNameElement) {
+
+            userNameElement.textContent =
+                user.prenom + " " + user.nom;
+
+        }
+
+
+        const profilePrenom =
+            document.getElementById("profilePrenom");
+
+        const profileNom =
+            document.getElementById("profileNom");
+
+        const profileId =
+            document.getElementById("profileId");
+
+
+        if (profilePrenom) {
+            profilePrenom.textContent = user.prenom;
+        }
+
+
+        if (profileNom) {
+            profileNom.textContent = user.nom;
+        }
+
+
+        if (profileId) {
+            profileId.textContent = user.id;
+        }
+
+
+        return user;
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        if (historyElement) {
+
+            historyElement.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        Erreur de connexion au serveur.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+        return null;
+    }
+
+}
+
+
+/* =========================================================
+   CHARGER LES PERFORMANCES MYSQL
+   ========================================================= */
+
+async function loadPerformances() {
+
+    try {
+
+        const response =
+            await fetch("/api/performances");
+
+
+        if (response.status === 401) {
+
+            window.location.href = "connexion.html";
+
+            return;
+        }
+
+
+        const data = await response.json();
+
+
+        if (!data.success) {
+
+            console.error(data.message);
+
+            return;
+        }
+
+
+        performances = data.performances || [];
+
+
+        updateDashboard();
+
+        renderHistory();
+
+        drawCharts();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        if (historyElement) {
+
+            historyElement.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        Impossible de charger les performances.
+                    </td>
+                </tr>
+            `;
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   AJOUTER UNE PERFORMANCE
+   ========================================================= */
+
+if (performanceForm) {
+
+    performanceForm.addEventListener(
+        "submit",
+        addPerformance
+    );
+
+}
+
+
+async function addPerformance(event) {
+
+    event.preventDefault();
+
+
+    const type =
+        document.getElementById("type").value;
+
+
+    const rawValue =
+        document.getElementById("value").value.trim();
+
+
+    const date =
+        document.getElementById("date").value;
+
+
+    const message =
+        document.getElementById("performanceMessage");
+
+
+    if (!type || !rawValue || !date) {
+
+        message.textContent =
+            "Remplis tous les champs.";
+
+        return;
+    }
+
+
+    let value;
+
+
+    /* =========================
+       POIDS
+       ========================= */
+
+    if (type === "weight") {
+
+        value = Number(
+            rawValue.replace(",", ".")
+        );
+
+
+        if (!Number.isFinite(value) || value <= 0) {
+
+            message.textContent =
+                "Entre un poids valide.";
+
+            return;
+        }
+
+    }
+
+
+    /* =========================
+       RUN / HYROX
+       ========================= */
+
+    else if (
+        type === "run" ||
+        type === "hyrox"
+    ) {
+
+        value = timeToSeconds(rawValue);
+
+
+        if (!Number.isFinite(value) || value <= 0) {
+
+            message.textContent =
+                "Entre un chrono valide, par exemple 20:23.";
+
+            return;
+        }
+
+    }
+
+
+    /* =========================
+       KILOMÈTRES
+       ========================= */
+
+    else if (type === "km") {
+
+        value = Number(
+            rawValue.replace(",", ".")
+        );
+
+
+        if (!Number.isFinite(value) || value <= 0) {
+
+            message.textContent =
+                "Entre un nombre de kilomètres valide.";
+
+            return;
+        }
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch("/api/performances", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    type: type,
+                    value: value,
+                    date: date
+                })
+
+            });
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            message.textContent =
+                data.message ||
+                "Erreur lors de l'ajout.";
+
+            return;
+        }
+
+
+        message.textContent =
+            "✅ Performance enregistrée dans MySQL !";
+
+
+        document.getElementById("value").value = "";
+
+
+        await loadPerformances();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+            "Impossible de contacter le serveur.";
+
+    }
+
+}
+
+
+/* =========================================================
+   HISTORIQUE
+   ========================================================= */
+
+function renderHistory() {
+
+    if (!historyElement) {
+        return;
+    }
+
+
+    if (performances.length === 0) {
+
+        historyElement.innerHTML = `
+            <tr>
+                <td colspan="4">
+                    Aucune performance enregistrée.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    historyElement.innerHTML = "";
+
+
+    performances.forEach(function (performance) {
+
+        const row =
+            document.createElement("tr");
+
+
+        const dateCell =
+            document.createElement("td");
+
+        dateCell.textContent =
+            formatDate(performance.date);
+
+
+        const typeCell =
+            document.createElement("td");
+
+        typeCell.textContent =
+            getTypeName(performance.type);
+
+
+        const valueCell =
+            document.createElement("td");
+
+        valueCell.textContent =
+            formatPerformance(
+                performance.type,
+                performance.value
+            );
+
+
+        const actionCell =
+            document.createElement("td");
+
+
+        const deleteButton =
+            document.createElement("button");
+
+
+        deleteButton.textContent =
+            "🗑️ Supprimer";
+
+
+        deleteButton.className =
+            "delete-button";
+
+
+        deleteButton.addEventListener(
+            "click",
+            function () {
+
+                deletePerformance(
+                    performance.id
+                );
+
+            }
+        );
+
+
+        actionCell.appendChild(deleteButton);
+
+
+        row.appendChild(dateCell);
+        row.appendChild(typeCell);
+        row.appendChild(valueCell);
+        row.appendChild(actionCell);
+
+
+        historyElement.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   NOM DES TYPES
+   ========================================================= */
+
+function getTypeName(type) {
+
+    const names = {
+
+        weight: "⚖️ Poids",
+
+        run: "🏃 5 KM",
+
+        hyrox: "🔥 HYROX",
+
+        km: "🏃‍♂️ Running"
+
+    };
+
+
+    return names[type] || type;
+
+}
+
+
+/* =========================================================
+   FORMAT PERFORMANCE
+   ========================================================= */
+
+function formatPerformance(type, value) {
+
+    if (type === "weight") {
+
+        return Number(value).toFixed(1) + " kg";
+
+    }
+
+
+    if (type === "km") {
+
+        return Number(value).toFixed(1) + " km";
+
+    }
+
+
+    if (
+        type === "run" ||
+        type === "hyrox"
+    ) {
+
+        return formatTime(value);
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =========================================================
+   SUPPRIMER UNE PERFORMANCE
+   ========================================================= */
+
+async function deletePerformance(id) {
+
+    const confirmation =
+        confirm(
+            "Supprimer cette performance ?"
+        );
+
+
+    if (!confirmation) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/performances/" + id,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Impossible de supprimer la performance."
+            );
+
+            return;
+        }
+
+
+        await loadPerformances();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Impossible de contacter le serveur."
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+
+function updateDashboard() {
+
+    const weightData =
+        performances.filter(
+            performance => performance.type === "weight"
+        );
+
+
+    const runData =
+        performances.filter(
+            performance => performance.type === "run"
+        );
+
+
+    const hyroxData =
+        performances.filter(
+            performance => performance.type === "hyrox"
+        );
+
+
+    const kmData =
+        performances.filter(
+            performance => performance.type === "km"
+        );
+
+
+    /* =========================
+       POIDS
+       ========================= */
+
+    const weightElement =
+        document.getElementById("weight");
+
+
+    if (weightElement) {
+
+        if (weightData.length > 0) {
+
+            weightElement.textContent =
+                Number(weightData[0].value).toFixed(1);
+
+        } else {
+
+            weightElement.textContent =
+                "--";
+
+        }
+
+    }
+
+
+    /* =========================
+       5 KM
+       ========================= */
+
+    const runElement =
+        document.getElementById("run5k");
+
+
+    if (runElement) {
+
+        if (runData.length > 0) {
+
+            runElement.textContent =
+                formatTime(runData[0].value);
+
+        } else {
+
+            runElement.textContent =
+                "--:--";
+
+        }
+
+    }
+
+
+    /* =========================
+       HYROX
+       ========================= */
+
+    const hyroxElement =
+        document.getElementById("hyrox");
+
+
+    if (hyroxElement) {
+
+        if (hyroxData.length > 0) {
+
+            hyroxElement.textContent =
+                formatTime(hyroxData[0].value);
+
+        } else {
+
+            hyroxElement.textContent =
+                "--:--:--";
+
+        }
+
+    }
+
+
+    /* =========================
+       RUNNING
+       ========================= */
+
+    const weeklyKmElement =
+        document.getElementById("weeklyKm");
+
+
+    if (weeklyKmElement) {
+
+        const totalKm =
+            kmData.reduce(
+                function (total, performance) {
+
+                    return total +
+                        Number(performance.value);
+
+                },
+                0
+            );
+
+
+        weeklyKmElement.textContent =
+            totalKm.toFixed(1);
+
+    }
+
+
+    updateProgress(
+        weightData,
+        runData,
+        hyroxData
+    );
+
+}
+
+
+/* =========================================================
+   PROGRESSION
+   ========================================================= */
+
+function updateProgress(
+    weightData,
+    runData,
+    hyroxData
+) {
+
+
+    /* =========================
+       5 KM → OBJECTIF 20 MIN
+       ========================= */
+
+    const runProgress =
+        document.getElementById("runProgress");
+
+
+    if (
+        runProgress &&
+        runData.length > 0
+    ) {
+
+        const current =
+            Number(runData[0].value);
+
+
+        const goal =
+            20 * 60;
+
+
+        let percentage =
+            (goal / current) * 100;
+
+
+        percentage =
+            Math.min(
+                Math.max(percentage, 0),
+                100
+            );
+
+
+        runProgress.style.width =
+            percentage + "%";
+
+    }
+
+
+    /* =========================
+       HYROX → OBJECTIF 1H10
+       ========================= */
+
+    const hyroxProgress =
+        document.getElementById(
+            "hyroxProgress"
+        );
+
+
+    if (
+        hyroxProgress &&
+        hyroxData.length > 0
+    ) {
+
+        const current =
+            Number(hyroxData[0].value);
+
+
+        const goal =
+            70 * 60;
+
+
+        let percentage =
+            (goal / current) * 100;
+
+
+        percentage =
+            Math.min(
+                Math.max(percentage, 0),
+                100
+            );
+
+
+        hyroxProgress.style.width =
+            percentage + "%";
+
+    }
+
+
+    /* =========================
+       POIDS
+       ========================= */
+
+    const weightProgress =
+        document.getElementById(
+            "weightProgress"
+        );
+
+
+    if (
+        weightProgress &&
+        weightData.length > 0
+    ) {
+
+        /*
+            Pour l'instant on affiche
+            simplement une progression
+            basée sur la présence de données.
+        */
+
+        weightProgress.style.width =
+            "100%";
+
+    }
+
+}
+
+
+/* =========================================================
+   GRAPHIQUES
+   ========================================================= */
+
+function drawCharts() {
+
+    drawWeightChart();
+
+    drawRunChart();
+
+}
+
+
+/* =========================================================
+   GRAPHIQUE POIDS
+   ========================================================= */
+
+function drawWeightChart() {
+
+    const canvas =
+        document.getElementById(
+            "weightChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const data =
+        performances
+            .filter(
+                performance =>
+                    performance.type === "weight"
+            )
+            .slice()
+            .reverse();
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    if (data.length === 0) {
+
+        drawEmptyChart(
+            ctx,
+            canvas,
+            "Aucune donnée de poids"
+        );
+
+        return;
+    }
+
+
+    drawLineChart(
+        ctx,
+        canvas,
+        data.map(item => item.value),
+        data.map(item =>
+            formatDate(item.date)
+        ),
+        "kg"
+    );
+
+}
+
+
+/* =========================================================
+   GRAPHIQUE 5 KM
+   ========================================================= */
+
+function drawRunChart() {
+
+    const canvas =
+        document.getElementById(
+            "runChart"
+        );
+
+
+    if (!canvas) {
+        return;
+    }
+
+
+    const ctx =
+        canvas.getContext("2d");
+
+
+    const data =
+        performances
+            .filter(
+                performance =>
+                    performance.type === "run"
+            )
+            .slice()
+            .reverse();
+
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    if (data.length === 0) {
+
+        drawEmptyChart(
+            ctx,
+            canvas,
+            "Aucune donnée de 5 KM"
+        );
+
+        return;
+    }
+
+
+    drawLineChart(
+        ctx,
+        canvas,
+        data.map(item => item.value),
+        data.map(item =>
+            formatDate(item.date)
+        ),
+        "time"
+    );
+
+}
+
+
+/* =========================================================
+   DESSIN GRAPHIQUE
+   ========================================================= */
+
+function drawLineChart(
+    ctx,
+    canvas,
+    values,
+    labels,
+    unit
+) {
+
+    const width =
+        canvas.width;
+
+
+    const height =
+        canvas.height;
+
+
+    const padding =
+        50;
+
+
+    const max =
+        Math.max(...values);
+
+
+    const min =
+        Math.min(...values);
+
+
+    const range =
+        max - min || 1;
+
+
+    /* AXES */
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        padding,
+        20
+    );
+
+    ctx.lineTo(
+        padding,
+        height - padding
+    );
+
+    ctx.lineTo(
+        width - 20,
+        height - padding
+    );
+
+    ctx.stroke();
+
+
+    /* LIGNE */
+
+    ctx.beginPath();
+
+
+    values.forEach(
+        function (value, index) {
+
+            let x;
+
+
+            if (values.length === 1) {
+
+                x =
+                    width / 2;
+
+            } else {
+
+                x =
+                    padding +
+                    (
+                        index /
+                        (values.length - 1)
+                    ) *
+                    (
+                        width -
+                        padding -
+                        30
+                    );
+
+            }
+
+
+            const y =
+                height -
+                padding -
+                (
+                    (
+                        value -
+                        min
+                    ) /
+                    range
+                ) *
+                (
+                    height -
+                    padding -
+                    40
+                );
+
+
+            if (index === 0) {
+
+                ctx.moveTo(
+                    x,
+                    y
+                );
+
+            } else {
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+            }
+
+        }
+    );
+
+
+    ctx.stroke();
+
+
+    /* POINTS */
+
+    values.forEach(
+        function (value, index) {
+
+            let x;
+
+
+            if (values.length === 1) {
+
+                x =
+                    width / 2;
+
+            } else {
+
+                x =
+                    padding +
+                    (
+                        index /
+                        (values.length - 1)
+                    ) *
+                    (
+                        width -
+                        padding -
+                        30
+                    );
+
+            }
+
+
+            const y =
+                height -
+                padding -
+                (
+                    (
+                        value -
+                        min
+                    ) /
+                    range
+                ) *
+                (
+                    height -
+                    padding -
+                    40
+                );
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x,
+                y,
+                4,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+
+
+            ctx.fillText(
+                unit === "time"
+                    ? formatTime(value)
+                    : Number(value).toFixed(1),
+                x - 20,
+                y - 10
+            );
+
+        }
+    );
+
+
+    /* LABELS */
+
+    if (labels.length > 0) {
+
+        ctx.fillText(
+            labels[0],
+            padding,
+            height - 20
+        );
+
+
+        if (labels.length > 1) {
+
+            ctx.fillText(
+                labels[labels.length - 1],
+                width - 80,
+                height - 20
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   GRAPHIQUE VIDE
+   ========================================================= */
+
+function drawEmptyChart(
+    ctx,
+    canvas,
+    text
+) {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    ctx.textAlign = "center";
+
+
+    ctx.fillText(
+        text,
+        canvas.width / 2,
+        canvas.height / 2
+    );
+
+
+    ctx.textAlign = "start";
+
+}
+
+
+/* =========================================================
+   AIDE POUR LE CHAMP VALEUR
+   ========================================================= */
+
+const typeSelect =
+    document.getElementById("type");
+
+
+const valueHelp =
+    document.getElementById("valueHelp");
+
+
+if (typeSelect && valueHelp) {
+
+    typeSelect.addEventListener(
+        "change",
+        function () {
+
+            switch (typeSelect.value) {
+
+                case "weight":
+
+                    valueHelp.textContent =
+                        "Exemple : 73.5";
+
+                    break;
+
+
+                case "run":
+
+                    valueHelp.textContent =
+                        "Format : minutes:secondes — exemple : 20:23";
+
+                    break;
+
+
+                case "hyrox":
+
+                    valueHelp.textContent =
+                        "Format : heures:minutes:secondes — exemple : 1:20:00";
+
+                    break;
+
+
+                case "km":
+
+                    valueHelp.textContent =
+                        "Exemple : 10 ou 12.5";
+
+                    break;
+
+
+                default:
+
+                    valueHelp.textContent =
+                        "Sélectionne d'abord un type.";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DATE AUTOMATIQUE
+   ========================================================= */
+
+const dateInput =
+    document.getElementById("date");
+
+
+if (dateInput) {
+
+    dateInput.value =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+}
+
+
+/* =========================================================
+   DÉCONNEXION
+   ========================================================= */
+
+if (logoutButton) {
+
+    logoutButton.addEventListener(
+        "click",
+        async function () {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/logout",
+                        {
+                            method: "POST"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (data.success) {
+
+                    localStorage.removeItem(
+                        "user"
+                    );
+
+                    document.body.classList.remove(
+                        "authenticated"
+                    );
+
+                    window.location.href =
+                        "connexion.html";
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   COMPTE À REBOURS HYROX
+   ========================================================= */
+
+function countdown() {
+
+    const countdownElement =
+        document.getElementById(
+            "countdown"
+        );
+
+
+    if (!countdownElement) {
+        return;
+    }
+
+
+    const target =
+        new Date(
+            "2027-01-28T00:00:00"
+        );
+
+
+    function updateCountdown() {
+
+        const now =
+            new Date();
+
+
+        const difference =
+            target - now;
+
+
+        if (difference <= 0) {
+
+            countdownElement.textContent =
+                "🔥 Objectif atteint !";
+
+            return;
+        }
+
+
+        const days =
+            Math.floor(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        const hours =
+            Math.floor(
+                (
+                    difference /
+                    (1000 * 60 * 60)
+                ) % 24
+            );
+
+
+        const minutes =
+            Math.floor(
+                (
+                    difference /
+                    (1000 * 60)
+                ) % 60
+            );
+
+
+        const seconds =
+            Math.floor(
+                (
+                    difference /
+                    1000
+                ) % 60
+            );
+
+
+        countdownElement.textContent =
+            `${days}j ${hours}h ${minutes}m ${seconds}s`;
+
+    }
+
+
+    updateCountdown();
+
+    setInterval(
+        updateCountdown,
+        1000
+    );
+
+}
+
+
+/* =========================================================
+   INITIALISATION DU DASHBOARD
+   ========================================================= */
+
+if (historyElement) {
+
+    loadUser()
+        .then(function (user) {
+
+            if (user) {
+
+                loadPerformances();
+
+                countdown();
+
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   NAVIGATION SELON LA SESSION
+   ========================================================= */
+
+async function updateAuthenticatedNavigation() {
+
+    try {
+
+        const response = await fetch("/api/me", {
+            credentials: "same-origin"
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            document.body.classList.add("authenticated");
+        }
+
+    } catch (error) {
+
+        document.body.classList.remove("authenticated");
+
+    }
+
+}
+
+
+updateAuthenticatedNavigation();

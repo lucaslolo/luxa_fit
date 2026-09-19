@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Luxa_Fit | Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="dashboard-page">
+
+<header>
+    <a href="index.html" class="logo">luxa<span>_fit</span></a>
+
+    <nav class="site-nav" aria-label="Navigation principale">
+        <a class="nav-login auth-only" href="index.html">accueil</a>
+        <a class="nav-login auth-only" href="entrainement.html">entraînement</a>
+        <a class="nav-login auth-only" href="alimentation.html">alimentation</a>
+        <a class="nav-login auth-only" href="sommeil-mindset.html">mindset</a>
+    </nav>
+
+    <div class="dashboard-user">
+        <span id="userName">ATHLETE</span>
+        <button id="logoutButton">Déconnexion</button>
+    </div>
+</header>
+
+
+<main class="dashboard">
+
+    <!-- TITRE -->
+
+    <section class="dashboard-header">
+        <div class="dashboard-kicker">LUXA_FIT / ATHLETE OS</div>
+        <h1>Ton niveau.<br><span>En clair.</span></h1>
+        <p>
+            Suis tes performances, repère tes tendances et garde le cap sur tes objectifs.
+        </p>
+    </section>
+
+
+    <!-- PROFIL -->
+
+    <section class="dashboard-card">
+
+        <div class="dashboard-section-heading">
+            <span class="section-index">01</span>
+            <h2>Mon profil</h2>
+        </div>
+
+        <div class="profile-info">
+            <p>
+                <strong>Prénom :</strong>
+                <span id="profilePrenom">-</span>
+            </p>
+
+            <p>
+                <strong>Nom :</strong>
+                <span id="profileNom">-</span>
+            </p>
+
+            <p>
+                <strong>ID utilisateur :</strong>
+                <span id="profileId">-</span>
+            </p>
+        </div>
+
+    </section>
+
+
+    <!-- STATISTIQUES -->
+
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <h3>⚖️ Poids</h3>
+
+            <div class="stat-value">
+                <span id="weight">--</span>
+                <small>kg</small>
+            </div>
+
+            <p>Dernière mesure</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>🏃 5 KM</h3>
+
+            <div class="stat-value">
+                <span id="run5k">--:--</span>
+            </div>
+
+            <p>Dernier chrono</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>🔥 HYROX</h3>
+
+            <div class="stat-value">
+                <span id="hyrox">--:--:--</span>
+            </div>
+
+            <p>Dernier chrono</p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>🏃‍♂️ Running</h3>
+
+            <div class="stat-value">
+                <span id="weeklyKm">0</span>
+                <small>km</small>
+            </div>
+
+            <p>Total enregistré</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- AJOUTER UNE PERFORMANCE -->
+
+    <section class="dashboard-card">
+
+        <div class="dashboard-section-heading">
+            <span class="section-index">02</span>
+            <h2>Ajouter une performance</h2>
+        </div>
+
+        <form id="performanceForm">
+
+            <div class="form-group">
+
+                <label for="type">
+                    Type de performance
+                </label>
+
+                <select id="type" required>
+
+                    <option value="">
+                        Sélectionner
+                    </option>
+
+                    <option value="weight">
+                        ⚖️ Poids
+                    </option>
+
+                    <option value="run">
+                        🏃 5 KM
+                    </option>
+
+                    <option value="hyrox">
+                        🔥 HYROX
+                    </option>
+
+                    <option value="km">
+                        🏃‍♂️ Running
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="value">
+                    Valeur
+                </label>
+
+                <input
+                    type="text"
+                    id="value"
+                    placeholder="Ex : 73 / 20:23 / 1:20:00 / 10"
+                    required
+                >
+
+                <small id="valueHelp">
+                    Sélectionne d'abord un type.
+                </small>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="date">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="date"
+                    required
+                >
+
+            </div>
+
+
+            <button type="submit" class="primary-button">
+                Ajouter la performance
+            </button>
+
+            <p id="performanceMessage"></p>
+
+        </form>
+
+    </section>
+
+
+    <!-- OBJECTIFS -->
+
+    <section class="dashboard-card">
+
+        <div class="dashboard-section-heading">
+            <span class="section-index">03</span>
+            <h2>Mes objectifs</h2>
+        </div>
+
+        <div class="goals-grid">
+
+            <div class="goal-card">
+
+                <h3>5 KM</h3>
+
+                <p>
+                    Objectif :
+                    <strong>20:00</strong>
+                </p>
+
+                <div class="progress-bar">
+                    <div id="runProgress"></div>
+                </div>
+
+            </div>
+
+
+            <div class="goal-card">
+
+                <h3>HYROX</h3>
+
+                <p>
+                    Objectif :
+                    <strong>1:10:00</strong>
+                </p>
+
+                <div class="progress-bar">
+                    <div id="hyroxProgress"></div>
+                </div>
+
+            </div>
+
+
+            <div class="goal-card">
+
+                <h3>Poids</h3>
+
+                <p>
+                    Suivi de ton évolution
+                </p>
+
+                <div class="progress-bar">
+                    <div id="weightProgress"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- GRAPHIQUES -->
+
+    <section class="dashboard-card">
+
+        <div class="dashboard-section-heading">
+            <span class="section-index">04</span>
+            <h2>Mon évolution</h2>
+        </div>
+
+        <div class="charts-grid">
+
+            <div class="chart-container">
+
+                <h3>Évolution du poids</h3>
+
+                <canvas id="weightChart"></canvas>
+
+            </div>
+
+
+            <div class="chart-container">
+
+                <h3>Évolution du 5 KM</h3>
+
+                <canvas id="runChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- HISTORIQUE -->
+
+    <section class="dashboard-card">
+
+        <div class="history-header">
+
+            <div>
+                <div class="dashboard-section-heading">
+                    <span class="section-index">05</span>
+                    <h2>Historique</h2>
+                </div>
+                <p>
+                    Toutes tes performances enregistrées.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Valeur</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="history">
+
+                    <tr>
+                        <td colspan="4">
+                            Chargement...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- COMPTE À REBOURS -->
+
+    <section class="dashboard-card countdown-card">
+
+        <div class="dashboard-section-heading">
+            <span class="section-index">06</span>
+            <h2>Prochain objectif</h2>
+        </div>
+
+        <p>
+            HYROX
+        </p>
+
+        <div id="countdown">
+            Chargement...
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
