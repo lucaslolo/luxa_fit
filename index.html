@@ -3,91 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luxa_fit | HYBRIDE</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="css/connexion.css">
 </head>
 
-<body class="home-page">
+<body>
 
-<header>
-    <a href="index.html" class="back-link"><span style="color: yellow;">accueil</span></a>
-    <a href="muscu.html" class="back-link">muscu</a>
-    <a href="course.html" class="back-link">course</a>
-    <a href="hyrox.html" class="back-link">hyrox</a>
-    <a href="hybride.html" class="back-link">hybride</a>
-    <a href="connexion.html" class="back-link">connexion</a>
-</header>
+    <div class="login-container">
 
-<main class="home-main">
-    <section class="home-intro">
-        <div class="home-kicker">luxa_fit / PERFORMANCE JOURNAL</div>
-        <h1>Construire un athlète<br><span>hybride</span></h1>
-        <p>Bienvenue dans l'espace de suivi de <strong>luxa_fit</strong> : un programme complet entre force, vitesse et endurance pour arriver prêt sur la ligne de départ HYROX.</p>
-        <div class="home-meta">
-            <span>18 SEMAINES</span>
-            <span>73 KG → 78 KG</span>
-            <span>OBJECTIF : 1:10</span>
+        <div class="login-box">
+
+            <h1>Bienvenue</h1>
+            <p class="subtitle">Connecte-toi pour accéder au site</p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Ton nom d'utilisateur"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Mot de passe</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Ton mot de passe"
+                        required
+                    >
+                </div>
+
+                <button type="submit">SE CONNECTER</button>
+
+                <p id="error"></p>
+
+            </form>
+
         </div>
-    </section>
 
-    <section class="discipline-section">
-        <div class="section-header">
-            <h2>Les entraînements</h2>
-        </div>
-        <div class="section-description">
-            <p>Chaque piliers est essentiel pour créer un athlète complet et performant.</p>
-        </div>
-        <div class="discipline-grid">
-            <a class="discipline-card discipline" href="muscu.html">
-                <span class="discipline-number">01</span>
-                <span class="discipline-icon">✦</span>
-                <h3>Muscu</h3>
-                <p>Construire un physique esthétique, développer sa force et transformer son corps en véritable outil de performance.</p>
-                <span class="discipline-link">Voir le programme <b>→</b></span>
-            </a>
+    </div>
 
-            <a class="discipline-card discipline" href="course.html">
-                <span class="discipline-number">02</span>
-                <span class="discipline-icon">✦</span>
-                <h3>Course</h3>
-                <p>Construire un cardio capable d'encaisser toujours plus, jusqu'à développer ce fameux « troisième poumon ».</p>
-                <span class="discipline-link">Voir le programme <b>→</b></span>
-            </a>
-
-            <a class="discipline-card discipline" href="hyrox.html">
-                <span class="discipline-number">03</span>
-                <span class="discipline-icon">✦</span>
-                <h3>HYROX</h3>
-                <p>Réunir la force et le cardio pour devenir complet : puissant sur les stations, rapide sur les runs.</p>
-                <span class="discipline-link">Voir le programme <b>→</b></span>
-            </a>
-
-            <a class="discipline-card discipline" href="hybride.html">
-                <span class="discipline-number">04</span>
-                <span class="discipline-icon">✦</span>
-                <h3>HYBRIDE</h3>
-                <p>MON PROGRAMME HYBRIDE</p>
-                <span class="discipline-link">Voir le programme <b>→</b></span>
-            </a>
-
-            <a class="discipline-card discipline" href="#">
-                <span class="discipline-number">04</span>
-                <span class="discipline-icon">↗</span>
-                <h3>A SUIVRE...</h3>
-            </a>
-
-
-            
-        </div>
-    </section>
-
-    <footer class="home-footer">luxa_fit / TRAIN WITH INTENT / 2026—27</footer>
-</main>
-
-<main>
-
-<script src="js/app.js"></script>
+    <script src="js/connexion.js"></script>
 
 </body>
 </html>
-
