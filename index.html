@@ -1,53 +1,237 @@
 ﻿<!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luxa_fit | Accès privé</title>
-    <link rel="stylesheet" href="css/style.css">
+<title>luxa_fit | LES 3 PILIERS</title>
+
+<link rel="stylesheet" href="css/style.css">
+
 </head>
-<body class="access-page">
-    <header class="access-header">
+
+<body class="home-page">
+    <header>
+        <!-- LOGO -->
+        <a href="index.html" class="logo">
+            <span>luxa_fit</span>
+        </a>
+
+        <!-- NAVIGATION -->
+        <nav class="site-nav" aria-label="Navigation principale">
+
+            <!-- ALIMENTATION -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="alimentation.html">
+                    Alimentation <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="alimentation.html#masse-seche">
+                        Prise de masse sèche
+                        <small>Construire sans excès</small>
+                    </a>
+
+                    <a href="alimentation.html#maintien">
+                        Maintien calorique
+                        <small>Stabiliser et performer</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ENTRAÎNEMENT -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="entrainement.html">
+                    Entraînement <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="muscu.html">
+                        Muscu
+                        <small>Force et hypertrophie</small>
+                    </a>
+
+                    <a href="course.html">
+                        Course
+                        <small>Endurance et vitesse</small>
+                    </a>
+
+                    <a href="hyrox.html">
+                        Hyrox
+                        <small>Force et cardio</small>
+                    </a>
+
+                    <a href="hybride.html">
+                        Hybride
+                        <small>Devenir complet</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- MINDSET -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="sommeil-mindset.html">
+                    Mindset <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="sommeil-mindset.html#sommeil">
+                        Sommeil
+                        <small>Récupérer vraiment</small>
+                    </a>
+
+                    <a href="sommeil-mindset.html#sante-mentale">
+                        Santé mentale
+                        <small>Garder le cap</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <a href="dashboard.html" class="nav-login auth-only">
+                dashboard
+            </a>
+
+        </nav>
+
+        <!-- UTILISATEUR CONNECTÉ -->
+        <div class="dashboard-user auth-only" id="dashboard-user">
+            <span id="userName">ATHLETE</span>
+            <button id="logoutButton">Déconnexion</button>
+        </div>
+
+        <!-- CONNEXION SI NON CONNECTÉ -->
+        <a href="connexion.html"
+            class="nav-login"
+            id="login-link">
+                connexion
+        </a>
 
     </header>
-    <main class="access-shell">
-        <section class="access-panel" aria-labelledby="access-title">
-            <div class="access-brand">luxa<span>_fit</span></div>
-            <div class="access-kicker">PERFORMANCE / SANTÉ / DISCIPLINE</div>
-            <h1 id="access-title">Entre dans<br><span>ton espace.</span></h1>
-            <p class="access-intro">Un espace privé pour suivre tes formations, tes performances et ta progression.</p>
+<main class="home-main">
 
-            <form id="siteAccessForm" class="access-form">
-                <label for="siteUsername">Identifiant</label>
-                <input id="siteUsername" name="username" type="text" autocomplete="username" required>
+<!-- INTRODUCTION -->
+<section class="home-intro">
 
-                <label for="sitePassword">Mot de passe</label>
-                <input id="sitePassword" name="password" type="password" autocomplete="current-password" required>
+    <div class="home-kicker">
+        luxa_fit / PERFORMANCE & SANTÉ
+    </div>
 
-                <button type="submit">Entrer dans luxa_fit <span>→</span></button>
-                <p id="siteAccessMessage" class="access-message" role="alert"></p>
-            </form>
+    <h1>
+        Construire un corps<br>
+        <span>fort et sain</span>
+    </h1>
 
-            <div class="access-footer">SESSION PRIVÉE / LUXA_FIT</div>
-        </section>
-        <div class="access-mark" aria-hidden="true">01</div>
-    </main>
-   <script>
-    const accessForm = document.getElementById("siteAccessForm");
-    const accessMessage = document.getElementById("siteAccessMessage");
+    <p>
+        Bienvenue dans l'univers <strong>luxa_fit</strong>.
+        Une approche complète basée sur trois piliers essentiels :
+        l'alimentation, l'entraînement et le sommeil & mindset.
+    </p>
 
-    accessForm.addEventListener("submit", event => {
-        event.preventDefault();
+    <div class="home-meta">
+        <span>ALIMENTATION</span>
+        <span>ENTRAÎNEMENT</span>
+        <span>SOMMEIL & MINDSET</span>
+    </div>
 
-        const username = document.getElementById("siteUsername").value.trim();
-        const password = document.getElementById("sitePassword").value;
+</section>
 
-        if (username === "luxa" && password === "luxa") {
-            window.location.href = "entrainement.html";
-        } else {
-            accessMessage.textContent = "Identifiant ou mot de passe incorrect.";
-        }
-    });
-</script>
+
+<!-- LES 3 PILIERS -->
+<section class="discipline-section">
+
+    <div class="section-header">
+        <h2>Les 3 piliers</h2>
+    </div>
+
+    <div class="section-description">
+        <p>
+            Un corps performant ne repose pas uniquement sur l'entraînement.
+            Chaque pilier joue un rôle essentiel dans la progression,
+            la récupération et la santé.
+        </p>
+    </div>
+
+
+    <div class="discipline-grid">
+
+
+        <!-- PILIER 01 : ALIMENTATION -->
+        <a class="discipline-card discipline" href="alimentation.html">
+
+            <span class="discipline-number">01</span>
+
+            <span class="discipline-icon">✦</span>
+
+            <h3>ALIMENTATION</h3>
+
+            <p>
+                Nourrir son corps correctement pour soutenir la performance,
+                la récupération et construire un physique sain.
+            </p>
+
+            <span class="discipline-link">
+                Découvrir <b>→</b>
+            </span>
+
+        </a>
+
+
+        <!-- PILIER 02 : ENTRAINEMENT -->
+        <a class="discipline-card discipline" href="entrainement.html">
+
+            <span class="discipline-number">02</span>
+
+            <span class="discipline-icon">✦</span>
+
+            <h3>ENTRAÎNEMENT</h3>
+
+            <p>
+                Développer sa force, son endurance et ses capacités physiques
+                grâce à un entraînement structuré et progressif.
+            </p>
+
+            <span class="discipline-link">
+                Voir les formations <b>↓</b>
+            </span>
+
+        </a>
+
+
+        <!-- PILIER 03 : SOMMEIL & MINDSET -->
+        <a class="discipline-card discipline" href="sommeil-mindset.html">
+
+            <span class="discipline-number">03</span>
+
+            <span class="discipline-icon">✦</span>
+
+            <h3>SOMMEIL & MINDSET</h3>
+
+            <p>
+                Améliorer son sommeil, gérer son stress et développer
+                un état d'esprit solide pour progresser durablement.
+            </p>
+
+            <span class="discipline-link">
+                Découvrir <b>→</b>
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer class="home-footer">
+    luxa_fit / TRAIN WITH INTENT / 2026—27
+</footer>
+
+</main>
+
+<script src="js/app.js"></script>
+
 </body>
 </html>

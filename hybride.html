@@ -10,17 +10,103 @@
 
 <body class="program-page hybrid-page">
 
-<header>
-    <a href="luxa.html" class="logo">luxa<span>_fit</span></a>
-    <nav class="site-nav" aria-label="Navigation principale">
-        <div class="nav-dropdown"><a class="nav-trigger" href="alimentation.html">Alimentation <span>↓</span></a><div class="nav-menu"><a href="alimentation.html#masse-seche">Prise de masse sèche <small>Construire sans excès</small></a><a href="alimentation.html#maintien">Maintien calorique <small>Stabiliser et performer</small></a></div></div>
-        <div class="nav-dropdown"><a class="nav-trigger" href="index.html#entrainement">Entraînement <span>↓</span></a><div class="nav-menu"><a href="muscu.html">Muscu <small>Force et hypertrophie</small></a><a href="course.html">Course <small>Endurance et vitesse</small></a><a href="hyrox.html">Hyrox <small>Force et cardio</small></a><a href="hybride.html">Hybride <small>Devenir complet</small></a></div></div>
-        <div class="nav-dropdown"><a class="nav-trigger" href="sommeil-mindset.html">Mindset <span>↓</span></a><div class="nav-menu"><a href="sommeil-mindset.html#sommeil">Sommeil <small>Récupérer vraiment</small></a><a href="sommeil-mindset.html#sante-mentale">Santé mentale <small>Garder le cap</small></a></div></div>
-        <!-- <a href="connexion.html" class="nav-login">connexion</a> -->
-        <a href="dashboard.html" class="nav-login">dashboard</a>
-    </nav>
-    <div class="date">PROGRAMME / 04</div>
-</header>
+    <header>
+        <!-- LOGO -->
+        <a href="index.html" class="logo">
+            luxa<span>_fit</span>
+        </a>
+
+        <!-- NAVIGATION -->
+        <nav class="site-nav" aria-label="Navigation principale">
+
+            <!-- ALIMENTATION -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="alimentation.html">
+                    Alimentation <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="alimentation.html#masse-seche">
+                        Prise de masse sèche
+                        <small>Construire sans excès</small>
+                    </a>
+
+                    <a href="alimentation.html#maintien">
+                        Maintien calorique
+                        <small>Stabiliser et performer</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ENTRAÎNEMENT -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="entrainement.html">
+                    Entraînement <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="muscu.html">
+                        Muscu
+                        <small>Force et hypertrophie</small>
+                    </a>
+
+                    <a href="course.html">
+                        Course
+                        <small>Endurance et vitesse</small>
+                    </a>
+
+                    <a href="hyrox.html">
+                        Hyrox
+                        <small>Force et cardio</small>
+                    </a>
+
+                    <a href="hybride.html">
+                        Hybride
+                        <small>Devenir complet</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- MINDSET -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="sommeil-mindset.html">
+                    Mindset <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="sommeil-mindset.html#sommeil">
+                        Sommeil
+                        <small>Récupérer vraiment</small>
+                    </a>
+
+                    <a href="sommeil-mindset.html#sante-mentale">
+                        Santé mentale
+                        <small>Garder le cap</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <a href="dashboard.html" class="nav-login auth-only">
+                dashboard
+            </a>
+
+        </nav>
+
+        <!-- UTILISATEUR CONNECTÉ -->
+        <div class="dashboard-user auth-only" id="dashboard-user">
+            <span id="userName">ATHLETE</span>
+            <button id="logoutButton">Déconnexion</button>
+        </div>
+
+        <!-- CONNEXION SI NON CONNECTÉ -->
+        <a href="connexion.html"
+            class="nav-login"
+            id="login-link">
+                connexion
+        </a>
+
+    </header>
 
 
 <main class="program-main hybrid-main">
@@ -118,1908 +204,1907 @@
     /* =====================================================
        PROGRAMME 18 SEMAINES
     ===================================================== */
-
     const programs = {
 
-        /* ================================
-           SEMAINES 1-3
-           BASE
-        ================================= */
-
-        1: {
-            title: "Reprise",
-            phase: "Phase 1 — Base",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled Pull",
-                    description: "Reprendre progressivement la force de tirage.",
-                    exercises: [
-                        "Tractions — 4×6-8",
-                        "Row barre — 4×8",
-                        "Tirage vertical — 3×10",
-                        "Row poulie — 3×10",
-                        "Face Pull — 3×15",
-                        "Sled Pull — 5×20 m modéré",
-                        "Farmer Hold — 3×40 sec"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes + HYROX",
-                    description: "Reconstruire la force des jambes.",
-                    exercises: [
-                        "Squat — 4×6 @ RPE 7",
-                        "Romanian Deadlift — 3×8",
-                        "Bulgarian Split Squat — 3×8/jambe",
-                        "Leg Curl — 3×12",
-                        "Mollets — 4×12",
-                        "Wall Balls — 4×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Pecs / Épaules + footing",
-                    description: "Développer le haut du corps sans accumuler trop de fatigue.",
-                    exercises: [
-                        "Bench — 4×6",
-                        "Développé incliné haltères — 3×8",
-                        "OHP — 3×8",
-                        "Élévations latérales — 4×12",
-                        "Triceps — 3×10",
-                        "Biceps — 3×10",
-                        "Course facile — 6 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Récupération",
-                    description: "Le repos fait partie du programme.",
-                    exercises: [
-                        "Repos complet",
-                        "Mobilité légère",
-                        "Marche optionnelle"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Fractionné",
-                    description: "Commencer à développer la vitesse.",
-                    exercises: [
-                        "15 min échauffement",
-                        "6×400 m @ ~4:00/km",
-                        "Récupération — 1'30",
-                        "10 min retour au calme",
-                        "SkiErg — 4×250 m",
-                        "Row — 4×250 m"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Circuit technique",
-                    description: "Reprendre les mouvements spécifiques HYROX.",
-                    exercises: [
-                        "3 tours",
-                        "1 km run @ 4:45-5:00/km",
-                        "SkiErg — 500 m",
-                        "Sled Push — 25 m",
-                        "Sled Pull — 25 m",
-                        "Burpees — 10",
-                        "Farmers — 20 m",
-                        "Lunges — 10",
-                        "Wall Balls — 20"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Sortie longue",
-                    description: "Construire la base aérobie.",
-                    exercises: [
-                        "10-12 km facile",
-                        "Allure conversationnelle",
-                        "Aucune recherche de performance"
-                    ]
-                }
-
-            ]
-        },
-
-
-        2: {
-            title: "Volume",
-            phase: "Phase 1 — Base",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled Pull",
-                    description: "Développer la force de tirage.",
-                    exercises: [
-                        "Tractions — 4×6-8",
-                        "Row barre — 4×8",
-                        "Tirage vertical — 3×10",
-                        "Row poulie — 3×10",
-                        "Sled Pull — 6×20 m",
-                        "Farmer Hold — 3×45 sec"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes + HYROX",
-                    description: "Augmenter progressivement le volume.",
-                    exercises: [
-                        "Squat — 4×6",
-                        "RDL — 3×8",
-                        "Bulgarian — 3×8",
-                        "Leg Curl — 3×12",
-                        "Wall Balls — 5×20",
-                        "Sled Push — 4×15 m"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut du corps",
-                    description: "Force et hypertrophie.",
-                    exercises: [
-                        "Bench — 4×6",
-                        "Incliné haltères — 3×8",
-                        "OHP — 3×8",
-                        "Élévations latérales — 4×12",
-                        "Bras — 3×10",
-                        "Course facile — 7 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos",
-                        "Mobilité optionnelle"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Vitesse",
-                    description: "Augmenter progressivement la vitesse.",
-                    exercises: [
-                        "15 min échauffement",
-                        "7×400 m @ 3:55-4:00/km",
-                        "Récupération 1'30",
-                        "10 min retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Circuit HYROX",
-                    description: "Commencer à accumuler du volume spécifique.",
-                    exercises: [
-                        "4 tours",
-                        "1 km run",
-                        "SkiErg — 500 m",
-                        "Sled Push — 25 m",
-                        "Sled Pull — 25 m",
-                        "Burpees — 10",
-                        "Farmers — 50 m",
-                        "Lunges — 20 m",
-                        "Wall Balls — 20"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Sortie longue",
-                    description: "Développer l'endurance.",
-                    exercises: [
-                        "12 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        3: {
-            title: "Force",
-            phase: "Phase 1 — Base",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled Pull",
-                    description: "Commencer le développement de la force maximale.",
-                    exercises: [
-                        "Tractions — 4×6",
-                        "Row barre — 4×6",
-                        "Tirage vertical — 3×8",
-                        "Row poulie — 3×10",
-                        "Sled Pull — 5×25 m lourd"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Force jambes",
-                    description: "Développer la puissance.",
-                    exercises: [
-                        "Squat — 5×5",
-                        "RDL — 4×6",
-                        "Bulgarian — 3×8",
-                        "Leg Curl — 3×10",
-                        "Sled Push — 4×20 m",
-                        "Wall Balls — 5×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut du corps",
-                    description: "Développer la force du haut.",
-                    exercises: [
-                        "Bench — 4×6",
-                        "Incliné — 3×8",
-                        "OHP — 3×8",
-                        "Élévations latérales — 4×12",
-                        "Course facile — 7 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos complet"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Intervalles",
-                    description: "Première vraie séance de vitesse.",
-                    exercises: [
-                        "15 min échauffement",
-                        "5×800 m @ 4:00-4:05/km",
-                        "Récupération 2 min",
-                        "10 min retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Circuit spécifique",
-                    description: "Apprendre à enchaîner les stations.",
-                    exercises: [
-                        "4 tours",
-                        "1 km run",
-                        "SkiErg — 500 m",
-                        "Sled Push — 25 m",
-                        "Sled Pull — 25 m",
-                        "Burpees — 15",
-                        "Row — 500 m",
-                        "Farmers — 50 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Endurance",
-                    description: "Construire le moteur.",
-                    exercises: [
-                        "13 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 4
-           DELOAD
-        ================================= */
-
-        4: {
-            title: "Deload",
-            phase: "Phase 1 — Récupération",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos léger",
-                    description: "Réduire le volume.",
-                    exercises: [
-                        "Tractions — 3×6",
-                        "Row — 3×8",
-                        "Sled Pull — 3×15 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes légère",
-                    description: "Maintenir les sensations.",
-                    exercises: [
-                        "Squat — 3×5 léger",
-                        "RDL — 3×6",
-                        "Lunges — 2×10",
-                        "Wall Balls — 3×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU",
-                    title: "Haut du corps",
-                    description: "Volume réduit.",
-                    exercises: [
-                        "Bench — 3×6",
-                        "Incliné — 2×8",
-                        "OHP — 2×8"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Absorber les trois premières semaines.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Vitesse légère",
-                    description: "Conserver de la vitesse sans fatigue.",
-                    exercises: [
-                        "6×400 m @ 3:55-4:00/km",
-                        "Récupération complète"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "HYROX léger",
-                    description: "Technique uniquement.",
-                    exercises: [
-                        "2-3 tours",
-                        "1 km run",
-                        "Ski 500 m",
-                        "Sled Push 25 m",
-                        "Sled Pull 25 m",
-                        "20 Wall Balls"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Footing",
-                    description: "Récupération active.",
-                    exercises: [
-                        "10 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINES 5-6
-        ================================= */
-
-        5: {
-            title: "Force + vitesse",
-            phase: "Phase 2 — Développement",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled Pull",
-                    description: "Augmenter la force de tirage.",
-                    exercises: [
-                        "Tractions lestées — 4×5",
-                        "Row barre — 4×6",
-                        "Tirage vertical — 3×8",
-                        "Row poulie — 3×10",
-                        "Sled Pull — 5×25 m lourd"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Force jambes",
-                    description: "Développer la puissance.",
-                    exercises: [
-                        "Squat — 5×5",
-                        "RDL — 4×6",
-                        "Bulgarian — 3×8",
-                        "Leg Curl — 3×10",
-                        "Wall Balls — 5×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut du corps + footing",
-                    description: "Maintenir le volume musculaire.",
-                    exercises: [
-                        "Bench — 4×6",
-                        "Incliné — 3×8",
-                        "OHP — 3×8",
-                        "Épaules — 4×12",
-                        "Course facile — 7 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos complet"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Seuil",
-                    description: "Améliorer la capacité à tenir une allure élevée.",
-                    exercises: [
-                        "15 min échauffement",
-                        "5×1 km @ 4:00-4:05/km",
-                        "Récupération 2 min",
-                        "10 min retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "HYROX spécifique",
-                    description: "Commencer les enchaînements run/station.",
-                    exercises: [
-                        "1 km @ 4:30-4:40",
-                        "SkiErg — 500 m",
-                        "1 km run",
-                        "Sled Push — 25 m",
-                        "1 km run",
-                        "Sled Pull — 25 m",
-                        "1 km run",
-                        "Burpees — 15"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Sortie longue",
-                    description: "Endurance.",
-                    exercises: [
-                        "14 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        6: {
-            title: "Vitesse",
-            phase: "Phase 2 — Développement",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Pull",
-                    description: "Force de tirage.",
-                    exercises: [
-                        "Tractions lestées — 4×5",
-                        "Row — 4×6",
-                        "Sled Pull — 6×20 m lourd"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes + Sled",
-                    description: "Puissance.",
-                    exercises: [
-                        "Squat — 5×5",
-                        "RDL — 4×6",
-                        "Lunges — 3×10",
-                        "Sled Push — 5×20 m",
-                        "Wall Balls — 5×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut + footing",
-                    description: "Maintien musculaire.",
-                    exercises: [
-                        "Bench — 4×6",
-                        "Incliné — 3×8",
-                        "OHP — 3×8",
-                        "Course facile — 7 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "VO2",
-                    description: "Développer la vitesse.",
-                    exercises: [
-                        "15 min échauffement",
-                        "6×800 m @ 3:50-3:55/km",
-                        "Récupération 2 min",
-                        "10 min retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Stations",
-                    description: "Intensité spécifique.",
-                    exercises: [
-                        "1 km run",
-                        "Ski — 500 m",
-                        "1 km run",
-                        "Sled Push — 25 m",
-                        "1 km run",
-                        "Sled Pull — 25 m",
-                        "1 km run",
-                        "Burpees — 15",
-                        "1 km run",
-                        "Row — 500 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Longue",
-                    description: "Endurance.",
-                    exercises: [
-                        "15 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINES 7-9
-           SPECIFIQUE
-        ================================= */
-
-        7: {
-            title: "Run → Station",
-            phase: "Phase 3 — Spécifique HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled",
-                    description: "Force spécifique.",
-                    exercises: [
-                        "Tractions — 4×6",
-                        "Row — 4×8",
-                        "Sled Pull — 5×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes + Push",
-                    description: "Puissance.",
-                    exercises: [
-                        "Squat — 4×5",
-                        "RDL — 3×6",
-                        "Lunges — 3×10",
-                        "Sled Push — 5×20 m",
-                        "Wall Balls — 5×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut + footing",
-                    description: "Maintenir la masse musculaire.",
-                    exercises: [
-                        "Bench — 4×6",
-                        "Incliné — 3×8",
-                        "OHP — 3×8",
-                        "Course facile — 7 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos complet"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Tempo",
-                    description: "Développer le seuil.",
-                    exercises: [
-                        "2 km facile",
-                        "3 km @ 4:00-4:05/km",
-                        "1 km facile",
-                        "Ski — 3×500 m",
-                        "Row — 3×500 m"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "6× Run + Station",
-                    description: "Apprendre à courir après chaque station.",
-                    exercises: [
-                        "1 km @ 4:25-4:35",
-                        "Ski — 500 m",
-                        "1 km",
-                        "Sled Push — 25 m",
-                        "1 km",
-                        "Sled Pull — 25 m",
-                        "1 km",
-                        "Burpees — 15",
-                        "1 km",
-                        "Row — 500 m",
-                        "1 km",
-                        "Farmers — 100 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Longue",
-                    description: "Endurance.",
-                    exercises: [
-                        "15 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        8: {
-            title: "VO2 + HYROX",
-            phase: "Phase 3 — Spécifique HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos",
-                    description: "Force.",
-                    exercises: [
-                        "Tractions lestées — 4×5",
-                        "Row — 4×6",
-                        "Sled Pull — 5×25 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes + Sled",
-                    description: "Puissance.",
-                    exercises: [
-                        "Squat — 4×5",
-                        "RDL — 3×6",
-                        "Lunges — 3×10",
-                        "Sled Push — 5×20 m",
-                        "Wall Balls — 5×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut + footing",
-                    description: "Maintien.",
-                    exercises: [
-                        "Bench — 4×5",
-                        "Incliné — 3×8",
-                        "OHP — 3×6",
-                        "Course facile — 7 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "VO2 Max",
-                    description: "Développer la vitesse.",
-                    exercises: [
-                        "15 min échauffement",
-                        "8×600 m @ 3:45-3:50/km",
-                        "Récupération 90 sec",
-                        "10 min retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Gros circuit",
-                    description: "Cardio sous fatigue.",
-                    exercises: [
-                        "1 km run",
-                        "SkiErg — 1000 m",
-                        "1 km run",
-                        "Sled Push — 50 m",
-                        "1 km run",
-                        "Sled Pull — 50 m",
-                        "1 km run",
-                        "Burpees — 80 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Longue",
-                    description: "Endurance.",
-                    exercises: [
-                        "14-16 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        9: {
-            title: "Simulation partielle",
-            phase: "Phase 3 — Spécifique HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled",
-                    description: "Force spécifique.",
-                    exercises: [
-                        "Tractions — 4×6",
-                        "Row — 4×8",
-                        "Sled Pull — 5×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes",
-                    description: "Force.",
-                    exercises: [
-                        "Squat — 4×5",
-                        "RDL — 3×6",
-                        "Lunges — 3×10",
-                        "Wall Balls — 4×25"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut + footing",
-                    description: "Maintien.",
-                    exercises: [
-                        "Bench — 4×5",
-                        "OHP — 3×6",
-                        "Course facile — 6 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Intervalles",
-                    description: "Allure 5 km.",
-                    exercises: [
-                        "2 km échauffement",
-                        "4×1 km @ 3:55-4:00/km",
-                        "Récupération 2 min",
-                        "1 km retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Simulation 50 %",
-                    description: "Première vraie simulation.",
-                    exercises: [
-                        "1 km run",
-                        "Ski — 1000 m",
-                        "1 km run",
-                        "Sled Push — 50 m",
-                        "1 km run",
-                        "Sled Pull — 50 m",
-                        "1 km run",
-                        "Burpees — 80 m",
-                        "1 km run",
-                        "Row — 1000 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Recovery",
-                    description: "Récupérer après la simulation.",
-                    exercises: [
-                        "12 km très facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 10
-        ================================= */
-
-        10: {
-            title: "Gros bloc",
-            phase: "Phase 3 — Spécifique HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled Pull",
-                    description: "Force spécifique.",
-                    exercises: [
-                        "Tractions lestées — 4×5",
-                        "Row — 4×6",
-                        "Sled Pull — 5×25 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes",
-                    description: "Puissance.",
-                    exercises: [
-                        "Squat — 4×5",
-                        "RDL — 3×6",
-                        "Bulgarian — 3×8",
-                        "Sled Push — 5×20 m",
-                        "Wall Balls — 5×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut + footing",
-                    description: "Maintien.",
-                    exercises: [
-                        "Bench — 4×5",
-                        "Incliné — 3×8",
-                        "OHP — 3×6",
-                        "Course facile — 7 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos complet"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Seuil",
-                    description: "Développer l'allure HYROX.",
-                    exercises: [
-                        "2 km échauffement",
-                        "3×2 km @ 4:05-4:10/km",
-                        "Récupération 3 min",
-                        "1 km retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "5 km HYROX",
-                    description: "Apprendre à courir à 4:20 après les stations.",
-                    exercises: [
-                        "1 km @ 4:20",
-                        "SkiErg — 1000 m",
-                        "1 km @ 4:20",
-                        "Sled Push — 50 m",
-                        "1 km @ 4:20",
-                        "Sled Pull — 50 m",
-                        "1 km @ 4:20",
-                        "Burpees — 80 m",
-                        "1 km @ 4:20",
-                        "Row — 1000 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Endurance",
-                    description: "Volume contrôlé.",
-                    exercises: [
-                        "12-14 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 11
-        ================================= */
-
-        11: {
-            title: "Intensité spécifique",
-            phase: "Phase 3 — Spécifique HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Pull",
-                    description: "Force spécifique.",
-                    exercises: [
-                        "Tractions — 4×5",
-                        "Row — 4×6",
-                        "Sled Pull — 6×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes + Push",
-                    description: "Puissance.",
-                    exercises: [
-                        "Squat — 4×5",
-                        "RDL — 3×6",
-                        "Lunges — 3×10",
-                        "Sled Push — 5×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut + footing",
-                    description: "Maintien.",
-                    exercises: [
-                        "Bench — 4×5",
-                        "Incliné — 3×8",
-                        "OHP — 3×6",
-                        "Course — 7 km facile"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "5×1 km",
-                    description: "Développer la vitesse.",
-                    exercises: [
-                        "15 min échauffement",
-                        "5×1 km @ 3:50-3:55/km",
-                        "Récupération 2 min",
-                        "10 min retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "6 stations",
-                    description: "Grosse séance spécifique.",
-                    exercises: [
-                        "1 km run",
-                        "Ski — 1000 m",
-                        "1 km run",
-                        "Sled Push — 50 m",
-                        "1 km run",
-                        "Sled Pull — 50 m",
-                        "1 km run",
-                        "Burpees — 80 m",
-                        "1 km run",
-                        "Row — 1000 m",
-                        "1 km run",
-                        "Farmers — 200 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Endurance",
-                    description: "Récupération active.",
-                    exercises: [
-                        "14 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 12
-        ================================= */
-
-        12: {
-            title: "Deload",
-            phase: "Phase 3 — Récupération",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos léger",
-                    description: "Réduire le volume.",
-                    exercises: [
-                        "Tractions — 3×5",
-                        "Row — 3×8",
-                        "Sled Pull — 3×15 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes légère",
-                    description: "Maintenir les sensations.",
-                    exercises: [
-                        "Squat — 3×5 léger",
-                        "Lunges — 2×10",
-                        "Wall Balls — 3×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU",
-                    title: "Haut léger",
-                    description: "Volume réduit.",
-                    exercises: [
-                        "Bench — 3×5",
-                        "Incliné — 2×8",
-                        "OHP — 2×6"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Absorber le bloc.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Intervalles légers",
-                    description: "Entretenir la vitesse.",
-                    exercises: [
-                        "4×800 m",
-                        "Récupération complète"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Circuit réduit",
-                    description: "Technique.",
-                    exercises: [
-                        "1 km run",
-                        "Ski — 500 m",
-                        "Sled Push — 25 m",
-                        "Sled Pull — 25 m",
-                        "Row — 500 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Footing",
-                    description: "Récupération.",
-                    exercises: [
-                        "10 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 13
-        ================================= */
-
-        13: {
-            title: "Peak spécifique",
-            phase: "Phase 4 — Peak HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos + Sled",
-                    description: "Maintenir la force.",
-                    exercises: [
-                        "Tractions — 4×5",
-                        "Row — 4×6",
-                        "Sled Pull — 4×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes",
-                    description: "Puissance.",
-                    exercises: [
-                        "Squat — 4×4",
-                        "RDL — 3×6",
-                        "Lunges — 3×10",
-                        "Sled Push — 4×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU + RUN",
-                    title: "Haut + footing",
-                    description: "Maintenir la masse musculaire.",
-                    exercises: [
-                        "Bench — 3×5",
-                        "Incliné — 3×8",
-                        "OHP — 3×6",
-                        "Course — 6 km"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "3×1600 m",
-                    description: "Développer le moteur à allure élevée.",
-                    exercises: [
-                        "2 km échauffement",
-                        "3×1600 m @ ~4:00/km",
-                        "Récupération 3 min",
-                        "1 km retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "HYROX 75 %",
-                    description: "Simulation longue spécifique.",
-                    exercises: [
-                        "1 km run",
-                        "Ski — 1000 m",
-                        "1 km run",
-                        "Sled Push — 50 m",
-                        "1 km run",
-                        "Sled Pull — 50 m",
-                        "1 km run",
-                        "Burpees — 80 m",
-                        "1 km run",
-                        "Row — 1000 m",
-                        "1 km run",
-                        "Farmers — 200 m",
-                        "1 km run",
-                        "Lunges — 100 m",
-                        "1 km run",
-                        "Wall Balls — 50"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Endurance",
-                    description: "Volume modéré.",
-                    exercises: [
-                        "12-14 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 14
-        ================================= */
-
-        14: {
-            title: "Test 5 KM",
-            phase: "Phase 4 — Peak HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos",
-                    description: "Maintien.",
-                    exercises: [
-                        "Tractions — 3×6",
-                        "Row — 3×8",
-                        "Sled Pull — 3×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes",
-                    description: "Maintien.",
-                    exercises: [
-                        "Squat — 3×5",
-                        "RDL — 3×6",
-                        "Lunges — 2×10"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU",
-                    title: "Haut",
-                    description: "Maintien.",
-                    exercises: [
-                        "Bench — 3×5",
-                        "Incliné — 2×8",
-                        "OHP — 2×6"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération avant le test.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "TEST 5 KM",
-                    description: "Objectif : se rapprocher de 19 minutes.",
-                    exercises: [
-                        "2 km échauffement",
-                        "5 km test",
-                        "Objectif : 19:00-19:30",
-                        "Retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Simulation spécifique",
-                    description: "Travailler l'allure cible.",
-                    exercises: [
-                        "1 km @ ~4:15",
-                        "Ski — 1000 m",
-                        "1 km @ ~4:15",
-                        "Sled Push — 50 m",
-                        "1 km @ ~4:15",
-                        "Sled Pull — 50 m",
-                        "1 km @ ~4:15",
-                        "Burpees — 80 m",
-                        "1 km @ ~4:15",
-                        "Row — 1000 m",
-                        "1 km @ ~4:15",
-                        "Farmers — 200 m",
-                        "1 km @ ~4:15",
-                        "Lunges — 100 m",
-                        "1 km @ ~4:15",
-                        "Wall Balls — 100"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "RECOVERY",
-                    title: "Récupération",
-                    description: "Absorber la charge.",
-                    exercises: [
-                        "30-45 min très facile",
-                        "Mobilité"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 15
-        ================================= */
-
-        15: {
-            title: "Simulation compétition",
-            phase: "Phase 4 — Peak HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos",
-                    description: "Maintien de la force.",
-                    exercises: [
-                        "Tractions — 3×5",
-                        "Row — 3×6",
-                        "Sled Pull — 3×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes légère",
-                    description: "Ne pas créer de fatigue inutile.",
-                    exercises: [
-                        "Squat — 3×4",
-                        "RDL — 2×6",
-                        "Lunges — 2×10"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU",
-                    title: "Haut",
-                    description: "Maintien.",
-                    exercises: [
-                        "Bench — 3×5",
-                        "Incliné — 2×8",
-                        "OHP — 2×6"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Préparer la grosse séance.",
-                    exercises: [
-                        "Repos complet"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Allure HYROX",
-                    description: "Préparer les jambes à l'allure cible.",
-                    exercises: [
-                        "2 km facile",
-                        "4×1 km @ 4:10-4:20/km",
-                        "Récupération 2 min",
-                        "1 km facile"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "SIMULATION COMPLÈTE",
-                    description: "Séance clé du programme. Tout chronométrer.",
-                    exercises: [
-                        "Run 1 km",
-                        "SkiErg — 1000 m",
-                        "Run 1 km",
-                        "Sled Push — 50 m",
-                        "Run 1 km",
-                        "Sled Pull — 50 m",
-                        "Run 1 km",
-                        "Burpees — 80 m",
-                        "Run 1 km",
-                        "Row — 1000 m",
-                        "Run 1 km",
-                        "Farmers — 200 m",
-                        "Run 1 km",
-                        "Lunges — 100 m",
-                        "Run 1 km",
-                        "Wall Balls — 100",
-                        "Chronométrer les transitions"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "RECOVERY",
-                    title: "Récupération",
-                    description: "Absorber la simulation.",
-                    exercises: [
-                        "Footing très facile",
-                        "30-45 min maximum",
-                        "Mobilité"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 16
-        ================================= */
-
-        16: {
-            title: "Peak",
-            phase: "Phase 5 — Peak",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos léger",
-                    description: "Maintenir les sensations.",
-                    exercises: [
-                        "Tractions — 3×6",
-                        "Row — 3×8",
-                        "Sled Pull — 4×20 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes légère",
-                    description: "Maintenir la force sans fatigue.",
-                    exercises: [
-                        "Squat — 3×5",
-                        "RDL — 3×6",
-                        "Lunges — 3×10",
-                        "Wall Balls — 3×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU",
-                    title: "Haut léger",
-                    description: "Maintien.",
-                    exercises: [
-                        "Bench — 3×5",
-                        "Incliné — 2×8",
-                        "OHP — 2×6"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "4×1 km",
-                    description: "Dernier travail de vitesse important.",
-                    exercises: [
-                        "2 km échauffement",
-                        "4×1 km @ 3:55-4:00/km",
-                        "Récupération complète",
-                        "1 km retour au calme"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Dernier gros bloc",
-                    description: "Dernière grosse stimulation spécifique.",
-                    exercises: [
-                        "1 km run",
-                        "Ski — 1000 m",
-                        "1 km run",
-                        "Sled Push — 50 m",
-                        "1 km run",
-                        "Sled Pull — 50 m",
-                        "1 km run",
-                        "Burpees — 80 m",
-                        "1 km run",
-                        "Row — 1000 m",
-                        "1 km run",
-                        "Farmers — 200 m"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "COURSE",
-                    title: "Endurance",
-                    description: "Récupération.",
-                    exercises: [
-                        "10-12 km facile"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 17
-        ================================= */
-
-        17: {
-            title: "Taper",
-            phase: "Phase 6 — Affûtage",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "MUSCU",
-                    title: "Dos léger",
-                    description: "Réduire fortement le volume.",
-                    exercises: [
-                        "Tractions — 3×5",
-                        "Row — 3×6",
-                        "Sled Pull — 3×15 m"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "JAMBES",
-                    title: "Jambes légère",
-                    description: "Aucune fatigue résiduelle.",
-                    exercises: [
-                        "Squat — 3×4 léger",
-                        "Lunges — 2×8",
-                        "Wall Balls — 2×20"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "MUSCU",
-                    title: "Haut léger",
-                    description: "Activation.",
-                    exercises: [
-                        "Bench — 3×5",
-                        "OHP — 2×6",
-                        "Épaules légères"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos",
-                    description: "Récupération maximale.",
-                    exercises: [
-                        "Repos"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "COURSE",
-                    title: "Rappel vitesse",
-                    description: "Garder les jambes rapides.",
-                    exercises: [
-                        "15 min facile",
-                        "4×400 m @ ~3:50/km",
-                        "Récupération complète",
-                        "10 min facile"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "HYROX",
-                    title: "Petit rappel",
-                    description: "Dernières sensations HYROX.",
-                    exercises: [
-                        "1 km run",
-                        "Ski — 500 m",
-                        "Sled Push — 25 m",
-                        "1 km run",
-                        "Sled Pull — 25 m",
-                        "20 Wall Balls",
-                        "Terminer frais"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "RECOVERY",
-                    title: "Repos actif",
-                    description: "Préparation finale.",
-                    exercises: [
-                        "30-40 min footing très facile",
-                        "Mobilité"
-                    ]
-                }
-
-            ]
-        },
-
-
-        /* ================================
-           SEMAINE 18
-           RACE WEEK
-        ================================= */
-
-        18: {
-            title: "RACE WEEK",
-            phase: "🏁 Phase finale — HYROX",
-
-            days: [
-
-                {
-                    day: "Lundi",
-                    type: "ACTIVATION",
-                    title: "Activation légère",
-                    description: "Réveiller le corps sans créer de fatigue.",
-                    exercises: [
-                        "20-30 min footing très facile",
-                        "3×10 Air Squats",
-                        "3×10 Lunges",
-                        "3×10 Wall Balls légers",
-                        "Mobilité"
-                    ]
-                },
-
-                {
-                    day: "Mardi",
-                    type: "HYROX",
-                    title: "Dernier rappel",
-                    description: "Dernières sensations techniques.",
-                    exercises: [
-                        "Ski — 3×250 m",
-                        "Row — 3×250 m",
-                        "Sled Push — 2×15 m",
-                        "Sled Pull — 2×15 m",
-                        "Tout très facile"
-                    ]
-                },
-
-                {
-                    day: "Mercredi",
-                    type: "COURSE",
-                    title: "Activation vitesse",
-                    description: "Garder les jambes rapides.",
-                    exercises: [
-                        "20 min footing",
-                        "4×20 sec rapides",
-                        "Récupération complète"
-                    ]
-                },
-
-                {
-                    day: "Jeudi",
-                    type: "REPOS",
-                    title: "Repos total",
-                    description: "Récupération maximale.",
-                    exercises: [
-                        "Aucun entraînement",
-                        "Mobilité légère uniquement"
-                    ]
-                },
-
-                {
-                    day: "Vendredi",
-                    type: "REPOS",
-                    title: "Préparation",
-                    description: "Préparer la compétition.",
-                    exercises: [
-                        "Repos",
-                        "Marche légère",
-                        "Hydratation",
-                        "Alimentation normale"
-                    ]
-                },
-
-                {
-                    day: "Samedi",
-                    type: "RECOVERY",
-                    title: "Repos",
-                    description: "Arriver frais et prêt.",
-                    exercises: [
-                        "Repos",
-                        "Petite marche uniquement",
-                        "Préparer le matériel"
-                    ]
-                },
-
-                {
-                    day: "Dimanche",
-                    type: "🏁 RACE",
-                    title: "HYROX — OBJECTIF 1H10",
-                    description: "Le jour de la compétition.",
-                    exercises: [
-                        "Run 1 — ~4:15",
-                        "SkiErg — objectif ~4:00",
-                        "Run 2 — ~4:15",
-                        "Sled Push — ~3:00",
-                        "Run 3 — ~4:15",
-                        "Sled Pull — ~3:00",
-                        "Run 4 — ~4:15",
-                        "Burpees — ~4:00",
-                        "Run 5 — ~4:15",
-                        "Row — ~3:50",
-                        "Run 6 — ~4:15",
-                        "Farmers — ~1:45",
-                        "Run 7 — ~4:15",
-                        "Lunges — ~3:30",
-                        "Run 8 — ~4:15",
-                        "Wall Balls — ~5:00",
-                        "Transitions / Roxzone — objectif minimum"
-                    ]
-                }
-
-            ]
-        }
-
-    };
+    /* =========================================================
+       SEMAINES 1-4 — PHASE 1 : BASE / RECONSTRUCTION
+       Objectif : retrouver la force, construire le volume de course,
+       améliorer la technique HYROX et préparer le travail sous fatigue.
+    ========================================================= */
+
+    1: {
+        title: "Semaine 1 — Base & Technique",
+        phase: "Bloc 1 — Construction de la base",
+        objective: "Construire la force, améliorer la technique HYROX et reprendre une progression running contrôlée.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Dos + Sled Pull",
+                exercises: [
+                    "Échauffement : 5 min rameur + mobilité",
+                    "Deadlift : 4×5 @ 120 kg — repos 2'30",
+                    "Rowing barre : 4×8 @ 70 kg — repos 90s",
+                    "Tractions : 3×8 au poids du corps — repos 90s",
+                    "Tirage vertical : 3×10 — repos 75s",
+                    "Face Pull : 3×15 — repos 60s",
+                    "Sled Pull : 5×20 m @ charge Open — repos 90s",
+                    "SkiErg : 3×250 m — repos 60s",
+                    "RowErg : 3×250 m — repos 60s"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                title: "Jambes + Sled Push + Wall Balls",
+                exercises: [
+                    "Échauffement : 8–10 min",
+                    "Back Squat : 5×5 @ 100 kg — repos 2'30",
+                    "Romanian Deadlift : 3×8 @ 80 kg — repos 90s",
+                    "Bulgarian Split Squat : 3×8/jambe @ 24 kg/ main — repos 90s",
+                    "Leg Curl : 3×10 — repos 75s",
+                    "Mollets : 3×15 — repos 60s",
+                    "Sled Push : 5×15 m @ charge Open — repos 90s",
+                    "Wall Balls : 4×20 @ 9 kg — repos 60s"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                title: "Pectoraux + Épaules + Vitesse",
+                exercises: [
+                    "Bench Press : 4×5 @ 100 kg — repos 2'30",
+                    "Développé militaire : 4×6 @ 45 kg — repos 2 min",
+                    "Développé incliné haltères : 3×10 — repos 90s",
+                    "Élévations latérales : 3×15 — repos 60s",
+                    "Triceps poulie : 3×12 — repos 60s",
+                    "Running : 5×1 km @ 4:00/km",
+                    "Récupération : 2 min footing/marche entre les répétitions",
+                    "Retour au calme : 10 min footing facile"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                title: "Repos",
+                exercises: [
+                    "Repos complet",
+                    "Marche légère et mobilité optionnelle"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                title: "Running sous fatigue + Wall Balls + Burpees",
+                exercises: [
+                    "Échauffement : 10 min footing + mobilité",
+                    "4 tours :",
+                    "600 m @ 3:55–4:00/km",
+                    "10 Burpee Broad Jumps",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos : 90s après chaque tour",
+                    "SkiErg : 4×250 m — repos 60s",
+                    "RowErg : 4×250 m — repos 60s"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                title: "HYROX spécifique",
+                exercises: [
+                    "3 tours :",
+                    "1 km @ 4:30/km",
+                    "SkiErg 500 m",
+                    "Sled Push 15 m @ Open",
+                    "Sled Pull 15 m @ Open",
+                    "10 Burpee Broad Jumps",
+                    "Farmers Carry 50 m @ 24 kg/main",
+                    "Sandbag Lunges 20 m @ 20 kg",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos : 3 min entre les tours"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                title: "Sortie longue",
+                exercises: [
+                    "12 km",
+                    "Allure : 5:40–6:10/km",
+                    "Objectif : endurance fondamentale",
+                    "Pas de sprint final"
+                ]
+            }
+        ]
+    },
+
+
+    // ============================================================
+    // SEMAINE 2
+    // ============================================================
+
+    2: {
+        title: "Semaine 2 — Volume",
+        phase: "Bloc 1 — Construction de la base",
+        objective: "Augmenter légèrement le volume tout en conservant une bonne technique.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Dos + Sled Pull",
+                exercises: [
+                    "Échauffement : 5–10 min rameur",
+                    "Deadlift : 4×5 @ 125 kg — repos 2'30",
+                    "Rowing barre : 4×8 @ 72,5 kg — repos 90s",
+                    "Tractions : 4×8 au poids du corps — repos 90s",
+                    "Tirage vertical : 3×10 — repos 75s",
+                    "Face Pull : 3×15 — repos 60s",
+                    "Sled Pull : 6×20 m @ charge Open — repos 90s",
+                    "SkiErg : 4×250 m — repos 60s",
+                    "RowErg : 4×250 m — repos 60s"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                title: "Jambes + Sled Push",
+                exercises: [
+                    "Back Squat : 5×5 @ 105 kg — repos 2'30",
+                    "Romanian Deadlift : 3×8 @ 82,5 kg — repos 90s",
+                    "Bulgarian Split Squat : 3×8/jambe @ 26 kg/main — repos 90s",
+                    "Leg Curl : 3×10 — repos 75s",
+                    "Mollets : 3×15 — repos 60s",
+                    "Sled Push : 6×15 m @ charge Open — repos 90s",
+                    "Wall Balls : 4×25 @ 9 kg — repos 60s"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                title: "Pectoraux + Épaules + Vitesse",
+                exercises: [
+                    "Bench Press : 5×5 @ 100 kg — repos 2'30",
+                    "Développé militaire : 4×6 @ 47,5 kg — repos 2 min",
+                    "Développé incliné haltères : 3×10 — repos 90s",
+                    "Élévations latérales : 3×15 — repos 60s",
+                    "Triceps poulie : 3×12 — repos 60s",
+                    "Running : 6×1 km @ 3:58–4:00/km",
+                    "Récupération : 2 min footing très léger",
+                    "Retour au calme : 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                title: "Repos",
+                exercises: [
+                    "Repos complet",
+                    "Mobilité légère optionnelle"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                title: "Running + Burpees + Wall Balls",
+                exercises: [
+                    "Échauffement : 10 min",
+                    "5 tours :",
+                    "600 m @ 3:55/km",
+                    "10 Burpee Broad Jumps",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos : 90s",
+                    "SkiErg : 4×250 m — repos 60s",
+                    "RowErg : 4×250 m — repos 60s"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                title: "HYROX spécifique",
+                exercises: [
+                    "3 tours :",
+                    "1 km @ 4:25–4:30/km",
+                    "SkiErg 500 m",
+                    "Sled Push 20 m @ Open",
+                    "Sled Pull 20 m @ Open",
+                    "10 Burpee Broad Jumps",
+                    "Farmers Carry 50 m @ 24 kg/main",
+                    "Sandbag Lunges 20 m @ 20 kg",
+                    "25 Wall Balls @ 9 kg",
+                    "Repos : 3 min"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                title: "Sortie longue",
+                exercises: [
+                    "13 km",
+                    "Allure : 5:35–6:05/km",
+                    "Endurance fondamentale"
+                ]
+            }
+        ]
+    },
+
+
+    // ============================================================
+    // SEMAINE 3
+    // ============================================================
+
+    3: {
+        title: "Semaine 3 — Intensification",
+        phase: "Bloc 1 — Construction de la base",
+        objective: "Augmenter l'intensité et commencer à rapprocher le travail de l'effort HYROX.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Dos + Sled Pull",
+                exercises: [
+                    "Échauffement : 10 min",
+                    "Deadlift : 5×4 @ 130 kg — repos 2'30",
+                    "Rowing barre : 4×8 @ 75 kg — repos 90s",
+                    "Tractions : 4×8 au poids du corps — repos 90s",
+                    "Tirage vertical : 3×10 — repos 75s",
+                    "Face Pull : 3×15 — repos 60s",
+                    "Sled Pull : 6×20 m @ Open — repos 75–90s",
+                    "SkiErg : 4×250 m — repos 60s",
+                    "RowErg : 4×250 m — repos 60s"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                title: "Jambes + Sled Push + Wall Balls",
+                exercises: [
+                    "Back Squat : 5×4 @ 110 kg — repos 2'30",
+                    "Romanian Deadlift : 3×8 @ 85 kg — repos 90s",
+                    "Bulgarian Split Squat : 3×8/jambe @ 28 kg/main — repos 90s",
+                    "Leg Curl : 3×10 — repos 75s",
+                    "Mollets : 3×15 — repos 60s",
+                    "Sled Push : 6×15 m @ Open — repos 75–90s",
+                    "Wall Balls : 5×20 @ 9 kg — repos 60s"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                title: "Pectoraux + Épaules + Vitesse",
+                exercises: [
+                    "Bench Press : 5×4 @ 102,5 kg — repos 2'30",
+                    "Développé militaire : 4×6 @ 47,5 kg — repos 2 min",
+                    "Développé incliné haltères : 3×8–10 — repos 90s",
+                    "Élévations latérales : 3×15 — repos 60s",
+                    "Triceps poulie : 3×12 — repos 60s",
+                    "Running : 5×1 km @ 3:50–3:55/km",
+                    "Récupération : 2 min footing très léger",
+                    "Retour au calme : 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                title: "Repos",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                title: "HYROX Running Fatigue",
+                exercises: [
+                    "Échauffement : 10 min",
+                    "5 tours :",
+                    "600 m @ 3:50/km",
+                    "10 Burpee Broad Jumps",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos : 90s",
+                    "SkiErg : 4×250 m — repos 60s",
+                    "RowErg : 4×250 m — repos 60s"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                title: "HYROX spécifique — Intensification",
+                exercises: [
+                    "4 tours :",
+                    "1 km @ 4:20–4:25/km",
+                    "SkiErg 500 m",
+                    "Sled Push 20 m @ Open",
+                    "Sled Pull 20 m @ Open",
+                    "10 Burpee Broad Jumps",
+                    "Farmers Carry 50 m @ 24 kg/main",
+                    "Sandbag Lunges 20 m @ 20 kg",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos : 3 min"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                title: "Sortie longue",
+                exercises: [
+                    "14 km",
+                    "Allure : 5:30–6:00/km",
+                    "Derniers 2 km : 5:10–5:20/km si bonnes sensations",
+                    "Ne pas transformer la sortie en course"
+                ]
+            }
+        ]
+    },
+
+
+    // ============================================================
+    // SEMAINE 4 — DELOAD + TEST
+    // ============================================================
+
+    4: {
+        title: "Semaine 4 — Deload + Tests",
+        phase: "Bloc 1 — Évaluation",
+        objective: "Réduire la fatigue et mesurer les progrès avant de construire le Bloc 2.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Dos — Deload",
+                exercises: [
+                    "Échauffement : 10 min",
+                    "Deadlift : 3×5 @ 110 kg — repos 2 min",
+                    "Rowing barre : 3×8 @ 65 kg — repos 90s",
+                    "Tractions : 3×8 au poids du corps — repos 90s",
+                    "Tirage vertical : 2×10 — repos 75s",
+                    "Face Pull : 2×15 — repos 60s",
+                    "Sled Pull : 4×20 m @ Open — repos 90s"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                title: "Jambes — Deload",
+                exercises: [
+                    "Back Squat : 3×5 @ 90 kg — repos 2 min",
+                    "Romanian Deadlift : 2×8 @ 70 kg — repos 90s",
+                    "Bulgarian Split Squat : 2×8/jambe @ 20 kg/main — repos 90s",
+                    "Leg Curl : 2×10 — repos 75s",
+                    "Sled Push : 4×15 m @ Open — repos 90s",
+                    "Wall Balls : 3×20 @ 9 kg — repos 60s"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                title: "Bench + Test 5 km",
+                exercises: [
+                    "Bench Press : 3×5 @ 90 kg — repos 2 min",
+                    "Développé militaire : 3×6 @ 40 kg — repos 90s",
+                    "Élévations latérales : 2×15",
+                    "Running : TEST 5 km",
+                    "Départ contrôlé : environ 3:55–4:00/km",
+                    "Objectif : courir le plus vite possible de manière régulière",
+                    "Note ton temps final",
+                    "Retour au calme : 10–15 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                title: "Repos",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                title: "Test Wall Balls + Burpees",
+                exercises: [
+                    "Échauffement : 10 min",
+                    "Wall Balls @ 9 kg : TEST 100 reps",
+                    "Objectif : maximum de reps unbroken",
+                    "Repos : 5 min",
+                    "Burpee Broad Jumps : 50 reps chronométrées",
+                    "Repos : 5 min",
+                    "SkiErg : 500 m chronométré",
+                    "Repos : 3 min",
+                    "RowErg : 500 m chronométré"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                title: "Mini Simulation HYROX",
+                exercises: [
+                    "3 tours :",
+                    "1 km @ 4:15–4:25/km",
+                    "SkiErg 500 m",
+                    "Sled Push 20 m @ Open",
+                    "Sled Pull 20 m @ Open",
+                    "10 Burpee Broad Jumps",
+                    "Farmers Carry 50 m @ 24 kg/main",
+                    "Sandbag Lunges 20 m @ 20 kg",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos : 3 min",
+                    "Objectif : qualité des transitions et régularité"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                title: "Récupération",
+                exercises: [
+                    "8–10 km très facile",
+                    "Allure : 5:50–6:20/km",
+                    "Aucune accélération",
+                    "Objectif : récupérer"
+                ]
+            }
+        ]
+    },
+
+
+    /* =========================================================
+       SEMAINES 5-8 — PHASE 2 : DÉVELOPPEMENT
+    ========================================================= */
+
+    5: {
+        title: "Développement",
+        phase: "Phase 2 — Force + Vitesse",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Deadlift lourd + Dos",
+                description: "Augmenter la force maximale.",
+                exercises: [
+                    "Power Clean — 5×2 @ 60 kg",
+                    "Deadlift — 5×3 @ 135 kg — repos 3 min",
+                    "Tractions lestées — 5×5 @ +15 kg",
+                    "Row barre — 4×8 @ 77.5 kg",
+                    "Tirage vertical — 3×8",
+                    "Sled Pull — 5×20 m @ Open"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat + Sled",
+                description: "Développer la force et la puissance.",
+                exercises: [
+                    "Squat — 5×4 @ 110 kg",
+                    "RDL — 4×6 @ 90 kg",
+                    "Bulgarian — 3×8/jambe @ 28 kg/main",
+                    "Leg Curl — 3×10",
+                    "Sled Push — 6×20 m @ Open",
+                    "Wall Balls — 4×25 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "MUSCU + RUN",
+                title: "Bench + Intervalles",
+                description: "Développer la vitesse spécifique 5 km.",
+                exercises: [
+                    "Bench — 5×4 @ 87.5 kg",
+                    "OHP — 4×5 @ 52.5 kg",
+                    "Incline DB — 3×8",
+                    "Lateral Raise — 4×15",
+                    "Échauffement — 15 min @ 5:30/km",
+                    "6×1 km @ 3:55/km",
+                    "Récupération — 90 sec footing",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Récupération.",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Burpees + Wall Balls",
+                description: "Travail spécifique sous fatigue.",
+                exercises: [
+                    "5 tours :",
+                    "800 m @ 3:55/km",
+                    "15 Burpees",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos — 90 sec"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "HYROX Run + Stations",
+                description: "Augmenter le volume spécifique.",
+                exercises: [
+                    "5× :",
+                    "1 km @ 4:20/km",
+                    "SkiErg — 500 m",
+                    "Sled Push — 15 m @ Open",
+                    "Sled Pull — 15 m @ Open",
+                    "15 Wall Balls @ 9 kg",
+                    "Repos — 2 min"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance.",
+                exercises: [
+                    "14 km @ 5:30-6:00/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    6: {
+        title: "Développement 2",
+        phase: "Phase 2 — Force + Vitesse",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Deadlift",
+                description: "Poursuivre l'intensification.",
+                exercises: [
+                    "Power Clean — 5×2 @ 62.5 kg",
+                    "Deadlift — 5×3 @ 140 kg",
+                    "Tractions lestées — 5×5 @ +17.5 kg",
+                    "Row barre — 4×8 @ 80 kg",
+                    "Sled Pull — 5×25 m @ Open"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat lourd",
+                description: "Force des jambes.",
+                exercises: [
+                    "Squat — 5×3 @ 115 kg",
+                    "RDL — 4×6 @ 92.5 kg",
+                    "Bulgarian — 3×8/jambe @ 28 kg/main",
+                    "Leg Curl — 3×10",
+                    "Sled Push — 6×20 m @ Open",
+                    "Wall Balls — 3×30 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "MUSCU + RUN",
+                title: "Bench + Seuil",
+                description: "Développer la capacité à maintenir une allure rapide.",
+                exercises: [
+                    "Bench — 5×3 @ 90 kg",
+                    "OHP — 4×5 @ 52.5 kg",
+                    "Incline DB — 3×8",
+                    "Échauffement — 15 min @ 5:30/km",
+                    "5×1200 m @ 3:55/km",
+                    "Récupération — 2 min",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos complet.",
+                exercises: [
+                    "Repos"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Fatigue",
+                description: "Augmenter le travail combiné.",
+                exercises: [
+                    "4 tours :",
+                    "1 km @ 4:00/km",
+                    "20 Burpees",
+                    "25 Wall Balls @ 9 kg",
+                    "Repos — 2 min"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation 6 km",
+                description: "Course et stations enchaînées.",
+                exercises: [
+                    "6× :",
+                    "1 km @ 4:15-4:20/km",
+                    "Station HYROX différente à chaque tour",
+                    "Repos — 90 sec maximum",
+                    "Wall Balls finaux — 40 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance.",
+                exercises: [
+                    "15 km @ 5:30-6:00/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    7: {
+        title: "Intensification",
+        phase: "Phase 2 — Force + Vitesse",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Deadlift + Power",
+                description: "Travail de force lourde.",
+                exercises: [
+                    "Power Clean — 6×2 @ 65 kg",
+                    "Deadlift — 6×2 @ 145 kg",
+                    "Tractions lestées — 5×4 @ +20 kg",
+                    "Row barre — 4×6 @ 82.5 kg",
+                    "Sled Pull — 5×25 m @ Open"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat",
+                description: "Force + puissance.",
+                exercises: [
+                    "Squat — 5×3 @ 120 kg",
+                    "RDL — 3×6 @ 95 kg",
+                    "Bulgarian — 3×8/jambe @ 30 kg/main",
+                    "Sled Push — 6×20 m @ Open",
+                    "Wall Balls — 3×30 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + MUSCU",
+                title: "Bench + Vitesse",
+                description: "Développer la vitesse pure.",
+                exercises: [
+                    "Bench — 6×3 @ 92.5 kg",
+                    "OHP — 4×5 @ 55 kg",
+                    "Échauffement — 15 min",
+                    "8×600 m @ 3:40/km",
+                    "Récupération — 90 sec",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Récupération complète.",
+                exercises: [
+                    "Repos"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Burpees rapides",
+                description: "Améliorer la cadence sous fatigue.",
+                exercises: [
+                    "6 tours :",
+                    "500 m @ 3:40/km",
+                    "10 Burpees",
+                    "15 Wall Balls @ 9 kg",
+                    "Repos — 90 sec"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation partielle",
+                description: "Gros travail de course sous fatigue.",
+                exercises: [
+                    "6×1 km @ 4:10-4:15/km",
+                    "Une station après chaque km",
+                    "SkiErg — 1 km total",
+                    "Sled Push — 50 m total",
+                    "Sled Pull — 50 m total",
+                    "Burpees — 40 total",
+                    "Wall Balls — 60 @ 9 kg",
+                    "Repos minimal"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance.",
+                exercises: [
+                    "15 km @ 5:30-6:00/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    8: {
+        title: "Deload + Test",
+        phase: "Phase 2 — Décharge / Test",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Force légère",
+                description: "Réduire la fatigue.",
+                exercises: [
+                    "Deadlift — 3×3 @ 120 kg",
+                    "Power Clean — 3×2 @ 50 kg",
+                    "Tractions — 3×6",
+                    "Row — 3×8 @ 65 kg"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat léger",
+                description: "Décharge.",
+                exercises: [
+                    "Squat — 3×3 @ 100 kg",
+                    "RDL — 2×8 @ 75 kg",
+                    "Sled Push — 3×15 m léger",
+                    "Wall Balls — 3×20 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "TEST 5 KM",
+                title: "Test 5 km",
+                description: "Mesurer la progression vers le sub-19.",
+                exercises: [
+                    "Échauffement — 15 min @ 5:30-6:00/km",
+                    "3×100 m progressifs",
+                    "5 km TEST",
+                    "Départ cible — 3:55/km",
+                    "Si possible accélérer vers 3:50/km",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Récupération.",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "RUN",
+                title: "Footing récupération",
+                description: "Récupérer du test.",
+                exercises: [
+                    "30 min @ 5:30-6:00/km",
+                    "4×100 m progressifs"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "HYROX contrôlé",
+                description: "Maintenir les automatismes.",
+                exercises: [
+                    "4 tours :",
+                    "1 km @ 4:30/km",
+                    "SkiErg — 500 m",
+                    "Sled Push — Open",
+                    "Sled Pull — Open",
+                    "10 Burpees",
+                    "20 Wall Balls @ 9 kg",
+                    "Repos — 2 min 30"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run facile",
+                description: "Récupération.",
+                exercises: [
+                    "12 km @ 5:45-6:10/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    /* =========================================================
+       SEMAINES 9-12 — PHASE 3 : SPÉCIFIQUE HYROX
+    ========================================================= */
+
+    9: {
+        title: "Spécifique HYROX",
+        phase: "Phase 3 — Spécifique",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Deadlift force",
+                description: "Maintenir la force tout en augmentant la spécificité.",
+                exercises: [
+                    "Power Clean — 5×2 @ 67.5 kg",
+                    "Deadlift — 5×2 @ 150 kg",
+                    "Tractions lestées — 5×4 @ +20 kg",
+                    "Row barre — 4×6 @ 85 kg",
+                    "Sled Pull — 5×20 m @ Open"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat + Fatigue",
+                description: "Force puis station HYROX.",
+                exercises: [
+                    "Squat — 5×3 @ 122.5 kg",
+                    "RDL — 3×6 @ 97.5 kg",
+                    "Bulgarian — 3×6/jambe @ 30 kg/main",
+                    "Sled Push — 6×20 m @ Open",
+                    "Wall Balls — 4×25 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + MUSCU",
+                title: "Bench + Allure",
+                description: "Se rapprocher de l'allure sub-19.",
+                exercises: [
+                    "Bench — 5×3 @ 95 kg",
+                    "OHP — 3×5 @ 55 kg",
+                    "Échauffement — 15 min",
+                    "5×1 km @ 3:50/km",
+                    "Récupération — 2 min",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos.",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Wall Balls sous fatigue",
+                description: "Développer la capacité à maintenir les séries longues.",
+                exercises: [
+                    "4 tours :",
+                    "1 km @ 4:00/km",
+                    "20 Burpees",
+                    "30 Wall Balls @ 9 kg",
+                    "Repos — 2 min"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation spécifique",
+                description: "Enchaînement course + stations.",
+                exercises: [
+                    "1 km @ 4:10/km",
+                    "SkiErg — 1 km",
+                    "1 km @ 4:10/km",
+                    "Sled Push — Open",
+                    "1 km @ 4:10/km",
+                    "Sled Pull — Open",
+                    "1 km @ 4:10/km",
+                    "Burpees — 40",
+                    "1 km @ 4:10/km",
+                    "Row — 1 km",
+                    "Wall Balls — 50 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance.",
+                exercises: [
+                    "15 km @ 5:30-5:55/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    10: {
+        title: "Spécifique 2",
+        phase: "Phase 3 — Spécifique",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Deadlift",
+                description: "Force lourde.",
+                exercises: [
+                    "Power Clean — 5×2 @ 70 kg",
+                    "Deadlift — 4×2 @ 155 kg",
+                    "Tractions lestées — 4×4 @ +22.5 kg",
+                    "Row barre — 4×6 @ 87.5 kg",
+                    "Sled Pull — 5×25 m @ Open"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat lourd",
+                description: "Maintenir la force.",
+                exercises: [
+                    "Squat — 5×2 @ 127.5 kg",
+                    "RDL — 3×6 @ 100 kg",
+                    "Bulgarian — 3×6/jambe @ 30 kg/main",
+                    "Sled Push — 6×20 m @ Open",
+                    "Wall Balls — 3×30 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + MUSCU",
+                title: "Bench + Seuil",
+                description: "Développer la capacité à maintenir l'allure.",
+                exercises: [
+                    "Bench — 5×2 @ 97.5 kg",
+                    "OHP — 3×5 @ 55 kg",
+                    "Échauffement — 15 min",
+                    "3×1600 m @ 3:55/km",
+                    "Récupération — 3 min",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos complet.",
+                exercises: [
+                    "Repos"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Burpees + Wall Balls",
+                description: "Volume spécifique élevé.",
+                exercises: [
+                    "5 tours :",
+                    "800 m @ 3:50/km",
+                    "15 Burpees",
+                    "25 Wall Balls @ 9 kg",
+                    "Repos — 90 sec"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation 6 stations",
+                description: "Travail proche de la compétition.",
+                exercises: [
+                    "6×1 km @ 4:05-4:15/km",
+                    "Une station après chaque km",
+                    "Sled Push — Open",
+                    "Sled Pull — Open",
+                    "Burpees — 40",
+                    "Row — 1 km",
+                    "Farmers — Open",
+                    "Wall Balls — 60 @ 9 kg",
+                    "Repos minimal"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance.",
+                exercises: [
+                    "16 km @ 5:30-6:00/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    11: {
+        title: "Intensité",
+        phase: "Phase 3 — Spécifique",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Deadlift + Dos",
+                description: "Force et maintien musculaire.",
+                exercises: [
+                    "Power Clean — 5×2 @ 70 kg",
+                    "Deadlift — 5×2 @ 157.5 kg",
+                    "Tractions lestées — 5×3 @ +25 kg",
+                    "Row barre — 4×6 @ 90 kg",
+                    "Sled Pull — 5×20 m @ Open"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat",
+                description: "Dernière grosse phase de force.",
+                exercises: [
+                    "Squat — 4×2 @ 130 kg",
+                    "RDL — 3×6 @ 100 kg",
+                    "Bulgarian — 3×6/jambe @ 32 kg/main",
+                    "Sled Push — 5×20 m @ Open",
+                    "Wall Balls — 3×35 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + MUSCU",
+                title: "Bench + VO2",
+                description: "Développer la vitesse maximale utile.",
+                exercises: [
+                    "Bench — 4×2 @ 100 kg",
+                    "OHP — 3×5 @ 57.5 kg",
+                    "Échauffement — 15 min",
+                    "10×400 m @ 3:35/km",
+                    "Récupération — 75 sec",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos complet.",
+                exercises: [
+                    "Repos"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Fatigue intense",
+                description: "Apprendre à maintenir une cadence élevée.",
+                exercises: [
+                    "3 tours :",
+                    "1 km @ 3:55/km",
+                    "20 Burpees",
+                    "30 Wall Balls @ 9 kg",
+                    "Repos — 2 min"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation longue",
+                description: "Grosse séance spécifique.",
+                exercises: [
+                    "6×1 km @ 4:05-4:10/km",
+                    "SkiErg — 1 km",
+                    "Sled Push — 50 m",
+                    "Sled Pull — 50 m",
+                    "Burpees — 50",
+                    "Row — 1 km",
+                    "Farmers — 200 m",
+                    "Lunges — 100 m",
+                    "Wall Balls — 75 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance.",
+                exercises: [
+                    "15 km @ 5:30-5:55/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    12: {
+        title: "Test spécifique",
+        phase: "Phase 3 — Test",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Force légère",
+                description: "Réduire la fatigue avant les tests.",
+                exercises: [
+                    "Deadlift — 3×3 @ 125 kg",
+                    "Power Clean — 3×2 @ 55 kg",
+                    "Tractions — 3×5",
+                    "Row — 3×8 @ 70 kg"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat léger",
+                description: "Décharge.",
+                exercises: [
+                    "Squat — 3×3 @ 105 kg",
+                    "RDL — 2×8 @ 80 kg",
+                    "Sled Push — 3×15 m",
+                    "Wall Balls — 3×20 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "TEST 5 KM",
+                title: "Test sub-19",
+                description: "Tester la progression vers 19 minutes.",
+                exercises: [
+                    "Échauffement — 15 min @ 5:30-6:00/km",
+                    "3×100 m progressifs",
+                    "5 km TEST",
+                    "Objectif : 19:00-19:30",
+                    "Allure cible : 3:48-3:54/km",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos.",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "RUN",
+                title: "Récupération",
+                description: "Footing léger.",
+                exercises: [
+                    "30-35 min @ 5:30-6:00/km",
+                    "4×100 m progressifs"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation 80-90%",
+                description: "Tester les sensations sans créer une fatigue excessive.",
+                exercises: [
+                    "1 km @ 4:10/km",
+                    "SkiErg — 1 km",
+                    "1 km @ 4:10/km",
+                    "Sled Push — Open",
+                    "1 km @ 4:10/km",
+                    "Sled Pull — Open",
+                    "1 km @ 4:10/km",
+                    "Burpees — 80 m",
+                    "1 km @ 4:10/km",
+                    "Row — 1 km",
+                    "1 km @ 4:10/km",
+                    "Farmers — Open",
+                    "Wall Balls — 75 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance légère.",
+                exercises: [
+                    "12 km @ 5:45-6:10/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    /* =========================================================
+       SEMAINES 13-15 — PHASE 4 : PEAK HYROX
+    ========================================================= */
+
+    13: {
+        title: "Peak HYROX",
+        phase: "Phase 4 — Peak",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Force maintien",
+                description: "Maintenir la force sans accumuler de fatigue.",
+                exercises: [
+                    "Deadlift — 4×2 @ 160 kg",
+                    "Power Clean — 4×2 @ 65 kg",
+                    "Tractions lestées — 4×4 @ +20 kg",
+                    "Row barre — 3×6 @ 85 kg",
+                    "Sled Pull — 4×20 m @ Open"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat + Wall Balls",
+                description: "Maintenir la force et développer la résistance spécifique.",
+                exercises: [
+                    "Squat — 4×2 @ 130 kg",
+                    "RDL — 3×5 @ 95 kg",
+                    "Bulgarian — 2×6/jambe @ 28 kg/main",
+                    "Sled Push — 5×20 m @ Open",
+                    "Wall Balls — 4×30 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + MUSCU",
+                title: "Bench + allure sub-19",
+                description: "Travail à l'allure cible.",
+                exercises: [
+                    "Bench — 4×2 @ 102.5 kg",
+                    "OHP — 3×5 @ 55 kg",
+                    "Échauffement — 15 min",
+                    "6×1 km @ 3:48-3:52/km",
+                    "Récupération — 2 min",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Récupération.",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Wall Balls sous fatigue",
+                description: "Préparer les longues séries.",
+                exercises: [
+                    "4 tours :",
+                    "1 km @ 3:55/km",
+                    "20 Burpees",
+                    "30 Wall Balls @ 9 kg",
+                    "Repos — 2 min"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation majeure",
+                description: "Séance très spécifique à la compétition.",
+                exercises: [
+                    "1 km @ 4:05/km",
+                    "SkiErg — 1 km",
+                    "1 km @ 4:05/km",
+                    "Sled Push — Open",
+                    "1 km @ 4:05/km",
+                    "Sled Pull — Open",
+                    "1 km @ 4:05/km",
+                    "Burpees — 80 m",
+                    "1 km @ 4:05/km",
+                    "Row — 1 km",
+                    "1 km @ 4:05/km",
+                    "Farmers — Open",
+                    "1 km @ 4:05/km",
+                    "Lunges — Open",
+                    "1 km @ 4:05/km",
+                    "Wall Balls — 100 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run récupération",
+                description: "Récupérer de la simulation.",
+                exercises: [
+                    "12-14 km @ 5:40-6:10/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    14: {
+        title: "Peak 2",
+        phase: "Phase 4 — Peak",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Deadlift maintien",
+                description: "Force avec volume réduit.",
+                exercises: [
+                    "Deadlift — 3×2 @ 165 kg",
+                    "Power Clean — 4×2 @ 67.5 kg",
+                    "Tractions lestées — 4×4 @ +20 kg",
+                    "Row — 3×6 @ 85 kg"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat maintien",
+                description: "Maintenir la force.",
+                exercises: [
+                    "Squat — 3×2 @ 132.5 kg",
+                    "RDL — 3×5 @ 95 kg",
+                    "Sled Push — 4×20 m @ Open",
+                    "Wall Balls — 3×35 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + MUSCU",
+                title: "Bench + 1200 m",
+                description: "Travail spécifique sub-19.",
+                exercises: [
+                    "Bench — 3×2 @ 105 kg",
+                    "OHP — 3×5 @ 55 kg",
+                    "Échauffement — 15 min",
+                    "4×1200 m @ 3:48/km",
+                    "Récupération — 2 min 30",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos complet.",
+                exercises: [
+                    "Repos"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Course + stations",
+                description: "Maintenir une haute intensité.",
+                exercises: [
+                    "5× :",
+                    "1 km @ 3:55/km",
+                    "15 Burpees",
+                    "25 Wall Balls @ 9 kg",
+                    "Repos — 90 sec"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation 90-95%",
+                description: "Simulation très proche de la compétition.",
+                exercises: [
+                    "8×1 km @ 4:00-4:10/km",
+                    "Stations HYROX entre chaque run",
+                    "Sled Push — Open",
+                    "Sled Pull — Open",
+                    "Burpees — 80 m",
+                    "Row — 1 km",
+                    "Farmers — Open",
+                    "Lunges — Open",
+                    "Wall Balls — 100 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run",
+                description: "Endurance facile.",
+                exercises: [
+                    "12 km @ 5:40-6:10/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    15: {
+        title: "Dernier gros bloc",
+        phase: "Phase 4 — Peak",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Force test",
+                description: "Dernier rappel lourd avant le taper.",
+                exercises: [
+                    "Deadlift — 3×1 @ 170 kg",
+                    "Power Clean — 3×2 @ 65 kg",
+                    "Tractions lestées — 3×3 @ +20 kg",
+                    "Row — 3×6 @ 80 kg"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat lourd",
+                description: "Dernier rappel de force.",
+                exercises: [
+                    "Squat — 3×1 @ 140 kg",
+                    "RDL — 2×5 @ 90 kg",
+                    "Sled Push — 4×15 m @ Open",
+                    "Wall Balls — 3×30 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + MUSCU",
+                title: "Bench lourd + vitesse",
+                description: "Dernier rappel de force et vitesse.",
+                exercises: [
+                    "Bench — 3×1 @ 110 kg",
+                    "OHP — 2×5 @ 50 kg",
+                    "Échauffement — 15 min",
+                    "5×1 km @ 3:45-3:50/km",
+                    "Récupération — 2 min",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Récupération.",
+                exercises: [
+                    "Repos complet"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Activation",
+                description: "Courte séance spécifique.",
+                exercises: [
+                    "3× :",
+                    "1 km @ 3:55/km",
+                    "15 Burpees",
+                    "25 Wall Balls @ 9 kg",
+                    "Repos — 2 min"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Grande simulation",
+                description: "Dernière grosse simulation avant réduction du volume.",
+                exercises: [
+                    "HYROX presque complet",
+                    "Runs — 4:05-4:15/km",
+                    "Charges — standards Open",
+                    "Wall Balls — 100 @ 9 kg",
+                    "Transitions rapides",
+                    "Objectif : 90-95% d'effort",
+                    "Ne pas aller à l'échec musculaire"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run facile",
+                description: "Récupération.",
+                exercises: [
+                    "10-12 km @ 5:40-6:10/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    /* =========================================================
+       SEMAINES 16-17 — TAPER / PEAK FINAL
+    ========================================================= */
+
+    16: {
+        title: "Peak final",
+        phase: "Phase 5 — Taper",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Force maintien",
+                description: "Réduire le volume.",
+                exercises: [
+                    "Deadlift — 3×2 @ 140 kg",
+                    "Power Clean — 3×2 @ 60 kg",
+                    "Tractions — 3×5",
+                    "Row — 3×6 @ 75 kg"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Squat maintien",
+                description: "Maintenir les sensations.",
+                exercises: [
+                    "Squat — 3×2 @ 115 kg",
+                    "RDL — 2×6 @ 80 kg",
+                    "Sled Push — 3×15 m @ Open",
+                    "Wall Balls — 3×20 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN",
+                title: "Vitesse",
+                description: "Conserver la vitesse sans fatigue.",
+                exercises: [
+                    "Échauffement — 15 min @ 5:30-6:00/km",
+                    "3×1 km @ 3:45-3:50/km",
+                    "Récupération — 3 min",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos complet.",
+                exercises: [
+                    "Repos"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Activation HYROX",
+                description: "Petite séance spécifique.",
+                exercises: [
+                    "4× :",
+                    "500 m @ 3:50/km",
+                    "10 Burpees",
+                    "15 Wall Balls @ 9 kg",
+                    "Repos — 2 min"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Simulation courte",
+                description: "Intensité élevée mais volume réduit.",
+                exercises: [
+                    "4× :",
+                    "1 km @ 3:55/km",
+                    "Station HYROX",
+                    "Repos — 3 min",
+                    "Finir par 30 Wall Balls @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Long run réduit",
+                description: "Maintenir l'endurance.",
+                exercises: [
+                    "10-12 km @ 5:40-6:10/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    17: {
+        title: "Taper",
+        phase: "Phase 5 — Taper",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "MUSCU",
+                title: "Dos léger",
+                description: "Aucune fatigue résiduelle.",
+                exercises: [
+                    "Deadlift — 3×2 @ 120 kg",
+                    "Power Clean — 3×2 @ 50 kg",
+                    "Tractions — 3×5 PDC",
+                    "Row — 2×8 @ 60 kg"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "JAMBES",
+                title: "Jambes légère",
+                description: "Maintenir les sensations.",
+                exercises: [
+                    "Squat — 3×2 @ 100 kg",
+                    "RDL — 2×6 @ 70 kg",
+                    "Sled Push — 2×15 m léger",
+                    "Wall Balls — 2×20 @ 9 kg"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN",
+                title: "Derniers intervalles",
+                description: "Dernière stimulation rapide.",
+                exercises: [
+                    "Échauffement — 15 min @ 5:30-6:00/km",
+                    "4×400 m @ 3:40/km",
+                    "Récupération — 2 min",
+                    "Retour au calme — 10 min"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "REPOS",
+                title: "Repos",
+                description: "Repos complet.",
+                exercises: [
+                    "Repos"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "HYROX",
+                title: "Activation",
+                description: "Très faible volume.",
+                exercises: [
+                    "3× :",
+                    "500 m @ 3:45/km",
+                    "10 Burpees",
+                    "15 Wall Balls @ 9 kg",
+                    "Repos complet entre les tours"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "HYROX",
+                title: "Technique",
+                description: "Derniers automatismes.",
+                exercises: [
+                    "20 min très facile",
+                    "SkiErg — 500 m",
+                    "Sled Push — 10 m léger",
+                    "Sled Pull — 10 m léger",
+                    "10 Burpees",
+                    "20 Wall Balls @ 9 kg",
+                    "Aucune fatigue recherchée"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "COURSE",
+                title: "Footing",
+                description: "Très facile.",
+                exercises: [
+                    "8-10 km @ 5:45-6:15/km"
+                ]
+            }
+
+        ]
+    },
+
+
+    /* =========================================================
+       SEMAINE 18 — COURSE
+    ========================================================= */
+
+    18: {
+        title: "Race Week",
+        phase: "Phase 6 — HYROX",
+        days: [
+
+            {
+                day: "Lundi",
+                type: "RUN",
+                title: "Activation course",
+                description: "Faire circuler les jambes sans créer de fatigue.",
+                exercises: [
+                    "20-30 min @ 5:30-5:50/km",
+                    "4×100 m progressifs",
+                    "Récupération complète"
+                ]
+            },
+
+            {
+                day: "Mardi",
+                type: "MUSCU",
+                title: "Activation force",
+                description: "Dernier rappel très léger.",
+                exercises: [
+                    "Squat — 2×3 @ 70 kg",
+                    "Bench — 2×3 @ 70 kg",
+                    "Deadlift — 2×3 @ 100 kg",
+                    "Aucune série à l'échec",
+                    "Repos longs"
+                ]
+            },
+
+            {
+                day: "Mercredi",
+                type: "RUN + HYROX",
+                title: "Dernière activation",
+                description: "Conserver les sensations de vitesse.",
+                exercises: [
+                    "10 min @ 5:30-5:50/km",
+                    "3×400 m @ 3:45/km",
+                    "Récupération — 2 min",
+                    "10 Wall Balls @ 9 kg",
+                    "5 Burpees",
+                    "Stop — aucune fatigue"
+                ]
+            },
+
+            {
+                day: "Jeudi",
+                type: "HYROX",
+                title: "28 JANVIER — RACE DAY",
+                description: "Objectif : produire la meilleure performance HYROX de ta préparation.",
+                exercises: [
+                    "HYROX Open Homme",
+                    "Objectif chrono : 1h10",
+                    "Wall Balls : 100 × 9 kg",
+                    "Runs : courir fort mais contrôler le départ",
+                    "Transitions : zéro temps perdu",
+                    "Sled Push : charge Open",
+                    "Sled Pull : charge Open",
+                    "Burpees : cadence constante",
+                    "Objectif : Wall Balls unbroken"
+                ]
+            },
+
+            {
+                day: "Vendredi",
+                type: "RECUPERATION",
+                title: "Récupération post-HYROX",
+                description: "Récupération complète après la compétition.",
+                exercises: [
+                    "Repos",
+                    "Marche légère",
+                    "Mobilité"
+                ]
+            },
+
+            {
+                day: "Samedi",
+                type: "RECUPERATION",
+                title: "Récupération active",
+                description: "Aucune intensité.",
+                exercises: [
+                    "30 min marche ou vélo très léger",
+                    "Mobilité"
+                ]
+            },
+
+            {
+                day: "Dimanche",
+                type: "RECUPERATION",
+                title: "Repos",
+                description: "Repos complet.",
+                exercises: [
+                    "Repos complet",
+                    "Sommeil",
+                    "Hydratation"
+                ]
+            }
+
+        ]
+    }
+
+};
 
 
     /* =====================================================

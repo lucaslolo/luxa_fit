@@ -7,17 +7,103 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="program-page">
-<header>
-    <a href="luxa.html" class="logo">luxa<span>_fit</span></a>
-    <nav class="site-nav" aria-label="Navigation principale">
-        <div class="nav-dropdown"><a class="nav-trigger" href="alimentation.html">Alimentation <span>↓</span></a><div class="nav-menu"><a href="alimentation.html#masse-seche">Prise de masse sèche <small>Construire sans excès</small></a><a href="alimentation.html#maintien">Maintien calorique <small>Stabiliser et performer</small></a></div></div>
-        <div class="nav-dropdown"><a class="nav-trigger" href="index.html#entrainement">Entraînement <span>↓</span></a><div class="nav-menu"><a href="muscu.html">Muscu <small>Force et hypertrophie</small></a><a href="course.html">Course <small>Endurance et vitesse</small></a><a href="hyrox.html">Hyrox <small>Force et cardio</small></a><a href="hybride.html">Hybride <small>Devenir complet</small></a></div></div>
-        <div class="nav-dropdown"><a class="nav-trigger" href="sommeil-mindset.html">Mindset <span>↓</span></a><div class="nav-menu"><a href="sommeil-mindset.html#sommeil">Sommeil <small>Récupérer vraiment</small></a><a href="sommeil-mindset.html#sante-mentale">Santé mentale <small>Garder le cap</small></a></div></div>
-        <!-- <a href="connexion.html" class="nav-login">connexion</a> -->
-        <a href="dashboard.html" class="nav-login">dashboard</a>
-    </nav>
-    <div class="date">PROGRAMME / 02</div>
-</header>
+    <header>
+        <!-- LOGO -->
+        <a href="index.html" class="logo">
+            luxa<span>_fit</span>
+        </a>
+
+        <!-- NAVIGATION -->
+        <nav class="site-nav" aria-label="Navigation principale">
+
+            <!-- ALIMENTATION -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="alimentation.html">
+                    Alimentation <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="alimentation.html#masse-seche">
+                        Prise de masse sèche
+                        <small>Construire sans excès</small>
+                    </a>
+
+                    <a href="alimentation.html#maintien">
+                        Maintien calorique
+                        <small>Stabiliser et performer</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ENTRAÎNEMENT -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="entrainement.html">
+                    Entraînement <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="muscu.html">
+                        Muscu
+                        <small>Force et hypertrophie</small>
+                    </a>
+
+                    <a href="course.html">
+                        Course
+                        <small>Endurance et vitesse</small>
+                    </a>
+
+                    <a href="hyrox.html">
+                        Hyrox
+                        <small>Force et cardio</small>
+                    </a>
+
+                    <a href="hybride.html">
+                        Hybride
+                        <small>Devenir complet</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- MINDSET -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="sommeil-mindset.html">
+                    Mindset <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="sommeil-mindset.html#sommeil">
+                        Sommeil
+                        <small>Récupérer vraiment</small>
+                    </a>
+
+                    <a href="sommeil-mindset.html#sante-mentale">
+                        Santé mentale
+                        <small>Garder le cap</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <a href="dashboard.html" class="nav-login auth-only">
+                dashboard
+            </a>
+
+        </nav>
+
+        <!-- UTILISATEUR CONNECTÉ -->
+        <div class="dashboard-user auth-only" id="dashboard-user">
+            <span id="userName">ATHLETE</span>
+            <button id="logoutButton">Déconnexion</button>
+        </div>
+
+        <!-- CONNEXION SI NON CONNECTÉ -->
+        <a href="connexion.html"
+            class="nav-login"
+            id="login-link">
+                connexion
+        </a>
+
+    </header>
 <main class="program-main">
     <a class="back-link" href="index.html">← Retour à l'accueil</a>
     <section class="program-hero">

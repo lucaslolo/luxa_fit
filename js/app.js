@@ -57,7 +57,6 @@ function timeToSeconds(value) {
         return minutes * 60 + seconds;
     }
 
-
     if (parts.length === 3) {
 
         const hours = parts[0];
@@ -70,7 +69,6 @@ function timeToSeconds(value) {
 
         return hours * 3600 + minutes * 60 + seconds;
     }
-
 
     return NaN;
 }
@@ -139,7 +137,6 @@ if (registerForm) {
     registerForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
-
 
         const prenom =
             document.getElementById("registerPrenom").value.trim();
@@ -259,6 +256,8 @@ if (loginForm) {
                     "Content-Type": "application/json"
                 },
 
+                credentials: "same-origin",
+
                 body: JSON.stringify({
                     prenom: prenom,
                     nom: nom,
@@ -281,14 +280,12 @@ if (loginForm) {
 
 
             /*
-
                 On garde les informations de base
                 côté navigateur uniquement pour
                 l'affichage rapide.
 
                 La vraie authentification est assurée
                 par la session Express.
-
             */
 
             localStorage.setItem(
@@ -353,7 +350,10 @@ async function loadUser() {
 
     try {
 
-        const response = await fetch("/api/me");
+        const response = await fetch("/api/me", {
+            method: "GET",
+            credentials: "same-origin"
+        });
 
         const data = await response.json();
 
@@ -380,8 +380,10 @@ async function loadUser() {
         const profilePrenom =
             document.getElementById("profilePrenom");
 
+
         const profileNom =
             document.getElementById("profileNom");
+
 
         const profileId =
             document.getElementById("profileId");
@@ -409,6 +411,7 @@ async function loadUser() {
 
         console.error(error);
 
+
         if (historyElement) {
 
             historyElement.innerHTML = `
@@ -420,6 +423,7 @@ async function loadUser() {
             `;
 
         }
+
 
         return null;
     }
@@ -436,7 +440,9 @@ async function loadPerformances() {
     try {
 
         const response =
-            await fetch("/api/performances");
+            await fetch("/api/performances", {
+                credentials: "same-origin"
+            });
 
 
         if (response.status === 401) {
@@ -471,6 +477,7 @@ async function loadPerformances() {
     } catch (error) {
 
         console.error(error);
+
 
         if (historyElement) {
 
@@ -614,6 +621,8 @@ async function addPerformance(event) {
                     "Content-Type": "application/json"
                 },
 
+                credentials: "same-origin",
+
                 body: JSON.stringify({
                     type: type,
                     value: value,
@@ -696,6 +705,7 @@ function renderHistory() {
         const dateCell =
             document.createElement("td");
 
+
         dateCell.textContent =
             formatDate(performance.date);
 
@@ -703,12 +713,14 @@ function renderHistory() {
         const typeCell =
             document.createElement("td");
 
+
         typeCell.textContent =
             getTypeName(performance.type);
 
 
         const valueCell =
             document.createElement("td");
+
 
         valueCell.textContent =
             formatPerformance(
@@ -843,7 +855,8 @@ async function deletePerformance(id) {
             await fetch(
                 "/api/performances/" + id,
                 {
-                    method: "DELETE"
+                    method: "DELETE",
+                    credentials: "same-origin"
                 }
             );
 
@@ -869,6 +882,7 @@ async function deletePerformance(id) {
     } catch (error) {
 
         console.error(error);
+
 
         alert(
             "Impossible de contacter le serveur."
@@ -1641,7 +1655,8 @@ if (logoutButton) {
                     await fetch(
                         "/api/logout",
                         {
-                            method: "POST"
+                            method: "POST",
+                            credentials: "same-origin"
                         }
                     );
 
@@ -1656,9 +1671,11 @@ if (logoutButton) {
                         "user"
                     );
 
+
                     document.body.classList.remove(
                         "authenticated"
                     );
+
 
                     window.location.href =
                         "connexion.html";
@@ -1761,6 +1778,7 @@ function countdown() {
 
     updateCountdown();
 
+
     setInterval(
         updateCountdown,
         1000
@@ -1790,32 +1808,111 @@ if (historyElement) {
 
 }
 
-
 /* =========================================================
    NAVIGATION SELON LA SESSION
    ========================================================= */
 
 async function updateAuthenticatedNavigation() {
 
+    const authLinks = document.querySelectorAll(".auth-only");
+    const dashboardUser = document.querySelector(".dashboard-user");
+    const userName = document.getElementById("userName");
+    const loginLink = document.getElementById("login-link");
+
+    // État par défaut : utilisateur non connecté
+    authLinks.forEach(link => {
+        link.style.display = "none";
+    });
+
+    if (dashboardUser) {
+        dashboardUser.style.display = "none";
+    }
+
+    if (loginLink) {
+        loginLink.style.display = "inline-flex";
+    }
+
     try {
 
         const response = await fetch("/api/me", {
+            method: "GET",
             credentials: "same-origin"
         });
 
         const data = await response.json();
 
-        if (data.success) {
+        if (data.success === true && data.user) {
+
+            // ========================================
+            // UTILISATEUR CONNECTÉ
+            // ========================================
+
+            authLinks.forEach(link => {
+                link.style.display = "inline-flex";
+            });
+
+            if (dashboardUser) {
+                dashboardUser.style.display = "flex";
+            }
+
+            if (loginLink) {
+                loginLink.style.display = "none";
+            }
+
+            if (userName) {
+                userName.textContent =
+                    data.user.prenom + " " + data.user.nom;
+            }
+
             document.body.classList.add("authenticated");
+
+        } else {
+
+            // ========================================
+            // UTILISATEUR NON CONNECTÉ
+            // ========================================
+
+            authLinks.forEach(link => {
+                link.style.display = "none";
+            });
+
+            if (dashboardUser) {
+                dashboardUser.style.display = "none";
+            }
+
+            if (loginLink) {
+                loginLink.style.display = "inline-flex";
+            }
+
+            document.body.classList.remove("authenticated");
         }
 
     } catch (error) {
 
+        console.error(
+            "Erreur vérification session :",
+            error
+        );
+
+        authLinks.forEach(link => {
+            link.style.display = "none";
+        });
+
+        if (dashboardUser) {
+            dashboardUser.style.display = "none";
+        }
+
+        if (loginLink) {
+            loginLink.style.display = "inline-flex";
+        }
+
         document.body.classList.remove("authenticated");
-
     }
-
 }
 
+
+/* =========================================================
+   LANCEMENT
+   ========================================================= */
 
 updateAuthenticatedNavigation();
