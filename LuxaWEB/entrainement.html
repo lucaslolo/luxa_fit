@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>luxa_fit | Entraînement</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="program-page">
+    <header>
+        <!-- LOGO -->
+        <a href="index.html" class="logo">
+            luxa<span>_fit</span>
+        </a>
+
+        <!-- NAVIGATION -->
+        <nav class="site-nav" aria-label="Navigation principale">
+
+            <!-- ALIMENTATION -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="alimentation.html">
+                    Alimentation <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="alimentation.html#masse-seche">
+                        Prise de masse sèche
+                        <small>Construire sans excès</small>
+                    </a>
+
+                    <a href="alimentation.html#maintien">
+                        Maintien calorique
+                        <small>Stabiliser et performer</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- ENTRAÎNEMENT -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="entrainement.html">
+                    Entraînement <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="muscu.html">
+                        Muscu
+                        <small>Force et hypertrophie</small>
+                    </a>
+
+                    <a href="course.html">
+                        Course
+                        <small>Endurance et vitesse</small>
+                    </a>
+
+                    <a href="hyrox.html">
+                        Hyrox
+                        <small>Force et cardio</small>
+                    </a>
+
+                    <a href="hybride.html">
+                        Hybride
+                        <small>Devenir complet</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- MINDSET -->
+            <div class="nav-dropdown auth-only">
+                <a class="nav-trigger" href="sommeil-mindset.html">
+                    Mindset <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="sommeil-mindset.html#sommeil">
+                        Sommeil
+                        <small>Récupérer vraiment</small>
+                    </a>
+
+                    <a href="sommeil-mindset.html#sante-mentale">
+                        Santé mentale
+                        <small>Garder le cap</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- DASHBOARD -->
+            <a href="dashboard.html" class="nav-login auth-only">
+                dashboard
+            </a>
+
+        </nav>
+
+        <!-- UTILISATEUR CONNECTÉ -->
+        <div class="dashboard-user auth-only" id="dashboard-user">
+            <span id="userName">ATHLETE</span>
+            <button id="logoutButton">Déconnexion</button>
+        </div>
+
+        <!-- CONNEXION SI NON CONNECTÉ -->
+        <a href="connexion.html"
+            class="nav-login"
+            id="login-link">
+                connexion
+        </a>
+
+    </header>
+<main class="resource-page">
+    <section class="resource-hero">
+        <div class="resource-kicker">PILIER 02 / ENTRAÎNEMENT</div>
+        <h1>Construire un corps<br><span>capable.</span></h1>
+        <p>Choisir la bonne discipline, progresser avec méthode et garder assez de récupération pour devenir plus fort, plus endurant et plus complet.</p>
+    </section>
+
+    <section class="resource-grid" aria-label="Formations entraînement">
+        <article class="resource-card" id="muscu">
+            <div class="resource-card-label">FORMATION 01 / FORCE</div>
+            <h2>Muscu</h2>
+            <p>Développer sa force et sa masse musculaire grâce à un entraînement structuré, progressif et maîtrisé.</p>
+            <ul class="resource-list">
+                <li>Construire une base de mouvements solides</li>
+                <li>Progresser en charge et en répétitions</li>
+                <li>Développer un physique esthétique et fonctionnel</li>
+            </ul>
+            <a class="discipline-link" href="muscu.html">Voir la formation <b>→</b></a>
+        </article>
+
+        <article class="resource-card" id="course">
+            <div class="resource-card-label">FORMATION 02 / ENDURANCE</div>
+            <h2>Course</h2>
+            <p>Améliorer son endurance et sa vitesse en avançant progressivement, sans brûler les étapes.</p>
+            <ul class="resource-list">
+                <li>Construire une base aérobie régulière</li>
+                <li>Alterner endurance, tempo et vitesse</li>
+                <li>Courir mieux tout en récupérant assez</li>
+            </ul>
+            <a class="discipline-link" href="course.html">Voir la formation <b>→</b></a>
+        </article>
+
+        <article class="resource-card" id="hyrox">
+            <div class="resource-card-label">FORMATION 03 / COMPÉTITION</div>
+            <h2>Hyrox</h2>
+            <p>Combiner force, course et gestion de l'effort pour performer sur chaque station et chaque transition.</p>
+            <ul class="resource-list">
+                <li>Développer le moteur et la force utile</li>
+                <li>Apprendre à gérer les transitions</li>
+                <li>Préparer le rythme spécifique de course</li>
+            </ul>
+            <a class="discipline-link" href="hyrox.html">Voir la formation <b>→</b></a>
+        </article>
+
+        <article class="resource-card" id="hybride">
+            <div class="resource-card-label">FORMATION 04 / ATHLÈTE COMPLET</div>
+            <h2>Hybride</h2>
+            <p>Développer simultanément force, endurance et puissance pour construire un profil d'athlète complet.</p>
+            <ul class="resource-list">
+                <li>Organiser force et cardio dans la semaine</li>
+                <li>Gérer la fatigue entre les qualités</li>
+                <li>Progresser vers un objectif de performance</li>
+            </ul>
+            <a class="discipline-link" href="hybride.html">Voir la formation <b>→</b></a>
+        </article>
+    </section>
+
+    <p class="resource-note">La meilleure formation est celle que tu peux suivre avec régularité. Choisis une priorité, mesure ta progression et laisse le temps faire son travail.</p>
+</main>
+<footer>luxa_fit / ENTRAÎNEMENT / TRAIN WITH INTENT</footer>
+</body>
+</html>
