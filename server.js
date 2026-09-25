@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-const db = require("./js/database");
+const db = require("./js/database"); // Importer la connexion à la base de données
 
 const app = express();
 const PORT = process.env.PORT || 3000;
