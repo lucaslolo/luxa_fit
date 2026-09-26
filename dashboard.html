@@ -4,229 +4,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Luxa_Fit | Dashboard</title>
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body class="dashboard-page">
 
 <header>
-        <!-- LOGO -->
-        <a href="index.html" class="logo">
-            <span>luxa_fit</span>
-        </a>
+    <a href="index.html" class="logo"><span>luxa_fit</span></a>
 
-        <!-- NAVIGATION -->
-        <nav class="site-nav" aria-label="Navigation principale">
+    <nav class="site-nav" aria-label="Navigation principale">
 
-            <!-- ALIMENTATION -->
-            <div class="nav-dropdown auth-only">
-                <a class="nav-trigger" href="alimentation.html">
-                    Alimentation <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
-                    <a href="alimentation.html#masse-seche">
-                        Prise de masse sèche
-                        <small>Construire sans excès</small>
-                    </a>
-
-                    <a href="alimentation.html#maintien">
-                        Maintien calorique
-                        <small>Stabiliser et performer</small>
-                    </a>
-                </div>
-            </div>
-
-            <!-- ENTRAÎNEMENT -->
-            <div class="nav-dropdown auth-only">
-                <a class="nav-trigger" href="entrainement.html">
-                    Entraînement <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
-                    <a href="muscu.html">
-                        Muscu
-                        <small>Force et hypertrophie</small>
-                    </a>
-
-                    <a href="course.html">
-                        Course
-                        <small>Endurance et vitesse</small>
-                    </a>
-
-                    <a href="hyrox.html">
-                        Hyrox
-                        <small>Force et cardio</small>
-                    </a>
-
-                    <a href="hybride.html">
-                        Hybride
-                        <small>Devenir complet</small>
-                    </a>
-                </div>
-            </div>
-
-            <!-- MINDSET -->
-            <div class="nav-dropdown auth-only">
-                <a class="nav-trigger" href="sommeil-mindset.html">
-                    Mindset <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
-                    <a href="sommeil-mindset.html#sommeil">
-                        Sommeil
-                        <small>Récupérer vraiment</small>
-                    </a>
-
-                    <a href="sommeil-mindset.html#sante-mentale">
-                        Santé mentale
-                        <small>Garder le cap</small>
-                    </a>
-                </div>
-            </div>
-
-            <!-- DASHBOARD -->
-            <a href="dashboard.html" class="nav-login auth-only">
-                dashboard
+        <div class="nav-dropdown auth-only">
+            <a class="nav-trigger" href="alimentation.html">
+                Alimentation <span>↓</span>
             </a>
 
-        </nav>
+            <div class="nav-menu">
+                <a href="alimentation.html#masse-seche">
+                    Prise de masse sèche
+                    <small>Construire sans excès</small>
+                </a>
 
-        <!-- UTILISATEUR CONNECTÉ -->
-        <div class="dashboard-user auth-only" id="dashboard-user">
-            <span id="userName">ATHLETE</span>
-            <button id="logoutButton">Déconnexion</button>
+                <a href="alimentation.html#maintien">
+                    Maintien calorique
+                    <small>Stabiliser et performer</small>
+                </a>
+            </div>
         </div>
 
-        <!-- CONNEXION SI NON CONNECTÉ -->
-        <a href="connexion.html"
-            class="nav-login"
-            id="login-link">
-                connexion
+        <div class="nav-dropdown auth-only">
+            <a class="nav-trigger" href="entrainement.html">
+                Entraînement <span>↓</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="muscu.html">
+                    Muscu
+                    <small>Force et hypertrophie</small>
+                </a>
+
+                <a href="course.html">
+                    Course
+                    <small>Endurance et vitesse</small>
+                </a>
+
+                <a href="hyrox.html">
+                    Hyrox
+                    <small>Force et cardio</small>
+                </a>
+
+                <a href="hybride.html">
+                    Hybride
+                    <small>Devenir complet</small>
+                </a>
+            </div>
+        </div>
+
+        <div class="nav-dropdown auth-only">
+            <a class="nav-trigger" href="sommeil-mindset.html">
+                Mindset <span>↓</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="sommeil-mindset.html#sommeil">
+                    Sommeil
+                    <small>Récupérer vraiment</small>
+                </a>
+
+                <a href="sommeil-mindset.html#sante-mentale">
+                    Santé mentale
+                    <small>Garder le cap</small>
+                </a>
+            </div>
+        </div>
+
+        <a href="dashboard.html" class="nav-login auth-only">
+            Dashboard
         </a>
 
-    </header>
+    </nav>
+
+    <div class="dashboard-user auth-only" id="dashboard-user">
+        <span id="userName">ATHLETE</span>
+        <button id="logoutButton">Déconnexion</button>
+    </div>
+
+    <a href="connexion.html" class="nav-login" id="login-link">
+        Connexion
+    </a>
+
+</header>
+
 
 <main class="dashboard">
 
-    <!-- TITRE -->
+    <!-- ========================================
+         HEADER
+    ========================================= -->
 
     <section class="dashboard-header">
-        <div class="dashboard-kicker">LUXA_FIT / ATHLETE OS</div>
-        <h1>Ton niveau.<br><span>En clair.</span></h1>
+
+        <div class="dashboard-kicker">
+            LUXA_FIT / ATHLETE OS
+        </div>
+
+        <h1>
+            Ton niveau.<br>
+            <span>En clair.</span>
+        </h1>
+
         <p>
-            Suis tes performances, repère tes tendances et garde le cap sur tes objectifs.
+            Suis tes performances, repère tes tendances
+            et garde le cap sur tes objectifs.
         </p>
-    </section>
-
-
-    <!-- PROFIL -->
-
-    <section class="dashboard-card">
-
-        <div class="dashboard-section-heading">
-            <span class="section-index">01</span>
-            <h2>Mon profil</h2>
-        </div>
-
-        <div class="profile-info">
-            <p>
-                <strong>Prénom :</strong>
-                <span id="profilePrenom">-</span>
-            </p>
-
-            <p>
-                <strong>Nom :</strong>
-                <span id="profileNom">-</span>
-            </p>
-
-            <p>
-                <strong>ID utilisateur :</strong>
-                <span id="profileId">-</span>
-            </p>
-        </div>
 
     </section>
 
 
-    <!-- STATISTIQUES -->
+    <!-- ========================================
+         PROFIL
+    ========================================= -->
 
-    <section class="stats-grid">
+    <section class="dashboard-overview">
 
-        <div class="stat-card">
+        <div class="dashboard-card profile-card">
 
-            <h3>⚖️ Poids</h3>
-
-            <div class="stat-value">
-                <span id="weight">--</span>
-                <small>kg</small>
+            <div class="dashboard-section-heading">
+                <span class="section-index">01</span>
+                <h2>Profil athlète</h2>
             </div>
 
-            <p>Dernière mesure</p>
+            <div class="profile-info">
+
+                <p>
+                    <strong>Prénom</strong>
+                    <span id="profilePrenom">-</span>
+                </p>
+
+                <p>
+                    <strong>Nom</strong>
+                    <span id="profileNom">-</span>
+                </p>
+
+                <p>
+                    <strong>Identifiant</strong>
+                    <span id="profileId">-</span>
+                </p>
+
+            </div>
 
         </div>
 
 
-        <div class="stat-card">
+        <div class="dashboard-card dashboard-status-card">
 
-            <h3>🏃 5 KM</h3>
+            <span class="dashboard-status-label">
+                SYSTÈME DE SUIVI
+            </span>
 
-            <div class="stat-value">
-                <span id="run5k">--:--</span>
-            </div>
+            <strong>
+                Prêt à progresser.
+            </strong>
 
-            <p>Dernier chrono</p>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>🔥 HYROX</h3>
-
-            <div class="stat-value">
-                <span id="hyrox">--:--:--</span>
-            </div>
-
-            <p>Dernier chrono</p>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>🏃‍♂️ Running</h3>
-
-            <div class="stat-value">
-                <span id="weeklyKm">0</span>
-                <small>km</small>
-            </div>
-
-            <p>Total enregistré</p>
+            <p>
+                Chaque mesure ajoutée nourrit ton historique
+                et rend ta progression lisible.
+            </p>
 
         </div>
 
     </section>
 
 
-    <!-- AJOUTER UNE PERFORMANCE -->
+    <!-- ========================================
+         EXPLORER LES DONNÉES
+    ========================================= -->
 
-    <section class="dashboard-card">
+    <section class="dashboard-card category-browser">
 
         <div class="dashboard-section-heading">
             <span class="section-index">02</span>
-            <h2>Ajouter une performance</h2>
+            <h2>Explorer mes données</h2>
         </div>
+
+        <div class="category-browser-toolbar">
+
+            <div>
+
+                <label for="categoryFilter">
+                    Catégorie à afficher
+                </label>
+
+                <p id="categoryDescription">
+                    Choisis une catégorie pour voir toutes ses données.
+                </p>
+
+            </div>
+
+            <select id="categoryFilter">
+
+                <option value="">
+                    Toutes les catégories
+                </option>
+
+            </select>
+
+            <button
+                type="button"
+                class="questionnaire-button"
+                id="openQuestionnaire">
+
+                Remplir le questionnaire
+
+            </button>
+
+        </div>
+
+        <div
+            id="categorySummary"
+            class="category-summary">
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         AJOUT PERFORMANCE
+    ========================================= -->
+
+    <section class="dashboard-card dashboard-form-card">
+
+        <div class="dashboard-section-heading">
+
+            <span class="section-index">
+                04
+            </span>
+
+            <h2>
+                Ajouter une performance
+            </h2>
+
+        </div>
+
 
         <form id="performanceForm">
 
             <div class="form-group">
 
                 <label for="type">
-                    Type de performance
+                    Catégorie
                 </label>
 
                 <select id="type" required>
@@ -235,20 +262,16 @@
                         Sélectionner
                     </option>
 
-                    <option value="weight">
+                    <option value="poids">
                         ⚖️ Poids
                     </option>
 
-                    <option value="run">
-                        🏃 5 KM
+                    <option value="course_5km">
+                        🏃 Course 5 km
                     </option>
 
-                    <option value="hyrox">
-                        🔥 HYROX
-                    </option>
-
-                    <option value="km">
-                        🏃‍♂️ Running
+                    <option value="course_km_semaine">
+                        🏃 Kilomètres par semaine
                     </option>
 
                 </select>
@@ -265,9 +288,8 @@
                 <input
                     type="text"
                     id="value"
-                    placeholder="Ex : 73 / 20:23 / 1:20:00 / 10"
-                    required
-                >
+                    placeholder="Ex : 105 / 20:23 / 12.5"
+                    required>
 
                 <small id="valueHelp">
                     Sélectionne d'abord un type.
@@ -285,14 +307,17 @@
                 <input
                     type="date"
                     id="date"
-                    required
-                >
+                    required>
 
             </div>
 
 
-            <button type="submit" class="primary-button">
-                Ajouter la performance
+            <button
+                type="submit"
+                class="primary-button">
+
+                Ajouter
+
             </button>
 
             <p id="performanceMessage"></p>
@@ -302,24 +327,38 @@
     </section>
 
 
-    <!-- OBJECTIFS -->
+    <!-- ========================================
+         OBJECTIFS
+    ========================================= -->
 
     <section class="dashboard-card">
 
         <div class="dashboard-section-heading">
-            <span class="section-index">03</span>
-            <h2>Mes objectifs</h2>
+
+            <span class="section-index">
+                05
+            </span>
+
+            <h2>
+                Mes objectifs
+            </h2>
+
         </div>
+
 
         <div class="goals-grid">
 
             <div class="goal-card">
 
-                <h3>5 KM</h3>
+                <h3>
+                    5 KM
+                </h3>
 
                 <p>
                     Objectif :
-                    <strong>20:00</strong>
+                    <strong>
+                        20:00
+                    </strong>
                 </p>
 
                 <div class="progress-bar">
@@ -331,11 +370,15 @@
 
             <div class="goal-card">
 
-                <h3>HYROX</h3>
+                <h3>
+                    HYROX
+                </h3>
 
                 <p>
                     Objectif :
-                    <strong>1:10:00</strong>
+                    <strong>
+                        1:10:00
+                    </strong>
                 </p>
 
                 <div class="progress-bar">
@@ -347,7 +390,9 @@
 
             <div class="goal-card">
 
-                <h3>Poids</h3>
+                <h3>
+                    Poids
+                </h3>
 
                 <p>
                     Suivi de ton évolution
@@ -364,20 +409,32 @@
     </section>
 
 
-    <!-- GRAPHIQUES -->
+    <!-- ========================================
+         GRAPHIQUES
+    ========================================= -->
 
     <section class="dashboard-card">
 
         <div class="dashboard-section-heading">
-            <span class="section-index">04</span>
-            <h2>Mon évolution</h2>
+
+            <span class="section-index">
+                06
+            </span>
+
+            <h2>
+                Mon évolution
+            </h2>
+
         </div>
+
 
         <div class="charts-grid">
 
             <div class="chart-container">
 
-                <h3>Évolution du poids</h3>
+                <h3>
+                    Évolution du poids
+                </h3>
 
                 <canvas id="weightChart"></canvas>
 
@@ -386,7 +443,9 @@
 
             <div class="chart-container">
 
-                <h3>Évolution du 5 KM</h3>
+                <h3>
+                    Évolution du 5 KM
+                </h3>
 
                 <canvas id="runChart"></canvas>
 
@@ -397,20 +456,36 @@
     </section>
 
 
-    <!-- HISTORIQUE -->
+    <!-- ========================================
+         HISTORIQUE
+    ========================================= -->
 
     <section class="dashboard-card">
 
         <div class="history-header">
 
-            <div>
-                <div class="dashboard-section-heading">
-                    <span class="section-index">05</span>
-                    <h2>Historique</h2>
-                </div>
-                <p>
-                    Toutes tes performances enregistrées.
-                </p>
+            <div class="dashboard-section-heading">
+
+                <span class="section-index">
+                    07
+                </span>
+
+                <h2>
+                    Historique
+                </h2>
+
+            </div>
+
+            <p>
+                Toutes tes performances enregistrées.
+            </p>
+
+            <div class="history-controls">
+
+                <span id="historyCount">
+                    0 performance
+                </span>
+
             </div>
 
         </div>
@@ -448,13 +523,22 @@
     </section>
 
 
-    <!-- COMPTE À REBOURS -->
+    <!-- ========================================
+         COUNTDOWN
+    ========================================= -->
 
     <section class="dashboard-card countdown-card">
 
         <div class="dashboard-section-heading">
-            <span class="section-index">06</span>
-            <h2>Prochain objectif</h2>
+
+            <span class="section-index">
+                08
+            </span>
+
+            <h2>
+                Prochain objectif
+            </h2>
+
         </div>
 
         <p>
@@ -470,7 +554,339 @@
 </main>
 
 
+<!-- ============================================
+     QUESTIONNAIRE
+============================================= -->
+
+<div
+    class="questionnaire-modal"
+    id="questionnaireModal"
+    hidden>
+
+    <div
+        class="questionnaire-backdrop"
+        data-close-questionnaire>
+    </div>
+
+
+    <section
+        class="questionnaire-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="questionnaireTitle">
+
+
+        <!-- HEADER -->
+
+        <div class="questionnaire-header">
+
+            <div>
+
+                <span class="category-kicker">
+                    QUESTIONNAIRE / MISE À JOUR
+                </span>
+
+                <h2 id="questionnaireTitle">
+                    Renseigne ton niveau
+                </h2>
+
+                <p>
+                    Les champs laissés vides ne modifieront pas tes données existantes.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="questionnaire-close"
+                id="closeQuestionnaire"
+                aria-label="Fermer">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- FORMULAIRE -->
+
+        <form id="questionnaireForm">
+
+
+            <!-- ========================================
+                 FORCE
+            ========================================= -->
+
+            <div class="questionnaire-section">
+
+                <span class="questionnaire-section-label">
+                    01 / FORCE
+                </span>
+
+
+                <div class="questionnaire-fields">
+
+
+                    <label>
+
+                        Bench actuel
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="bench_actuel"
+                            placeholder="kg">
+
+                    </label>
+
+
+                    <label>
+
+                        Squat actuel
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="squat_actuel"
+                            placeholder="kg">
+
+                    </label>
+
+
+                    <label>
+
+                        Deadlift actuel
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="deadlift_actuel"
+                            placeholder="kg">
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 ENDURANCE
+            ========================================= -->
+
+            <div class="questionnaire-section">
+
+                <span class="questionnaire-section-label">
+                    02 / ENDURANCE
+                </span>
+
+
+                <div class="questionnaire-fields">
+
+
+                    <label>
+
+                        Course 5 km
+
+                        <input
+                            type="text"
+                            data-questionnaire-type="course_5km"
+                            placeholder="20:23">
+
+                    </label>
+
+
+                    <label>
+
+                        Course 10 km
+
+                        <input
+                            type="text"
+                            data-questionnaire-type="course_10km"
+                            placeholder="45:00">
+
+                    </label>
+
+
+                    <label>
+
+                        Course 21 km
+
+                        <input
+                            type="text"
+                            data-questionnaire-type="course_21km"
+                            placeholder="1:40:00">
+
+                    </label>
+
+
+                    <label>
+
+                        Course 42 km
+
+                        <input
+                            type="text"
+                            data-questionnaire-type="course_42km"
+                            placeholder="3:30:00">
+
+                    </label>
+
+
+                    <label>
+
+                        Km par semaine
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="course_km_semaine"
+                            placeholder="km">
+
+                    </label>
+
+
+                    <label>
+
+                        HYROX solo open homme
+
+                        <input
+                            type="text"
+                            data-questionnaire-type="hyrox solo open homme"
+                            placeholder="1:20:00">
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 MESURES
+            ========================================= -->
+
+            <div class="questionnaire-section">
+
+                <span class="questionnaire-section-label">
+                    03 / MESURES
+                </span>
+
+
+                <div class="questionnaire-fields">
+
+
+                    <label>
+
+                        Poids
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="poids"
+                            placeholder="kg">
+
+                    </label>
+
+
+                    <label>
+
+                        Taille
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="taille"
+                            placeholder="cm">
+
+                    </label>
+
+
+                    <label>
+
+                        Tour de taille
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="tour_de_taille"
+                            placeholder="cm">
+
+                    </label>
+
+
+                    <label>
+
+                        Tour de hanche
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.1"
+                            data-questionnaire-type="tour_de_hanche"
+                            placeholder="cm">
+
+                    </label>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 FOOTER
+            ========================================= -->
+
+            <div class="questionnaire-footer">
+
+
+                <label class="questionnaire-date">
+
+                    Date de mesure
+
+                    <input
+                        type="date"
+                        id="questionnaireDate"
+                        required>
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="primary-button">
+
+                    Enregistrer mes réponses
+
+                </button>
+
+
+                <p id="questionnaireMessage"></p>
+
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+</div>
+
+
 <script src="js/app.js"></script>
 
 </body>
+
 </html>

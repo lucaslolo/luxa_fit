@@ -352,10 +352,32 @@ app.post(
         }
 
         const allowedTypes = [
-            "weight",
-            "run",
-            "hyrox",
-            "km"
+            "poids",
+            "taille",
+            "tour_de_taille",
+            "tour_de_hanche",
+            "tour_de_bras",
+            "tour_de_cuisse",
+            "tour_de_mollet",
+            "tour_de_torse",
+            "bench_actuel",
+            "bench_max",
+            "squat_actuel",
+            "squat_max",
+            "deadlift_actuel",
+            "deadlift_max",
+            "hyrox solo open homme",
+            "hyrox solo pro homme",
+            "hyrox solo open femme",
+            "hyrox solo pro femme",
+            "hyrox mixte",
+            "hyrox homme/homme",
+            "hyrox femme/femme",
+            "course_5km",
+            "course_10km",
+            "course_21km",
+            "course_42km",
+            "course_km_semaine"
         ];
 
         if (!allowedTypes.includes(type)) {
