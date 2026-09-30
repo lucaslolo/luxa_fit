@@ -3,74 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luxa_fit | Salle</title>
+    <title>luxa_fit | LES 3 PILIERS</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="program-page">
-    <header>
+
+<body class="programme-page">
+<header>
+
         <!-- LOGO -->
         <a href="index.html" class="logo">
-            luxa<span>_fit</span>
+            <span>luxa_fit</span>
         </a>
+
 
         <!-- NAVIGATION -->
         <nav class="site-nav" aria-label="Navigation principale">
 
-            <!-- ALIMENTATION -->
+
+            <!-- =========================================
+                ALIMENTATION
+            ========================================== -->
             <div class="nav-dropdown auth-only">
+
                 <a class="nav-trigger" href="alimentation.html">
                     Alimentation <span>↓</span>
                 </a>
 
                 <div class="nav-menu">
-                    <a href="alimentation.html#masse-seche">
-                        Prise de masse sèche
+
+                    <a href="seche.html">
+                        Sèche
+                        <small>Perdre sans excès</small>
+                    </a>
+
+                    <a href="masse.html">
+                        Prise de masse
                         <small>Construire sans excès</small>
                     </a>
 
-                    <a href="alimentation.html#maintien">
+                    <a href="maintien.html">
                         Maintien calorique
                         <small>Stabiliser et performer</small>
                     </a>
+
                 </div>
+
             </div>
 
-            <!-- ENTRAÎNEMENT -->
+
+
+            <!-- =========================================
+                ENTRAÎNEMENT
+            ========================================== -->
             <div class="nav-dropdown auth-only">
+
                 <a class="nav-trigger" href="entrainement.html">
                     Entraînement <span>↓</span>
                 </a>
 
                 <div class="nav-menu">
-                    <a href="salle.html">
-                        Salle
-                        <small>Force et hypertrophie</small>
-                    </a>
 
+
+                    <!-- SALLE -->
+                    <div class="nav-dropdown nav-submenu">
+
+                        <a class="nav-trigger" href="salle.html">
+                            Salle <span>→</span>
+                        </a>
+
+                        <div class="nav-menu nav-submenu-menu">
+
+                            <a href="salle-forme.html">
+                                Remise en forme
+                                <small>Reprendre et progresser</small>
+                            </a>
+
+                            <a href="salle-bodybuilding.html">
+                                BodyBuilding
+                                <small>volume</small>
+                            </a>
+
+                            <a href="salle-powerlifting.html">
+                                Powerlifting
+                                <small>Force</small>
+                            </a>
+
+                            <a href="salle-powerbuilding.html">
+                                Powerbuilding
+                                <small>Force et volume</small>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- COURSE -->
                     <a href="course.html">
                         Course
                         <small>Endurance et vitesse</small>
                     </a>
 
+
+                    <!-- HYROX -->
                     <a href="hyrox.html">
                         Hyrox
                         <small>Force et cardio</small>
                     </a>
 
+
+                    <!-- HYBRIDE -->
                     <a href="hybride.html">
                         Hybride
                         <small>Devenir complet</small>
                     </a>
+
                 </div>
+
             </div>
 
-            <!-- MINDSET -->
+
+
+            <!-- =========================================
+                MINDSET
+            ========================================== -->
             <div class="nav-dropdown auth-only">
+
                 <a class="nav-trigger" href="sommeil-mindset.html">
                     Mindset <span>↓</span>
                 </a>
 
                 <div class="nav-menu">
+
                     <a href="sommeil-mindset.html#sommeil">
                         Sommeil
                         <small>Récupérer vraiment</small>
@@ -80,31 +144,51 @@
                         Santé mentale
                         <small>Garder le cap</small>
                     </a>
+
                 </div>
+
             </div>
 
-            <!-- DASHBOARD -->
+
+
+            <!-- =========================================
+                DASHBOARD
+            ========================================== -->
             <a href="dashboard.html" class="nav-login auth-only">
                 dashboard
             </a>
 
         </nav>
 
-        <!-- UTILISATEUR CONNECTÉ -->
+
+
+        <!-- =========================================
+            UTILISATEUR CONNECTÉ
+        ========================================== -->
         <div class="dashboard-user auth-only" id="dashboard-user">
+
             <span id="userName">ATHLETE</span>
-            <button id="logoutButton">Déconnexion</button>
+
+            <button id="logoutButton">
+                Déconnexion
+            </button>
+
         </div>
 
-        <!-- CONNEXION SI NON CONNECTÉ -->
+
+
+        <!-- =========================================
+            CONNEXION SI NON CONNECTÉ
+        ========================================== -->
         <a href="connexion.html"
-            class="nav-login"
-            id="login-link">
-                connexion
+        class="nav-login"
+        id="login-link">
+
+            connexion
+
         </a>
 
     </header>
-
 <main class="program-main">
     <section class="program-hero">
         <div class="program-kicker">PILIER 02 / ENTRAINEMENT</div>
@@ -121,6 +205,20 @@
     </section>
 
     <section class="resource-grid salle-programs" aria-label="Programmes de musculation">
+        <a class="discipline-card discipline" href="salle-forme.html">
+            <div class="resource-card-label">PROGRAMME 01 / REPRISE</div>
+            <span class="discipline-icon">✦</span>
+            <h2>Se remettre en forme</h2>
+            <p>Reprendre l'entraînement avec des séances simples, progressives et adaptées à un niveau débutant.</p>
+            <ul class="resource-list">
+                <li>3 séances par semaine</li>
+                <li>Renforcement global</li>
+                <li>Progression sans surcharge</li>
+            </ul>
+            <span class="discipline-link">
+                Découvrir <b>→</b>
+            </span>
+        </a>
 
         <a class="discipline-card discipline" href="salle-bodybuilding.html">
             <div class="resource-card-label">PROGRAMME 02 / HYPERTROPHIE</div>
@@ -132,6 +230,9 @@
                 <li>Volume et contrôle</li>
                 <li>Focus esthétique</li>
             </ul>
+            <span class="discipline-link">
+                Découvrir <b>→</b>
+            </span>
         </a>
 
         <a class="discipline-card discipline" href="salle-powerlifting.html">
@@ -144,6 +245,9 @@
                 <li>Intensité progressive</li>
                 <li>Technique et récupération</li>
             </ul>
+            <span class="discipline-link">
+                Découvrir <b>→</b>
+            </span>
         </a>
 
         <a class="discipline-card discipline" href="salle-powerbuilding.html">
@@ -156,18 +260,9 @@
                 <li>Force et hypertrophie</li>
                 <li>Organisation équilibrée</li>
             </ul>
-        </a>
-
-        <a class="discipline-card discipline" href="salle-forme.html">
-            <div class="resource-card-label">PROGRAMME 04 / REPRISE</div>
-            <span class="discipline-icon">✦</span>
-            <h2>Se remettre en forme</h2>
-            <p>Reprendre l'entraînement avec des séances simples, progressives et adaptées à un niveau débutant.</p>
-            <ul class="resource-list">
-                <li>3 séances par semaine</li>
-                <li>Renforcement global</li>
-                <li>Progression sans surcharge</li>
-            </ul>
+            <span class="discipline-link">
+                Découvrir <b>→</b>
+            </span>
         </a>
     </section>
     <p class="resource-note">La meilleure formation est celle que tu peux suivre avec régularité. Choisis une priorité, mesure ta progression et laisse le temps faire son travail.</p>

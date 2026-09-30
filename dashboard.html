@@ -1,101 +1,194 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxa_Fit | Dashboard</title>
+    <title>luxa_fit | LES 3 PILIERS</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="dashboard-page">
+<body class="programme-page">
+    <header>
 
-<header>
-    <a href="index.html" class="logo"><span>luxa_fit</span></a>
-
-    <nav class="site-nav" aria-label="Navigation principale">
-
-        <div class="nav-dropdown auth-only">
-            <a class="nav-trigger" href="alimentation.html">
-                Alimentation <span>↓</span>
-            </a>
-
-            <div class="nav-menu">
-                <a href="alimentation.html#masse-seche">
-                    Prise de masse sèche
-                    <small>Construire sans excès</small>
-                </a>
-
-                <a href="alimentation.html#maintien">
-                    Maintien calorique
-                    <small>Stabiliser et performer</small>
-                </a>
-            </div>
-        </div>
-
-        <div class="nav-dropdown auth-only">
-            <a class="nav-trigger" href="entrainement.html">
-                Entraînement <span>↓</span>
-            </a>
-
-            <div class="nav-menu">
-                <a href="muscu.html">
-                    Muscu
-                    <small>Force et hypertrophie</small>
-                </a>
-
-                <a href="course.html">
-                    Course
-                    <small>Endurance et vitesse</small>
-                </a>
-
-                <a href="hyrox.html">
-                    Hyrox
-                    <small>Force et cardio</small>
-                </a>
-
-                <a href="hybride.html">
-                    Hybride
-                    <small>Devenir complet</small>
-                </a>
-            </div>
-        </div>
-
-        <div class="nav-dropdown auth-only">
-            <a class="nav-trigger" href="sommeil-mindset.html">
-                Mindset <span>↓</span>
-            </a>
-
-            <div class="nav-menu">
-                <a href="sommeil-mindset.html#sommeil">
-                    Sommeil
-                    <small>Récupérer vraiment</small>
-                </a>
-
-                <a href="sommeil-mindset.html#sante-mentale">
-                    Santé mentale
-                    <small>Garder le cap</small>
-                </a>
-            </div>
-        </div>
-
-        <a href="dashboard.html" class="nav-login auth-only">
-            Dashboard
+        <!-- LOGO -->
+        <a href="index.html" class="logo">
+            <span>luxa_fit</span>
         </a>
 
-    </nav>
 
-    <div class="dashboard-user auth-only" id="dashboard-user">
-        <span id="userName">ATHLETE</span>
-        <button id="logoutButton">Déconnexion</button>
-    </div>
+        <!-- NAVIGATION -->
+        <nav class="site-nav" aria-label="Navigation principale">
 
-    <a href="connexion.html" class="nav-login" id="login-link">
-        Connexion
-    </a>
 
-</header>
+            <!-- =========================================
+                ALIMENTATION
+            ========================================== -->
+            <div class="nav-dropdown auth-only">
 
+                <a class="nav-trigger" href="alimentation.html">
+                    Alimentation <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+
+                    <a href="seche.html">
+                        Sèche
+                        <small>Perdre sans excès</small>
+                    </a>
+
+                    <a href="masse.html">
+                        Prise de masse
+                        <small>Construire sans excès</small>
+                    </a>
+
+                    <a href="maintien.html">
+                        Maintien calorique
+                        <small>Stabiliser et performer</small>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                ENTRAÎNEMENT
+            ========================================== -->
+            <div class="nav-dropdown auth-only">
+
+                <a class="nav-trigger" href="entrainement.html">
+                    Entraînement <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+
+
+                    <!-- SALLE -->
+                    <div class="nav-dropdown nav-submenu">
+
+                        <a class="nav-trigger" href="salle.html">
+                            Salle <span>→</span>
+                        </a>
+
+                        <div class="nav-menu nav-submenu-menu">
+
+                            <a href="salle-forme.html">
+                                Remise en forme
+                                <small>Reprendre et progresser</small>
+                            </a>
+
+                            <a href="salle-bodybuilding.html">
+                                BodyBuilding
+                                <small>volume</small>
+                            </a>
+
+                            <a href="salle-powerlifting.html">
+                                Powerlifting
+                                <small>Force</small>
+                            </a>
+
+                            <a href="salle-powerbuilding.html">
+                                Powerbuilding
+                                <small>Force et volume</small>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- COURSE -->
+                    <a href="course.html">
+                        Course
+                        <small>Endurance et vitesse</small>
+                    </a>
+
+
+                    <!-- HYROX -->
+                    <a href="hyrox.html">
+                        Hyrox
+                        <small>Force et cardio</small>
+                    </a>
+
+
+                    <!-- HYBRIDE -->
+                    <a href="hybride.html">
+                        Hybride
+                        <small>Devenir complet</small>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                MINDSET
+            ========================================== -->
+            <div class="nav-dropdown auth-only">
+
+                <a class="nav-trigger" href="sommeil-mindset.html">
+                    Mindset <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+
+                    <a href="sommeil-mindset.html#sommeil">
+                        Sommeil
+                        <small>Récupérer vraiment</small>
+                    </a>
+
+                    <a href="sommeil-mindset.html#sante-mentale">
+                        Santé mentale
+                        <small>Garder le cap</small>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                DASHBOARD
+            ========================================== -->
+            <a href="dashboard.html" class="nav-login auth-only">
+                dashboard
+            </a>
+
+        </nav>
+
+
+
+        <!-- =========================================
+            UTILISATEUR CONNECTÉ
+        ========================================== -->
+        <div class="dashboard-user auth-only" id="dashboard-user">
+
+            <span id="userName">ATHLETE</span>
+
+            <button id="logoutButton">
+                Déconnexion
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================================
+            CONNEXION SI NON CONNECTÉ
+        ========================================== -->
+        <a href="connexion.html"
+        class="nav-login"
+        id="login-link">
+
+            connexion
+
+        </a>
+
+    </header>
 
 <main class="dashboard">
 

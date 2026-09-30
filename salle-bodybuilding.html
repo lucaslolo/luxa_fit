@@ -1,11 +1,575 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>luxa_fit | Bodybuilding</title><link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>luxa_fit | LES 3 PILIERS</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="program-page">
-    <header><a href="index.html" class="logo">luxa<span>_fit</span></a><nav class="site-nav" aria-label="Navigation principale"><a class="nav-login" href="entrainement.html">entraînement</a><a class="nav-login" href="salle.html">salle</a><a class="nav-login" href="connexion.html">connexion</a></nav></header>
-    <main class="program-main"><a class="back-link" href="salle.html">← Retour aux programmes salle</a><section class="program-hero"><div class="program-kicker" id="programKicker"></div><h1 id="programTitle"></h1><p id="programDescription"></p></section><section class="section"><div class="selector-title">Choisir la semaine</div><div class="weeks" id="weeks"></div><div class="week-header"><div><div class="week-number" id="weekNumber"></div><div class="week-title" id="weekTitle"></div></div><div class="phase" id="phase"></div></div><div class="days" id="days"></div><div class="program-note" id="programNote"></div></section></main>
-    <footer>luxa_fit / SALLE / BUILD WITH INTENT</footer><script src="js/app.js"></script><script src="js/programme/salle/prog_bodybuilding.js"></script><script src="js/programme/salle/salle-program.js"></script>
+
+<body class="programme-page">
+    <header>
+
+        <!-- LOGO -->
+        <a href="index.html" class="logo">
+            <span>luxa_fit</span>
+        </a>
+
+
+        <!-- NAVIGATION -->
+        <nav class="site-nav" aria-label="Navigation principale">
+
+
+            <!-- =========================================
+                ALIMENTATION
+            ========================================== -->
+            <div class="nav-dropdown auth-only">
+
+                <a class="nav-trigger" href="alimentation.html">
+                    Alimentation <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+
+                    <a href="seche.html">
+                        Sèche
+                        <small>Perdre sans excès</small>
+                    </a>
+
+                    <a href="masse.html">
+                        Prise de masse
+                        <small>Construire sans excès</small>
+                    </a>
+
+                    <a href="maintien.html">
+                        Maintien calorique
+                        <small>Stabiliser et performer</small>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                ENTRAÎNEMENT
+            ========================================== -->
+            <div class="nav-dropdown auth-only">
+
+                <a class="nav-trigger" href="entrainement.html">
+                    Entraînement <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+
+
+                    <!-- SALLE -->
+                    <div class="nav-dropdown nav-submenu">
+
+                        <a class="nav-trigger" href="salle.html">
+                            Salle <span>→</span>
+                        </a>
+
+                        <div class="nav-menu nav-submenu-menu">
+
+                            <a href="salle-forme.html">
+                                Remise en forme
+                                <small>Reprendre et progresser</small>
+                            </a>
+
+                            <a href="salle-bodybuilding.html">
+                                BodyBuilding
+                                <small>volume</small>
+                            </a>
+
+                            <a href="salle-powerlifting.html">
+                                Powerlifting
+                                <small>Force</small>
+                            </a>
+
+                            <a href="salle-powerbuilding.html">
+                                Powerbuilding
+                                <small>Force et volume</small>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- COURSE -->
+                    <a href="course.html">
+                        Course
+                        <small>Endurance et vitesse</small>
+                    </a>
+
+
+                    <!-- HYROX -->
+                    <a href="hyrox.html">
+                        Hyrox
+                        <small>Force et cardio</small>
+                    </a>
+
+
+                    <!-- HYBRIDE -->
+                    <a href="hybride.html">
+                        Hybride
+                        <small>Devenir complet</small>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                MINDSET
+            ========================================== -->
+            <div class="nav-dropdown auth-only">
+
+                <a class="nav-trigger" href="sommeil-mindset.html">
+                    Mindset <span>↓</span>
+                </a>
+
+                <div class="nav-menu">
+
+                    <a href="sommeil-mindset.html#sommeil">
+                        Sommeil
+                        <small>Récupérer vraiment</small>
+                    </a>
+
+                    <a href="sommeil-mindset.html#sante-mentale">
+                        Santé mentale
+                        <small>Garder le cap</small>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                DASHBOARD
+            ========================================== -->
+            <a href="dashboard.html" class="nav-login auth-only">
+                dashboard
+            </a>
+
+        </nav>
+
+
+
+        <!-- =========================================
+            UTILISATEUR CONNECTÉ
+        ========================================== -->
+        <div class="dashboard-user auth-only" id="dashboard-user">
+
+            <span id="userName">ATHLETE</span>
+
+            <button id="logoutButton">
+                Déconnexion
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================================
+            CONNEXION SI NON CONNECTÉ
+        ========================================== -->
+        <a href="connexion.html"
+        class="nav-login"
+        id="login-link">
+
+            connexion
+
+        </a>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENU PRINCIPAL
+    ====================================================== -->
+
+    <main class="program-main">
+
+
+        <!-- =================================================
+             HERO / PRÉSENTATION
+        ================================================== -->
+
+        <section class="program-hero">
+
+            <div class="program-kicker">
+                SALLE / VOLUME
+            </div>
+
+            <h1>
+                BodyBuilding<span>.</span>
+            </h1>
+
+            <p>
+                adjflkajfdlksdfjalskfj dlsakjf lasdkjf lsdakjflksadjf lkasjdflkasdj f
+            </p>
+                    
+            
+
+        </section>
+
+
+
+
+        <!-- =================================================
+             QUESTIONNAIRE
+        ================================================== -->
+
+        <section class="section questionnaire-section">
+
+            <div class="selector-title">
+                Ton profil
+            </div>
+
+            <p class="questionnaire-intro">
+                Réponds aux questions ci-dessous pour construire
+                ton programme.
+            </p>
+
+
+            <form id="remiseFormeForm">
+
+
+                <!-- =========================================
+                     QUESTION 1 — NIVEAU
+                ========================================== -->
+
+                <div class="question-block">
+
+                    <label for="niveau">
+                        1. Quel est ton niveau actuel ?
+                    </label>
+
+                    <select id="niveau" name="niveau" required>
+
+                        <option value="">
+                            Sélectionne ton niveau
+                        </option>
+
+                        <option value="debutant">
+                            Débutant
+                        </option>
+
+                        <option value="reprise">
+                            Reprise après une période d'arrêt
+                        </option>
+
+                        <option value="regulier">
+                            Je m'entraîne déjà régulièrement
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     QUESTION 2 — FRÉQUENCE
+                ========================================== -->
+
+                <div class="question-block">
+
+                    <label for="jours">
+                        2. Combien de séances peux-tu faire par semaine ?
+                    </label>
+
+                    <select id="jours" name="jours" required>
+
+                        <option value="">
+                            Sélectionne une fréquence
+                        </option>
+
+                        <option value="2">
+                            2 séances
+                        </option>
+
+                        <option value="3">
+                            3 séances
+                        </option>
+
+                        <option value="4">
+                            4 séances
+                        </option>
+
+                        <option value="5">
+                            5 séances
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     QUESTION 3 — DURÉE
+                ========================================== -->
+
+                <div class="question-block">
+
+                    <label for="dureeSeance">
+                        3. Combien de temps peux-tu consacrer à chaque séance ?
+                    </label>
+
+                    <select
+                        id="dureeSeance"
+                        name="dureeSeance"
+                        required
+                    >
+
+                        <option value="">
+                            Sélectionne une durée
+                        </option>
+
+                        <option value="30-45">
+                            30 à 45 minutes
+                        </option>
+
+                        <option value="45-60">
+                            45 à 60 minutes
+                        </option>
+
+                        <option value="60-90">
+                            60 à 90 minutes
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     QUESTION 4 — OBJECTIF
+                ========================================== -->
+
+                <div class="question-block">
+
+                    <label for="objectif">
+                        4. Quel est ton objectif principal ?
+                    </label>
+
+                    <select id="objectif" name="objectif" required>
+
+                        <option value="">
+                            Sélectionne ton objectif
+                        </option>
+
+                        <option value="reprise">
+                            Reprendre une activité physique
+                        </option>
+
+                        <option value="muscle">
+                            Construire du muscle
+                        </option>
+
+                        <option value="perte">
+                            Perdre du gras
+                        </option>
+
+                        <option value="force">
+                            Devenir plus fort
+                        </option>
+
+                        <option value="condition">
+                            Améliorer ma condition physique
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     QUESTION 5 — DURÉE DU PROGRAMME
+                ========================================== -->
+
+                <div class="question-block">
+
+                    <label for="semaines">
+                        5. Combien de temps veux-tu suivre le programme ?
+                    </label>
+
+                    <select id="semaines" name="semaines" required>
+
+                        <option value="">
+                            Sélectionne une durée
+                        </option>
+
+                        <option value="4">
+                            4 semaines
+                        </option>
+
+                        <option value="8">
+                            8 semaines
+                        </option>
+
+                        <option value="12">
+                            12 semaines
+                        </option>
+
+                        <option value="16">
+                            16 semaines
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- =========================================
+                     BOUTON
+                ========================================== -->
+
+                <div class="questionnaire-submit">
+
+                    <button
+                        type="submit"
+                        class="program-submit"
+                    >
+                        Générer mon programme
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RÉSULTAT DU QUESTIONNAIRE
+        ================================================== -->
+
+        <section
+            class="section program-result"
+            id="programResult"
+            hidden
+        >
+
+            <div class="selector-title">
+                Ton programme
+            </div>
+
+            <div class="program-result-summary">
+
+                <h2 id="resultTitle">
+                    Ton programme personnalisé
+                </h2>
+
+                <p id="resultDescription">
+                    Ton programme sera affiché ici.
+                </p>
+
+            </div>
+
+
+            <!-- =============================================
+                 SÉLECTION DES SEMAINES
+            ============================================== -->
+
+            <div class="selector-title">
+                Choisir la semaine
+            </div>
+
+            <div
+                class="weeks"
+                id="weeks"
+            ></div>
+
+
+            <!-- =============================================
+                 HEADER SEMAINE
+            ============================================== -->
+
+            <div class="week-header">
+
+                <div>
+
+                    <div
+                        class="week-number"
+                        id="weekNumber"
+                    ></div>
+
+                    <div
+                        class="week-title"
+                        id="weekTitle"
+                    ></div>
+
+                </div>
+
+                <div
+                    class="phase"
+                    id="phase"
+                ></div>
+
+            </div>
+
+
+            <!-- =============================================
+                 JOURS
+            ============================================== -->
+
+            <div
+                class="days"
+                id="days"
+            ></div>
+
+
+            <!-- =============================================
+                 NOTE
+            ============================================== -->
+
+            <div
+                class="program-note"
+                id="programNote"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+        luxa_fit / SALLE / BODYBUILDING / BUILD WITH INTENT
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="js/app.js"></script>
+
+    <!-- Bibliothèque des programmes -->
+    <script src="js/programme/salle/prog_bodybuilding.js"></script>
+
+    <!-- Gestion du questionnaire + affichage du programme -->
+     <script src="js/programme/salle/salle.js"></script>
+    
+
 </body>
+
 </html>
