@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luxa_fit | Muscu</title>
+    <title>luxa_fit | Salle</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="program-page">
@@ -42,8 +42,8 @@
                 </a>
 
                 <div class="nav-menu">
-                    <a href="muscu.html">
-                        Muscu
+                    <a href="salle.html">
+                        Salle
                         <small>Force et hypertrophie</small>
                     </a>
 
@@ -106,20 +106,13 @@
     </header>
 
 <main class="program-main">
-    <a class="back-link" href="index.html">← Retour à l'accueil</a>
-    <section class="program-hero">
-        <div class="program-kicker">PILIER 01 / FORCE UTILE</div>
-        <h1>Muscu<span>.</span></h1>
-        <p>Construire un physique esthétique, développer sa force et transformer son corps en véritable outil de performance.</p>
-    </section>
+        <section class="program-hero">
+            <div class="program-kicker" id="programKicker"></div>
+            <h1 id="programTitle"></h1>
+            <p id="programDescription"></p>
+        </section>
 
-    <section class="program-story">
-        <div class="program-kicker">MON HISTOIRE / DE 59 À 70 KG</div>
-        <h2>Une progression construite avec constance.</h2>
-        <p>J'ai commencé la salle à 19 ans, avec un poids de 59 kg. Pendant ma première année, je suis monté à 70 kg grâce à trois séances par semaine et une vraie régularité.</p>
-        <p>Le premier format que j'ai suivi était un split PPL : Push, Pull, Legs. Au fil de la deuxième et de la troisième année, le PPL a évolué vers une organisation plus précise, avec un ou deux groupes musculaires travaillés par jour.</p>
-    </section>
-    <section class="program-stats muscu-stats">
+        <section class="program-stats muscu-stats">
         <div class="program-stat stat-current">
             <span>Bench press</span>
             <strong id="muscuBenchCurrent" data-performance-type="bench_actuel">---kg</strong>
@@ -150,26 +143,23 @@
             </div>
         </div>
     </section>
-    <section class="section">
-        <div class="selector-title">Choisir la semaine</div>
-        <div class="weeks" id="weeks"></div>
+    
+        <section class="section">
+            <div class="selector-title">Choisir la semaine</div>
+            <div class="weeks" id="weeks"></div>
+            <div class="week-header">
+                <div>
+                    <div class="week-number" id="weekNumber"></div>
+                    <div class="week-title" id="weekTitle"></div>
+                </div>
+            <div class="phase" id="phase">
 
-        <div class="week-header">
-            <div>
-                <div class="week-number" id="weekNumber">SEMAINE 1</div>
-                <div class="week-title" id="weekTitle">Reprise</div>
             </div>
-            <div class="phase" id="phase">Phase 1 — Base</div>
         </div>
-
-        <div class="days" id="days"></div>
-        <div class="program-note">Objectif : progresser sans créer de fatigue inutile. Garde 1 à 2 répétitions en réserve sur les mouvements principaux.</div>
-    </section>
-</main>
-<footer>luxa_fit / MUSCU / BUILD THE ENGINE</footer>
-
-<script src="js/app.js"></script>
-<script src="js/programme/prog_muscu.js"></script>
-
+            <div class="days" id="days"></div>
+            <div class="program-note" id="programNote"></div>
+        </section>
+    </main>
+    <footer>luxa_fit / SALLE / BUILD WITH INTENT</footer><script src="js/app.js"></script><script src="js/programme/salle/prog_powerlifting.js"></script><script src="js/programme/salle/salle-program.js"></script>
 </body>
 </html>

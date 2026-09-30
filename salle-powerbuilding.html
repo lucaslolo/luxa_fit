@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luxa_fit | Entraînement</title>
+    <title>luxa_fit | Salle</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="program-page">
@@ -43,7 +43,7 @@
 
                 <div class="nav-menu">
                     <a href="salle.html">
-                        Muscu
+                        Salle
                         <small>Force et hypertrophie</small>
                     </a>
 
@@ -104,68 +104,30 @@
         </a>
 
     </header>
-<main class="resource-page">
-    <section class="resource-hero">
-        <div class="resource-kicker">PILIER 02 / ENTRAÎNEMENT</div>
-        <h1>Construire un corps<br><span>capable.</span></h1>
-        <p>Choisir la bonne discipline, progresser avec méthode et garder assez de récupération pour devenir plus fort, plus endurant et plus complet.</p>
-    </section>
 
-    <section class="resource-grid" aria-label="Formations entraînement">
+<body class="program-page">
 
-        <a class="discipline-card discipline" href="salle.html">
-            <div class="resource-card-label">FORMATION 01 / FORCE</div>
-            <span class="discipline-icon">✦</span>
-            <h2>Salle</h2>
-            <p>Développer sa force et sa masse musculaire grâce à un entraînement structuré, progressif et maîtrisé.</p>
-            <ul class="resource-list">
-                <li>bodybuilding</li>
-                <li>powerlifting</li>
-                <li>powerbuilding</li>
-                <li>se remettre en forme</li>
-            </ul>
-        </a>
-
-        <a class="discipline-card discipline" href="course.html">
-            <div class="resource-card-label">FORMATION 02 / ENDURANCE</div>
-            <span class="discipline-icon">✦</span>
-            <h2>Course</h2>
-            <p>Améliorer son endurance et sa vitesse en avançant progressivement, sans brûler les étapes.</p>
-            <ul class="resource-list">
-                <li>Construire une base aérobie régulière</li>
-                <li>Alterner endurance, tempo et vitesse</li>
-                <li>Courir mieux tout en récupérant assez</li>
-            </ul>
-        </a>
-
-        <a class="discipline-card discipline" href="hyrox.html">
-            <div class="resource-card-label">FORMATION 03 / COMPÉTITION</div>
-            <span class="discipline-icon">✦</span>
-            <h2>Hyrox</h2>
-            <p>Combiner force, course et gestion de l'effort pour performer sur chaque station et chaque transition.</p>
-            <ul class="resource-list">
-                <li>Développer le moteur et la force utile</li>
-                <li>Apprendre à gérer les transitions</li>
-                <li>Préparer le rythme spécifique de course</li>
-            </ul>
-        </a>
-
-        <a class="discipline-card discipline" href="hybride.html">
-            <div class="resource-card-label">FORMATION 04 / ATHLÈTE COMPLET</div>
-            <span class="discipline-icon">✦</span>
-            <h2>Hybride</h2>
-            <p>Développer simultanément force, endurance et puissance pour construire un profil d'athlète complet.</p>
-            <ul class="resource-list">
-                <li>Organiser force et cardio dans la semaine</li>
-                <li>Gérer la fatigue entre les qualités</li>
-                <li>Progresser vers un objectif de performance</li>
-            </ul>
-        </a>
-    </section>
-
-    <p class="resource-note">La meilleure formation est celle que tu peux suivre avec régularité. Choisis une priorité, mesure ta progression et laisse le temps faire son travail.</p>
-</main>
-<footer>luxa_fit / ENTRAÎNEMENT / TRAIN WITH INTENT</footer>
-<script src="js/app.js"></script>
+    <main class="program-main">
+        <a class="back-link" href="salle.html">← Retour aux programmes salle</a>
+        <section class="program-hero">
+            <div class="program-kicker" id="programKicker"></div>
+            <h1 id="programTitle"></h1>
+            <p id="programDescription"></p>
+        </section>
+        <section class="section">
+            <div class="selector-title">Choisir la semaine</div>
+            <div class="weeks" id="weeks"></div>
+            <div class="week-header">
+                <div>
+                    <div class="week-number" id="weekNumber"></div>
+                    <div class="week-title" id="weekTitle"></div>
+                </div>
+                <div class="phase" id="phase"></div>
+            </div>
+            <div class="days" id="days"></div>
+            <div class="program-note" id="programNote"></div>
+        </section>
+    </main>
+    <footer>luxa_fit / SALLE / BUILD WITH INTENT</footer><script src="js/app.js"></script><script src="js/programme/salle/prog_powerbuilding.js"></script><script src="js/programme/salle/salle-program.js"></script>
 </body>
 </html>
