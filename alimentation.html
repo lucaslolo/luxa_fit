@@ -3,1029 +3,1208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Estime tes besoins énergétiques et tes macronutriments avec le calculateur luxa_fit.">
-    <title>Alimentation | luxa_fit</title>
+    <title>luxa_fit | LES 3 PILIERS</title>
     <link rel="stylesheet" href="css/alimentation.css">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/programmes.css">
+    <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/responsive.css">
-
+    
 </head>
 
-<body class="alimentation-page">
+<body class="programme-page alimentation-page">
    <div id="header-container"></div>
 
-    <main>
-        <section class="hero">
-            <div class="hero-inner">
-                <span class="eyebrow">LUXA_FIT / ALIMENTATION</span>
+<main class="program-main">
 
-                <h1>Comprends<br><strong>tes besoins.</strong></h1>
-                <p>
-                    Estime tes besoins énergétiques, définis ton objectif
-                    et obtiens une répartition personnalisée de tes
-                    macronutriments.
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="program-hero nutrition-hero">
+
+        <div class="nutrition-hero-content">
+
+            <span class="program-kicker eyebrow">
+                LUXA_FIT / ALIMENTATION
+            </span>
+
+            <h1>
+                Construis ton<br>
+                alimentation<span>.</span>
+            </h1>
+
+            <p>
+                Calcule tes besoins, définis tes macros
+                et construis ta journée repas par repas.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CALCULATEUR
+         ===================================================== -->
+
+    <section class="section questionnaire-section nutrition-calculator">
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                01 / CALCULATEUR
+            </span>
+
+            <h2>
+                Tes besoins
+            </h2>
+
+            <p>
+                Remplis les informations ci-dessous pour obtenir
+                une estimation personnalisée de tes besoins.
+            </p>
+
+        </div>
+
+
+        <form id="nutritionForm">
+
+            <!-- =================================================
+                 PROFIL
+                 ================================================= -->
+
+            <div class="form-block">
+
+                <div class="form-block-header">
+                    <span>01</span>
+                    <h3>Profil</h3>
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+
+                        <label>
+                            Sexe
+                        </label>
+
+                        <div class="radio-grid">
+
+                            <label class="radio-card">
+
+                                <input
+                                    type="radio"
+                                    name="sex"
+                                    value="male"
+                                    checked
+                                >
+
+                                <span>
+                                    Homme
+                                </span>
+
+                            </label>
+
+
+                            <label class="radio-card">
+
+                                <input
+                                    type="radio"
+                                    name="sex"
+                                    value="female"
+                                >
+
+                                <span>
+                                    Femme
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="age">
+                            Âge
+                        </label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            min="14"
+                            max="100"
+                            placeholder="Ex : 25"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="height">
+                            Taille
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input
+                                type="number"
+                                id="height"
+                                min="100"
+                                max="250"
+                                placeholder="Ex : 180"
+                                required
+                            >
+
+                            <span>cm</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="weight">
+                            Poids
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input
+                                type="number"
+                                id="weight"
+                                min="30"
+                                max="300"
+                                step="0.1"
+                                placeholder="Ex : 75"
+                                required
+                            >
+
+                            <span>kg</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="bodyFat">
+                            Masse grasse
+                            <small>optionnel</small>
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input
+                                type="number"
+                                id="bodyFat"
+                                min="2"
+                                max="70"
+                                step="0.1"
+                                placeholder="Ex : 15"
+                            >
+
+                            <span>%</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ACTIVITE
+                 ================================================= -->
+
+            <div class="form-block">
+
+                <div class="form-block-header">
+                    <span>02</span>
+                    <h3>Activité quotidienne</h3>
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group full">
+
+                        <label for="activity">
+                            Niveau d'activité
+                        </label>
+
+                        <select id="activity" required>
+
+                            <option value="1.2">
+                                Sédentaire — peu ou pas d'activité
+                            </option>
+
+                            <option value="1.375">
+                                Légèrement actif — 1 à 3 jours/semaine
+                            </option>
+
+                            <option value="1.55" selected>
+                                Modérément actif — 3 à 5 jours/semaine
+                            </option>
+
+                            <option value="1.725">
+                                Très actif — 6 à 7 jours/semaine
+                            </option>
+
+                            <option value="1.9">
+                                Extrêmement actif — activité quotidienne
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="steps">
+                            Pas quotidiens
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input
+                                type="number"
+                                id="steps"
+                                min="0"
+                                max="50000"
+                                value="7000"
+                            >
+
+                            <span>pas</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="trainingType">
+                            Type d'entraînement
+                        </label>
+
+                        <select id="trainingType">
+
+                            <option value="none">
+                                Aucun
+                            </option>
+
+                            <option value="strength">
+                                Musculation
+                            </option>
+
+                            <option value="running">
+                                Course à pied
+                            </option>
+
+                            <option value="hyrox">
+                                HYROX
+                            </option>
+
+                            <option value="hybrid">
+                                Hybride
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="sessions">
+                            Séances / semaine
+                        </label>
+
+                        <input
+                            type="number"
+                            id="sessions"
+                            min="0"
+                            max="14"
+                            value="4"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="duration">
+                            Durée d'une séance
+                        </label>
+
+                        <div class="input-with-unit">
+
+                            <input
+                                type="number"
+                                id="duration"
+                                min="0"
+                                max="300"
+                                value="60"
+                            >
+
+                            <span>min</span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="intensity">
+                            Intensité
+                        </label>
+
+                        <select id="intensity">
+
+                            <option value="0.8">
+                                Faible
+                            </option>
+
+                            <option value="1" selected>
+                                Modérée
+                            </option>
+
+                            <option value="1.2">
+                                Élevée
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 OBJECTIF
+                 ================================================= -->
+
+            <div class="form-block">
+
+                <div class="form-block-header">
+                    <span>03</span>
+                    <h3>Objectif</h3>
+                </div>
+
+
+                <div class="goal-grid">
+
+                    <label class="goal-card">
+
+                        <input
+                            type="radio"
+                            name="goal"
+                            value="cut"
+                        >
+
+                        <div>
+
+                            <strong>
+                                Perte de poids
+                            </strong>
+
+                            <span>
+                                Déficit calorique
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="goal-card active">
+
+                        <input
+                            type="radio"
+                            name="goal"
+                            value="maintain"
+                            checked
+                        >
+
+                        <div>
+
+                            <strong>
+                                Maintien
+                            </strong>
+
+                            <span>
+                                Conserver ton poids
+                            </span>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="goal-card">
+
+                        <input
+                            type="radio"
+                            name="goal"
+                            value="bulk"
+                        >
+
+                        <div>
+
+                            <strong>
+                                Prise de poids
+                            </strong>
+
+                            <span>
+                                Surplus calorique
+                            </span>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+                <div
+                    class="form-group adjustment-field"
+                    id="adjustmentField"
+                >
+
+                    <label for="adjustment">
+                        Ajustement calorique
+                    </label>
+
+                    <select id="adjustment">
+
+                        <option value="0.10">
+                            10 %
+                        </option>
+
+                        <option value="0.15" selected>
+                            15 %
+                        </option>
+
+                        <option value="0.20">
+                            20 %
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 REPAS
+                 ================================================= -->
+
+            <div class="form-block">
+
+                <div class="form-block-header">
+                    <span>04</span>
+                    <h3>Organisation des repas</h3>
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="mealCount">
+                        Nombre de repas / jour
+                    </label>
+
+                    <select id="mealCount">
+
+                        <option value="2">
+                            2 repas
+                        </option>
+
+                        <option value="3" selected>
+                            3 repas
+                        </option>
+
+                        <option value="4">
+                            4 repas
+                        </option>
+
+                        <option value="5">
+                            5 repas
+                        </option>
+
+                        <option value="6">
+                            6 repas
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <p class="form-help">
+                    Le nombre de repas détermine automatiquement
+                    la répartition des calories sur ta journée.
                 </p>
 
             </div>
 
-        </section>
 
+            <button
+                type="submit"
+                class="calculate-button"
+            >
+                Calculer mes besoins
+                <span>→</span>
+            </button>
 
+        </form>
 
-<!-- =========================================================
-     CALCULATEUR
-     ========================================================= -->
-
-<section class="calculator-section">
-
-<div class="calculator">
-
-<form id="nutritionForm">
-
-
-<!-- =====================================================
-     01 — PROFIL
-     ===================================================== -->
-
-<div class="form-section">
-
-    <div class="section-number">
-        01
-    </div>
-
-
-    <div class="section-content">
-
-        <span class="section-label">
-            TON PROFIL
-        </span>
-
-
-        <h2>
-            Informations personnelles
-        </h2>
-
-
-
-        <!-- SEXE -->
-
-        <div class="field">
-
-            <label>
-                Sexe
-            </label>
-
-
-            <div class="radio-grid">
-
-                <label class="radio-card">
-
-                    <input
-                        type="radio"
-                        name="sex"
-                        value="male"
-                        checked
-                    >
-
-                    <span>
-                        Homme
-                    </span>
-
-                </label>
-
-
-                <label class="radio-card">
-
-                    <input
-                        type="radio"
-                        name="sex"
-                        value="female"
-                    >
-
-                    <span>
-                        Femme
-                    </span>
-
-                </label>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- AGE / TAILLE / POIDS -->
-
-        <div class="three-fields">
-
-
-            <div class="field">
-
-                <label for="age">
-                    Âge
-                </label>
-
-                <div class="input-wrapper">
-
-                    <input
-                        id="age"
-                        type="number"
-                        min="15"
-                        max="100"
-                        placeholder="25"
-                        required
-                    >
-
-                    <span>
-                        ans
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="field">
-
-                <label for="height">
-                    Taille
-                </label>
-
-                <div class="input-wrapper">
-
-                    <input
-                        id="height"
-                        type="number"
-                        min="120"
-                        max="230"
-                        placeholder="180"
-                        required
-                    >
-
-                    <span>
-                        cm
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="field">
-
-                <label for="weight">
-                    Poids
-                </label>
-
-                <div class="input-wrapper">
-
-                    <input
-                        id="weight"
-                        type="number"
-                        min="35"
-                        max="250"
-                        step="0.1"
-                        placeholder="75"
-                        required
-                    >
-
-                    <span>
-                        kg
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- MASSE GRASSE -->
-
-        <div class="field">
-
-            <label for="bodyFat">
-
-                Masse grasse
-
-                <small>
-                    optionnel
-                </small>
-
-            </label>
-
-
-            <div class="input-wrapper">
-
-                <input
-                    id="bodyFat"
-                    type="number"
-                    min="3"
-                    max="60"
-                    step="0.1"
-                    placeholder="15"
-                >
-
-                <span>
-                    %
-                </span>
-
-            </div>
-
-
-            <p class="help">
-                Si tu connais ton taux de masse grasse,
-                il peut être utilisé pour estimer ta masse maigre.
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     02 — ACTIVITÉ
-     ===================================================== -->
-
-<div class="form-section">
-
-    <div class="section-number">
-        02
-    </div>
-
-
-    <div class="section-content">
-
-        <span class="section-label">
-            TON QUOTIDIEN
-        </span>
-
-
-        <h2>
-            Niveau d'activité
-        </h2>
-
-
-        <div class="field">
-
-            <label for="activity">
-                Activité quotidienne
-            </label>
-
-
-            <select id="activity">
-
-                <option value="1.2">
-                    Sédentaire — peu de déplacements
-                </option>
-
-                <option value="1.375">
-                    Légèrement actif
-                </option>
-
-                <option
-                    value="1.55"
-                    selected
-                >
-                    Modérément actif
-                </option>
-
-                <option value="1.725">
-                    Très actif
-                </option>
-
-                <option value="1.9">
-                    Extrêmement actif
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="field">
-
-            <label for="steps">
-
-                Pas quotidiens
-
-                <small>
-                    optionnel
-                </small>
-
-            </label>
-
-
-            <div class="input-wrapper">
-
-                <input
-                    id="steps"
-                    type="number"
-                    min="0"
-                    max="50000"
-                    placeholder="8000"
-                >
-
-                <span>
-                    pas
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     03 — SPORT
-     ===================================================== -->
-
-<div class="form-section">
-
-    <div class="section-number">
-        03
-    </div>
-
-
-    <div class="section-content">
-
-        <span class="section-label">
-            TON SPORT
-        </span>
-
-
-        <h2>
-            Entraînement
-        </h2>
-
-
-        <div class="field">
-
-            <label for="trainingType">
-                Discipline principale
-            </label>
-
-
-            <select id="trainingType">
-
-                <option value="none">
-                    Aucun sport
-                </option>
-
-                <option value="strength">
-                    Musculation
-                </option>
-
-                <option value="running">
-                    Course à pied
-                </option>
-
-                <option value="hyrox">
-                    HYROX
-                </option>
-
-                <option value="hybrid">
-                    Programme hybride
-                </option>
-
-            </select>
-
-        </div>
-
-
-
-        <div class="three-fields">
-
-
-            <div class="field">
-
-                <label for="sessions">
-                    Séances
-                </label>
-
-                <div class="input-wrapper">
-
-                    <input
-                        id="sessions"
-                        type="number"
-                        min="0"
-                        max="20"
-                        value="3"
-                    >
-
-                    <span>
-                        / sem.
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="field">
-
-                <label for="duration">
-                    Durée
-                </label>
-
-                <div class="input-wrapper">
-
-                    <input
-                        id="duration"
-                        type="number"
-                        min="0"
-                        max="300"
-                        value="60"
-                    >
-
-                    <span>
-                        min
-                    </span>
-
-                </div>
-
-            </div>
-
-
-
-            <div class="field">
-
-                <label for="intensity">
-                    Intensité
-                </label>
-
-                <select id="intensity">
-
-                    <option value="0.8">
-                        Faible
-                    </option>
-
-                    <option
-                        value="1"
-                        selected
-                    >
-                        Modérée
-                    </option>
-
-                    <option value="1.2">
-                        Élevée
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     04 — OBJECTIF
-     ===================================================== -->
-
-<div class="form-section">
-
-    <div class="section-number">
-        04
-    </div>
-
-
-    <div class="section-content">
-
-        <span class="section-label">
-            TON OBJECTIF
-        </span>
-
-
-        <h2>
-            Que veux-tu faire ?
-        </h2>
-
-
-        <div class="goal-grid">
-
-
-            <label class="goal-card">
-
-                <input
-                    type="radio"
-                    name="goal"
-                    value="cut"
-                >
-
-                <div>
-
-                    <span class="goal-symbol">
-                        ↓
-                    </span>
-
-                    <strong>
-                        Sèche
-                    </strong>
-
-                    <small>
-                        Réduire le poids
-                    </small>
-
-                </div>
-
-            </label>
-
-
-
-            <label class="goal-card">
-
-                <input
-                    type="radio"
-                    name="goal"
-                    value="maintain"
-                    checked
-                >
-
-                <div>
-
-                    <span class="goal-symbol">
-                        =
-                    </span>
-
-                    <strong>
-                        Maintien
-                    </strong>
-
-                    <small>
-                        Stabiliser le poids
-                    </small>
-
-                </div>
-
-            </label>
-
-
-
-            <label class="goal-card">
-
-                <input
-                    type="radio"
-                    name="goal"
-                    value="bulk"
-                >
-
-                <div>
-
-                    <span class="goal-symbol">
-                        ↑
-                    </span>
-
-                    <strong>
-                        Prise de masse
-                    </strong>
-
-                    <small>
-                        Augmenter le poids
-                    </small>
-
-                </div>
-
-            </label>
-
-        </div>
-
-
-
-        <!-- AJUSTEMENT -->
-
-        <div
-            class="field"
-            id="adjustmentField"
-        >
-
-            <label for="adjustment">
-
-                Amplitude
-
-            </label>
-
-
-            <select id="adjustment">
-
-                <option value="0.10">
-                    Modérée — 10 %
-                </option>
-
-                <option
-                    value="0.15"
-                    selected
-                >
-                    Standard — 15 %
-                </option>
-
-                <option value="0.20">
-                    Importante — 20 %
-                </option>
-
-            </select>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     CALCUL
-     ===================================================== -->
-
-<button
-    type="submit"
-    class="calculate-button"
->
-
-    <span>
-        CALCULER MES BESOINS
-    </span>
-
-    <span class="arrow">
-        →
-    </span>
-
-</button>
-
-
-</form>
-
-</div>
-
-</section>
-
-
-
-<!-- =========================================================
-     RESULTATS
-     ========================================================= -->
-
-<section
-    class="results-section hidden"
-    id="results"
->
-
-<div class="results">
-
-
-    <div class="results-header">
-
-        <span>
-            05 — TES RÉSULTATS
-        </span>
-
-        <h2>
-            Ton estimation
-        </h2>
-
-    </div>
-
+    </section>
 
 
     <!-- =====================================================
-         CALORIES
+         RESULTATS
          ===================================================== -->
 
-    <div class="calorie-main">
-
-        <span>
-            CALORIES CIBLES
-        </span>
-
-
-        <strong id="targetCalories">
-            0
-        </strong>
-
-
-        <small>
-            kcal / jour
-        </small>
-
-    </div>
-
-
-
-    <!-- BMR / TDEE -->
-
-    <div class="energy-grid">
-
-
-        <div class="energy-card">
-
-            <span>
-                MÉTABOLISME DE BASE
-            </span>
-
-            <strong id="bmr">
-                0 kcal
-            </strong>
-
-            <p>
-                Énergie approximative utilisée
-                par ton organisme au repos.
-            </p>
-
-        </div>
-
-
-
-        <div class="energy-card">
-
-            <span>
-                MAINTIEN / TDEE
-            </span>
-
-            <strong id="tdee">
-                0 kcal
-            </strong>
-
-            <p>
-                Estimation de tes besoins
-                énergétiques quotidiens.
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         SCENARIOS
-         ===================================================== -->
-
-    <div class="results-block">
-
-        <div class="block-header">
-
-            <span>
-                LES 3 SCÉNARIOS
-            </span>
-
-            <h3>
-                Selon ton objectif
-            </h3>
-
-        </div>
-
-
-        <div class="scenario-grid">
-
-
-            <div class="scenario cut">
-
-                <span>
-                    SÈCHE
-                </span>
-
-                <strong id="cutCalories">
-                    0
-                </strong>
-
-                <small>
-                    kcal / jour
-                </small>
-
-            </div>
-
-
-
-            <div class="scenario maintain">
-
-                <span>
-                    MAINTIEN
-                </span>
-
-                <strong id="maintainCalories">
-                    0
-                </strong>
-
-                <small>
-                    kcal / jour
-                </small>
-
-            </div>
-
-
-
-            <div class="scenario bulk">
-
-                <span>
-                    PRISE DE MASSE
-                </span>
-
-                <strong id="bulkCalories">
-                    0
-                </strong>
-
-                <small>
-                    kcal / jour
-                </small>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         MACROS
-         ===================================================== -->
-
-    <div class="results-block">
-
-        <div class="block-header">
-
-            <span>
-                MACRONUTRIMENTS
-            </span>
-
-            <h3>
-                Ta répartition
-            </h3>
-
-        </div>
-
-
-        <div class="macro-grid">
-
-
-            <div class="macro protein">
-
-                <span>
-                    PROTÉINES
-                </span>
-
-                <strong id="protein">
-                    0 g
-                </strong>
-
-                <small id="proteinKcal">
-                    0 kcal
-                </small>
-
-            </div>
-
-
-
-            <div class="macro fat">
-
-                <span>
-                    LIPIDES
-                </span>
-
-                <strong id="fat">
-                    0 g
-                </strong>
-
-                <small id="fatKcal">
-                    0 kcal
-                </small>
-
-            </div>
-
-
-
-            <div class="macro carbs">
-
-                <span>
-                    GLUCIDES
-                </span>
-
-                <strong id="carbs">
-                    0 g
-                </strong>
-
-                <small id="carbsKcal">
-                    0 kcal
-                </small>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         SUPPLEMENTS
-         ===================================================== -->
-
-    <div class="extra-grid">
-
-
-        <div class="extra-card">
-
-            <span>
-                💊 CRÉATINE
-            </span>
-
-            <strong>
-                3–5 g / jour
-            </strong>
-
-            <p>
-                La créatine monohydrate peut être
-                consommée quotidiennement, y compris
-                les jours sans entraînement.
-            </p>
-
-        </div>
-
-
-
-        <div class="extra-card">
-
-            <span>
-                💧 HYDRATATION
-            </span>
-
-            <strong id="water">
-                0 L / jour
-            </strong>
-
-            <p>
-                Estimation de base à adapter selon
-                la chaleur, la transpiration et ton activité.
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         NOTE
-         ===================================================== -->
-
-    <div class="result-note">
-
-        <strong>
-            Important
-        </strong>
-
-        <p id="message">
-
-            Ces chiffres sont des estimations de départ.
-            Les besoins réels peuvent varier selon la personne,
-            son activité et son évolution.
-
-        </p>
-
-    </div>
-
-
-
-    <button
-        type="button"
-        id="reset"
-        class="reset-button"
+    <section
+        id="results"
+        class="section nutrition-results hidden"
     >
 
-        REFAIRE LE CALCUL
+        <div class="section-heading light">
 
-    </button>
+            <span class="section-number">
+                02 / RÉSULTATS
+            </span>
+
+            <h2>
+                Ton plan
+            </h2>
+
+            <p>
+                Voici ton estimation quotidienne.
+            </p>
+
+        </div>
 
 
-</div>
+        <!-- OBJECTIF PRINCIPAL -->
 
-</section>
+        <div class="target-card">
+
+            <div>
+
+                <span>
+                    OBJECTIF
+                </span>
+
+                <h3 id="goalLabel">
+                    Maintien
+                </h3>
+
+            </div>
+
+            <strong>
+                <span id="targetCalories">0</span>
+                <small>kcal / jour</small>
+            </strong>
+
+        </div>
+
+
+        <!-- ENERGIE -->
+
+        <div class="results-grid">
+
+            <article class="result-card">
+
+                <span>
+                    MÉTABOLISME DE BASE
+                </span>
+
+                <strong>
+                    <span id="bmr">0</span>
+                    kcal
+                </strong>
+
+                <p>
+                    Énergie estimée au repos.
+                </p>
+
+            </article>
+
+
+            <article class="result-card">
+
+                <span>
+                    DÉPENSE QUOTIDIENNE
+                </span>
+
+                <strong>
+                    <span id="tdee">0</span>
+                    kcal
+                </strong>
+
+                <p>
+                    Estimation de ton maintien.
+                </p>
+
+            </article>
+
+        </div>
+
+
+        <!-- SCENARIOS -->
+
+        <div class="scenario-section">
+
+            <div class="sub-heading">
+
+                <span>
+                    SCÉNARIOS
+                </span>
+
+                <h3>
+                    Les différentes options
+                </h3>
+
+            </div>
+
+
+            <div class="scenario-grid">
+
+                <article class="scenario-card cut">
+
+                    <span>
+                        PERTE
+                    </span>
+
+                    <strong>
+                        <span id="cutCalories">0</span>
+                        kcal
+                    </strong>
+
+                </article>
+
+
+                <article class="scenario-card maintain">
+
+                    <span>
+                        MAINTIEN
+                    </span>
+
+                    <strong>
+                        <span id="maintainCalories">0</span>
+                        kcal
+                    </strong>
+
+                </article>
+
+
+                <article class="scenario-card bulk">
+
+                    <span>
+                        PRISE
+                    </span>
+
+                    <strong>
+                        <span id="bulkCalories">0</span>
+                        kcal
+                    </strong>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- MACROS -->
+
+        <div class="macro-section">
+
+            <div class="sub-heading">
+
+                <span>
+                    MACRONUTRIMENTS
+                </span>
+
+                <h3>
+                    Ta répartition quotidienne
+                </h3>
+
+            </div>
+
+
+            <div class="macro-grid">
+
+                <article class="macro-card protein">
+
+                    <span>
+                        PROTÉINES
+                    </span>
+
+                    <strong>
+                        <span id="protein">0</span>
+                        g
+                    </strong>
+
+                    <small>
+                        <span id="proteinKcal">0</span> kcal
+                    </small>
+
+                </article>
+
+
+                <article class="macro-card carbs">
+
+                    <span>
+                        GLUCIDES
+                    </span>
+
+                    <strong>
+                        <span id="carbs">0</span>
+                        g
+                    </strong>
+
+                    <small>
+                        <span id="carbsKcal">0</span> kcal
+                    </small>
+
+                </article>
+
+
+                <article class="macro-card fat">
+
+                    <span>
+                        LIPIDES
+                    </span>
+
+                    <strong>
+                        <span id="fat">0</span>
+                        g
+                    </strong>
+
+                    <small>
+                        <span id="fatKcal">0</span> kcal
+                    </small>
+
+                </article>
+
+            </div>
+
+        </div>
+
+
+        <!-- EXTRAS -->
+
+        <div class="extra-grid">
+
+            <article class="extra-card">
+
+                <span>
+                    EAU
+                </span>
+
+                <strong>
+                    <span id="water">0</span>
+                    L
+                </strong>
+
+                <p>
+                    Objectif hydratation quotidien.
+                </p>
+
+            </article>
+
+
+            <article class="extra-card">
+
+                <span>
+                    CRÉATINE
+                </span>
+
+                <strong>
+                    3–5 g
+                </strong>
+
+                <p>
+                    Dose quotidienne couramment utilisée.
+                </p>
+
+            </article>
+
+        </div>
+
+
+        <div
+            id="message"
+            class="result-message"
+        ></div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CATALOGUE REPAS
+         ===================================================== -->
+
+    <section
+        id="mealPlanner"
+        class="section meal-planner hidden"
+    >
+
+        <div class="section-heading">
+
+            <span class="section-number">
+                03 / CONSTRUCTION
+            </span>
+
+            <h2>
+                Construis ta journée
+            </h2>
+
+            <p>
+                Les portions s'adaptent automatiquement
+                à tes besoins caloriques et à ta répartition
+                en macros.
+            </p>
+
+        </div>
+
+
+        <!-- TARGET REPAS -->
+
+        <div class="meal-target">
+
+            <div>
+
+                <span>
+                    PROCHAIN REPAS
+                </span>
+
+                <h3 id="mealCountDisplay">
+                    3 repas
+                </h3>
+
+            </div>
+
+
+            <div class="meal-target-values">
+
+                <div>
+
+                    <span>
+                        KCAL
+                    </span>
+
+                    <strong id="mealTargetCalories">
+                        0
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        PROT
+                    </span>
+
+                    <strong id="mealTargetProtein">
+                        0 g
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        GLUC
+                    </span>
+
+                    <strong id="mealTargetCarbs">
+                        0 g
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        LIP
+                    </span>
+
+                    <strong id="mealTargetFat">
+                        0 g
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILTRES -->
+
+        <div class="meal-filters">
+
+            <button
+                class="filter-button active"
+                data-filter="all"
+                type="button"
+            >
+                Tous
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="breakfast"
+                type="button"
+            >
+                Petit-déjeuner
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="lunch"
+                type="button"
+            >
+                Déjeuner
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="dinner"
+                type="button"
+            >
+                Dîner
+            </button>
+
+            <button
+                class="filter-button"
+                data-filter="snack"
+                type="button"
+            >
+                Collation
+            </button>
+
+        </div>
+
+
+        <!-- CATALOGUE -->
+
+        <div
+            id="mealCatalog"
+            class="meal-catalog"
+        ></div>
+
+
+        <!-- JOURNEE -->
+
+        <div class="day-summary">
+
+            <div class="day-summary-header">
+
+                <div>
+
+                    <span>
+                        TA JOURNÉE
+                    </span>
+
+                    <h3>
+                        Repas sélectionnés
+                    </h3>
+
+                </div>
+
+                <span
+                    id="selectedMealCount"
+                    class="selected-meal-count"
+                >
+                    0 / 3
+                </span>
+
+            </div>
+
+
+            <div class="day-summary-grid">
+
+                <div>
+
+                    <span>
+                        OBJECTIF
+                    </span>
+
+                    <strong id="summaryTargetCalories">
+                        0 kcal
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        SÉLECTIONNÉ
+                    </span>
+
+                    <strong id="selectedCalories">
+                        0 kcal
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        RESTANT
+                    </span>
+
+                    <strong id="remainingCalories">
+                        0 kcal
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="macro-summary">
+
+                <div>
+
+                    <span>
+                        PROTÉINES
+                    </span>
+
+                    <strong>
+                        <span id="summaryTargetProtein">0</span> g
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        GLUCIDES
+                    </span>
+
+                    <strong>
+                        <span id="summaryTargetCarbs">0</span> g
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        LIPIDES
+                    </span>
+
+                    <strong>
+                        <span id="summaryTargetFat">0</span> g
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="remaining-macros">
+
+                <span>
+                    Restant :
+                </span>
+
+                <strong id="remainingProtein">
+                    0 g prot
+                </strong>
+
+                <strong id="remainingCarbs">
+                    0 g gluc
+                </strong>
+
+                <strong id="remainingFat">
+                    0 g lip
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- REPAS SELECTIONNES -->
+
+        <div class="selected-meals-section">
+
+            <div class="sub-heading">
+
+                <span>
+                    MA JOURNÉE
+                </span>
+
+                <h3>
+                    Mes repas
+                </h3>
+
+            </div>
+
+
+            <div
+                id="selectedMeals"
+                class="selected-meals"
+            ></div>
+
+        </div>
+
+
+        <div class="meal-note">
+
+            <strong>
+                ℹ️ Portions automatiques
+            </strong>
+
+            <p>
+                Les quantités affichées sont adaptées automatiquement
+                à ton objectif calorique. Un même repas peut donc être
+                plus petit ou plus grand selon tes besoins.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="reset"
+            class="reset-button"
+        >
+            Recommencer
+        </button>
+
+    </section>
 
 </main>
 
 
-
 <script src="js/alimentation/alimentation.js"></script>
-<script src="js/app.js"></script>
 <script src="js/components.js"></script>
-</body>
 
+</body>
 </html>

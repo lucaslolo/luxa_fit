@@ -1,403 +1,1130 @@
 /* =========================================================
-   LUXA_FIT — CALCULATEUR ALIMENTATION
+   LUXA_FIT — ALIMENTATION
    ========================================================= */
 
 
 /* =========================================================
-   ELEMENTS
+   VARIABLES GLOBALES
    ========================================================= */
 
-const form =
-    document.getElementById("nutritionForm");
+let nutritionPlan = null;
 
-const results =
-    document.getElementById("results");
+let selectedMeals = [];
 
-const resetButton =
-    document.getElementById("reset");
-
-const adjustmentField =
-    document.getElementById("adjustmentField");
-
-const goalInputs =
-    document.querySelectorAll(
-        'input[name="goal"]'
-    );
-
-const trainingTypeInput =
-    document.getElementById("trainingType");
-
-const trainingFields =
-    [
-        document.getElementById("sessions"),
-        document.getElementById("duration"),
-        document.getElementById("intensity")
-    ];
+let currentFilter = "all";
 
 
 /* =========================================================
-   OBJECTIF
+   CATALOGUE DES REPAS
    ========================================================= */
 
-goalInputs.forEach(input => {
+const mealTemplates = [
 
-    input.addEventListener(
-        "change",
-        updateGoalInterface
-    );
+    {
+        id: "oatmeal",
+        name: "Porridge banane & beurre de cacahuète",
+        categories: ["breakfast"],
+        calories: 620,
+        protein: 31,
+        carbs: 78,
+        fat: 22,
+
+        ingredients: [
+            ["Flocons d'avoine", 80, "g"],
+            ["Lait", 250, "ml"],
+            ["Banane", 120, "g"],
+            ["Beurre de cacahuète", 20, "g"],
+            ["Whey", 25, "g"]
+        ]
+    },
+
+    {
+        id: "eggs_toast",
+        name: "Œufs, pain complet & avocat",
+        categories: ["breakfast"],
+        calories: 590,
+        protein: 31,
+        carbs: 48,
+        fat: 30,
+
+        ingredients: [
+            ["Œufs", 3, "pièces"],
+            ["Pain complet", 100, "g"],
+            ["Avocat", 70, "g"],
+            ["Tomates", 100, "g"]
+        ]
+    },
+
+    {
+        id: "skyr_granola",
+        name: "Skyr, granola & fruits rouges",
+        categories: ["breakfast", "snack"],
+        calories: 450,
+        protein: 35,
+        carbs: 55,
+        fat: 10,
+
+        ingredients: [
+            ["Skyr", 300, "g"],
+            ["Granola", 60, "g"],
+            ["Fruits rouges", 150, "g"],
+            ["Miel", 15, "g"]
+        ]
+    },
+
+    {
+        id: "chicken_rice",
+        name: "Poulet, riz & légumes",
+        categories: ["lunch", "dinner"],
+        calories: 690,
+        protein: 55,
+        carbs: 82,
+        fat: 15,
+
+        ingredients: [
+            ["Poulet", 180, "g"],
+            ["Riz cuit", 250, "g"],
+            ["Brocoli", 150, "g"],
+            ["Huile d'olive", 10, "g"]
+        ]
+    },
+
+    {
+        id: "beef_rice",
+        name: "Bœuf, riz & légumes",
+        categories: ["lunch", "dinner"],
+        calories: 760,
+        protein: 50,
+        carbs: 78,
+        fat: 27,
+
+        ingredients: [
+            ["Bœuf 5%", 180, "g"],
+            ["Riz cuit", 230, "g"],
+            ["Courgettes", 150, "g"],
+            ["Huile d'olive", 10, "g"]
+        ]
+    },
+
+    {
+        id: "salmon_potato",
+        name: "Saumon, pommes de terre & légumes",
+        categories: ["lunch", "dinner"],
+        calories: 720,
+        protein: 43,
+        carbs: 60,
+        fat: 32,
+
+        ingredients: [
+            ["Saumon", 170, "g"],
+            ["Pommes de terre", 300, "g"],
+            ["Haricots verts", 150, "g"],
+            ["Huile d'olive", 5, "g"]
+        ]
+    },
+
+    {
+        id: "turkey_pasta",
+        name: "Pâtes, dinde & sauce tomate",
+        categories: ["lunch", "dinner"],
+        calories: 700,
+        protein: 53,
+        carbs: 86,
+        fat: 15,
+
+        ingredients: [
+            ["Pâtes cuites", 280, "g"],
+            ["Dinde", 180, "g"],
+            ["Sauce tomate", 150, "g"],
+            ["Parmesan", 15, "g"],
+            ["Huile d'olive", 5, "g"]
+        ]
+    },
+
+    {
+        id: "tuna_pasta",
+        name: "Pâtes au thon",
+        categories: ["lunch", "dinner"],
+        calories: 650,
+        protein: 48,
+        carbs: 82,
+        fat: 12,
+
+        ingredients: [
+            ["Pâtes cuites", 270, "g"],
+            ["Thon au naturel", 140, "g"],
+            ["Tomates", 150, "g"],
+            ["Fromage frais", 40, "g"],
+            ["Huile d'olive", 5, "g"]
+        ]
+    },
+
+    {
+        id: "wrap_chicken",
+        name: "Wrap poulet & crudités",
+        categories: ["lunch", "dinner"],
+        calories: 610,
+        protein: 48,
+        carbs: 58,
+        fat: 20,
+
+        ingredients: [
+            ["Tortillas", 2, "pièces"],
+            ["Poulet", 150, "g"],
+            ["Avocat", 50, "g"],
+            ["Salade", 50, "g"],
+            ["Tomates", 100, "g"],
+            ["Sauce yaourt", 50, "g"]
+        ]
+    },
+
+    {
+        id: "burger",
+        name: "Burger maison & pommes de terre",
+        categories: ["lunch", "dinner"],
+        calories: 800,
+        protein: 48,
+        carbs: 80,
+        fat: 32,
+
+        ingredients: [
+            ["Pain burger", 1, "pièce"],
+            ["Steak haché 5%", 150, "g"],
+            ["Fromage", 25, "g"],
+            ["Pommes de terre", 250, "g"],
+            ["Salade", 50, "g"]
+        ]
+    },
+
+    {
+        id: "rice_eggs",
+        name: "Riz, œufs & légumes",
+        categories: ["lunch", "dinner"],
+        calories: 610,
+        protein: 29,
+        carbs: 76,
+        fat: 20,
+
+        ingredients: [
+            ["Riz cuit", 250, "g"],
+            ["Œufs", 3, "pièces"],
+            ["Légumes", 200, "g"],
+            ["Huile d'olive", 10, "g"]
+        ]
+    },
+
+    {
+        id: "pancakes",
+        name: "Pancakes protéinés",
+        categories: ["breakfast"],
+        calories: 520,
+        protein: 38,
+        carbs: 65,
+        fat: 12,
+
+        ingredients: [
+            ["Flocons d'avoine", 70, "g"],
+            ["Œufs", 2, "pièces"],
+            ["Banane", 100, "g"],
+            ["Whey", 25, "g"],
+            ["Sirop d'érable", 15, "g"]
+        ]
+    },
+
+    {
+        id: "yogurt_banana",
+        name: "Yaourt, banane & noix",
+        categories: ["snack"],
+        calories: 390,
+        protein: 24,
+        carbs: 43,
+        fat: 14,
+
+        ingredients: [
+            ["Skyr", 250, "g"],
+            ["Banane", 120, "g"],
+            ["Noix", 20, "g"],
+            ["Miel", 10, "g"]
+        ]
+    },
+
+    {
+        id: "shake",
+        name: "Shake protéiné banane",
+        categories: ["snack"],
+        calories: 380,
+        protein: 32,
+        carbs: 48,
+        fat: 8,
+
+        ingredients: [
+            ["Lait", 300, "ml"],
+            ["Whey", 30, "g"],
+            ["Banane", 120, "g"],
+            ["Flocons d'avoine", 30, "g"]
+        ]
+    },
+
+    {
+        id: "toast_tuna",
+        name: "Toast thon & fromage frais",
+        categories: ["snack"],
+        calories: 430,
+        protein: 34,
+        carbs: 43,
+        fat: 13,
+
+        ingredients: [
+            ["Pain complet", 100, "g"],
+            ["Thon", 100, "g"],
+            ["Fromage frais", 40, "g"],
+            ["Tomates", 100, "g"]
+        ]
+    },
+
+    {
+        id: "rice_pudding",
+        name: "Riz au lait protéiné",
+        categories: ["snack", "breakfast"],
+        calories: 440,
+        protein: 30,
+        carbs: 66,
+        fat: 7,
+
+        ingredients: [
+            ["Riz cuit", 200, "g"],
+            ["Lait", 200, "ml"],
+            ["Whey", 25, "g"],
+            ["Fruits rouges", 100, "g"]
+        ]
+    },
+
+    {
+        id: "cottage_fruit",
+        name: "Cottage cheese & fruits",
+        categories: ["snack"],
+        calories: 350,
+        protein: 30,
+        carbs: 34,
+        fat: 9,
+
+        ingredients: [
+            ["Cottage cheese", 250, "g"],
+            ["Pomme", 150, "g"],
+            ["Amandes", 15, "g"]
+        ]
+    }
+
+];
+
+
+/* =========================================================
+   REPARTITION DES CALORIES
+   ========================================================= */
+
+const mealDistributions = {
+
+    2: [0.45, 0.55],
+
+    3: [0.30, 0.40, 0.30],
+
+    4: [0.25, 0.35, 0.30, 0.10],
+
+    5: [0.25, 0.30, 0.25, 0.10, 0.10],
+
+    6: [0.20, 0.25, 0.25, 0.10, 0.10, 0.10]
+
+};
+
+
+/* =========================================================
+   TYPES DE REPAS
+   ========================================================= */
+
+const mealTypes = {
+
+    2: [
+        "lunch",
+        "dinner"
+    ],
+
+    3: [
+        "breakfast",
+        "lunch",
+        "dinner"
+    ],
+
+    4: [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "snack"
+    ],
+
+    5: [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "snack",
+        "snack"
+    ],
+
+    6: [
+        "breakfast",
+        "lunch",
+        "dinner",
+        "snack",
+        "snack",
+        "snack"
+    ]
+
+};
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+const mealTypeLabels = {
+
+    breakfast: "Petit-déjeuner",
+
+    lunch: "Déjeuner",
+
+    dinner: "Dîner",
+
+    snack: "Collation"
+
+};
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const form = document.getElementById("nutritionForm");
+
+    const resetButton = document.getElementById("reset");
+
+    const mealCount = document.getElementById("mealCount");
+
+    const goalInputs =
+        document.querySelectorAll('input[name="goal"]');
+
+
+    /* -----------------------------------------------------
+       FORMULAIRE
+       ----------------------------------------------------- */
+
+    form.addEventListener("submit", calculateNutrition);
+
+
+    /* -----------------------------------------------------
+       NOMBRE DE REPAS
+       ----------------------------------------------------- */
+
+    mealCount.addEventListener("change", () => {
+
+        if (!nutritionPlan) {
+            return;
+        }
+
+        nutritionPlan.mealCount =
+            Number(mealCount.value);
+
+        selectedMeals = [];
+
+        updateMealPlanner();
+
+    });
+
+
+    /* -----------------------------------------------------
+       OBJECTIF
+       ----------------------------------------------------- */
+
+    goalInputs.forEach(input => {
+
+        input.addEventListener("change", () => {
+
+            updateGoalCards();
+
+            updateAdjustmentVisibility();
+
+        });
+
+    });
+
+
+    /* -----------------------------------------------------
+       FILTRES
+       ----------------------------------------------------- */
+
+    document.querySelectorAll(".filter-button")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                document.querySelectorAll(".filter-button")
+                    .forEach(btn => {
+                        btn.classList.remove("active");
+                    });
+
+                button.classList.add("active");
+
+                currentFilter =
+                    button.dataset.filter;
+
+                renderMealCatalog();
+
+            });
+
+        });
+
+
+    /* -----------------------------------------------------
+       RESET
+       ----------------------------------------------------- */
+
+    resetButton.addEventListener("click", resetPlanner);
+
+
+    updateGoalCards();
+    updateAdjustmentVisibility();
 
 });
 
 
-function updateGoalInterface() {
+/* =========================================================
+   CALCUL NUTRITION
+   ========================================================= */
+
+function calculateNutrition(event) {
+
+    event.preventDefault();
+
+
+    const sex =
+        document.querySelector(
+            'input[name="sex"]:checked'
+        ).value;
+
+    const age =
+        Number(document.getElementById("age").value);
+
+    const height =
+        Number(document.getElementById("height").value);
+
+    const weight =
+        Number(document.getElementById("weight").value);
+
+    const bodyFat =
+        Number(document.getElementById("bodyFat").value) || null;
+
+    const activity =
+        Number(document.getElementById("activity").value);
+
+    const steps =
+        Number(document.getElementById("steps").value) || 0;
+
+    const trainingType =
+        document.getElementById("trainingType").value;
+
+    const sessions =
+        Number(document.getElementById("sessions").value) || 0;
+
+    const duration =
+        Number(document.getElementById("duration").value) || 0;
+
+    const intensity =
+        Number(document.getElementById("intensity").value);
 
     const goal =
         document.querySelector(
             'input[name="goal"]:checked'
         ).value;
 
+    const adjustment =
+        Number(document.getElementById("adjustment").value);
 
-    if (goal === "maintain") {
+    const mealCount =
+        Number(document.getElementById("mealCount").value);
 
-        adjustmentField.style.display =
-            "none";
+
+    /* -----------------------------------------------------
+       VALIDATION
+       ----------------------------------------------------- */
+
+    if (
+        age <= 0 ||
+        height <= 0 ||
+        weight <= 0
+    ) {
+
+        alert(
+            "Vérifie ton âge, ta taille et ton poids."
+        );
+
+        return;
+    }
+
+
+    /* -----------------------------------------------------
+       BMR — MIFFLIN ST-JEOR
+       ----------------------------------------------------- */
+
+    let bmr;
+
+    if (sex === "male") {
+
+        bmr =
+            (10 * weight) +
+            (6.25 * height) -
+            (5 * age) +
+            5;
 
     } else {
 
-        adjustmentField.style.display =
-            "block";
+        bmr =
+            (10 * weight) +
+            (6.25 * height) -
+            (5 * age) -
+            161;
 
     }
 
+
+    /* -----------------------------------------------------
+       KATCH-MCARDLE SI MASSE GRASSE
+       ----------------------------------------------------- */
+
+    let finalBmr = bmr;
+
+    if (
+        bodyFat &&
+        bodyFat > 2 &&
+        bodyFat < 70
+    ) {
+
+        const leanMass =
+            weight * (1 - bodyFat / 100);
+
+        const katchBmr =
+            370 + (21.6 * leanMass);
+
+        /*
+         * On fait une moyenne légère entre les deux
+         * estimations afin de ne pas dépendre entièrement
+         * d'une masse grasse potentiellement imprécise.
+         */
+
+        finalBmr =
+            (bmr + katchBmr) / 2;
+
+    }
+
+
+    /* -----------------------------------------------------
+       ACTIVITE
+       ----------------------------------------------------- */
+
+    const baseTdee =
+        finalBmr * activity;
+
+
+    /* -----------------------------------------------------
+       DEPENSE ENTRAINEMENT
+       ----------------------------------------------------- */
+
+    let trainingCalories = 0;
+
+    if (
+        trainingType !== "none" &&
+        sessions > 0 &&
+        duration > 0
+    ) {
+
+        let met = 5;
+
+        if (trainingType === "strength") {
+            met = 5.5;
+        }
+
+        if (trainingType === "running") {
+            met = 9;
+        }
+
+        if (trainingType === "hyrox") {
+            met = 9;
+        }
+
+        if (trainingType === "hybrid") {
+            met = 8;
+        }
+
+        trainingCalories =
+            (
+                met *
+                weight *
+                (duration / 60) *
+                1.05
+            ) *
+            intensity *
+            sessions /
+            7;
+
+    }
+
+
+    /* -----------------------------------------------------
+       PAS
+       ----------------------------------------------------- */
+
+    const stepCalories =
+        steps *
+        weight *
+        0.0005;
+
+
+    /*
+     * On évite de compter 100 % de l'entraînement
+     * en plus du facteur d'activité.
+     */
+
+    const tdee =
+        baseTdee +
+        (trainingCalories * 0.5) +
+        stepCalories;
+
+
+    /* -----------------------------------------------------
+       SCENARIOS
+       ----------------------------------------------------- */
+
+    const cutCalories =
+        Math.round(
+            tdee * (1 - adjustment)
+        );
+
+    const maintainCalories =
+        Math.round(tdee);
+
+    const bulkCalories =
+        Math.round(
+            tdee * (1 + adjustment)
+        );
+
+
+    /* -----------------------------------------------------
+       OBJECTIF FINAL
+       ----------------------------------------------------- */
+
+    let targetCalories;
+
+    if (goal === "cut") {
+        targetCalories = cutCalories;
+    }
+
+    else if (goal === "bulk") {
+        targetCalories = bulkCalories;
+    }
+
+    else {
+        targetCalories = maintainCalories;
+    }
+
+
+    /* -----------------------------------------------------
+       PROTEINES
+       ----------------------------------------------------- */
+
+    let proteinPerKg;
+
+    if (goal === "cut") {
+        proteinPerKg = 2;
+    } else {
+        proteinPerKg = 1.8;
+    }
+
+    const protein =
+        weight * proteinPerKg;
+
+
+    /* -----------------------------------------------------
+       LIPIDES
+       ----------------------------------------------------- */
+
+    const fat =
+        weight * 0.9;
+
+
+    /* -----------------------------------------------------
+       GLUCIDES
+       ----------------------------------------------------- */
+
+    const proteinCalories =
+        protein * 4;
+
+    const fatCalories =
+        fat * 9;
+
+    const carbs =
+        Math.max(
+            0,
+            (
+                targetCalories -
+                proteinCalories -
+                fatCalories
+            ) / 4
+        );
+
+
+    /* -----------------------------------------------------
+       EAU
+       ----------------------------------------------------- */
+
+    let water =
+        weight * 0.035;
+
+
+    if (sessions >= 4) {
+        water += 0.4;
+    }
+
+    if (
+        trainingType === "running" ||
+        trainingType === "hyrox" ||
+        trainingType === "hybrid"
+    ) {
+        water += 0.3;
+    }
+
+
+    /* -----------------------------------------------------
+       PLAN
+       ----------------------------------------------------- */
+
+    nutritionPlan = {
+
+        sex,
+
+        age,
+
+        height,
+
+        weight,
+
+        bodyFat,
+
+        activity,
+
+        steps,
+
+        trainingType,
+
+        sessions,
+
+        duration,
+
+        intensity,
+
+        goal,
+
+        adjustment,
+
+        mealCount,
+
+        bmr: finalBmr,
+
+        tdee,
+
+        cutCalories,
+
+        maintainCalories,
+
+        bulkCalories,
+
+        targetCalories,
+
+        protein,
+
+        carbs,
+
+        fat,
+
+        water
+
+    };
+
+
+    selectedMeals = [];
+
+
+    displayResults();
+
+    updateMealPlanner();
+
+
+    document
+        .getElementById("results")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
 }
 
-function updateTrainingInterface() {
 
-    const isRestDay =
-        trainingTypeInput.value === "none";
+/* =========================================================
+   AFFICHAGE RESULTATS
+   ========================================================= */
 
-    trainingFields.forEach(field => {
-        field.disabled = isRestDay;
+function displayResults() {
+
+    const plan = nutritionPlan;
+
+
+    document.getElementById("results")
+        .classList.remove("hidden");
+
+
+    document.getElementById("mealPlanner")
+        .classList.remove("hidden");
+
+
+    document.getElementById("targetCalories")
+        .textContent =
+        Math.round(plan.targetCalories);
+
+
+    document.getElementById("bmr")
+        .textContent =
+        Math.round(plan.bmr);
+
+
+    document.getElementById("tdee")
+        .textContent =
+        Math.round(plan.tdee);
+
+
+    document.getElementById("cutCalories")
+        .textContent =
+        Math.round(plan.cutCalories);
+
+
+    document.getElementById("maintainCalories")
+        .textContent =
+        Math.round(plan.maintainCalories);
+
+
+    document.getElementById("bulkCalories")
+        .textContent =
+        Math.round(plan.bulkCalories);
+
+
+    document.getElementById("protein")
+        .textContent =
+        Math.round(plan.protein);
+
+
+    document.getElementById("carbs")
+        .textContent =
+        Math.round(plan.carbs);
+
+
+    document.getElementById("fat")
+        .textContent =
+        Math.round(plan.fat);
+
+
+    document.getElementById("proteinKcal")
+        .textContent =
+        Math.round(plan.protein * 4);
+
+
+    document.getElementById("carbsKcal")
+        .textContent =
+        Math.round(plan.carbs * 4);
+
+
+    document.getElementById("fatKcal")
+        .textContent =
+        Math.round(plan.fat * 9);
+
+
+    document.getElementById("water")
+        .textContent =
+        plan.water.toFixed(1);
+
+
+    let goalLabel = "Maintien";
+
+    if (plan.goal === "cut") {
+        goalLabel = "Perte de poids";
+    }
+
+    if (plan.goal === "bulk") {
+        goalLabel = "Prise de poids";
+    }
+
+
+    document.getElementById("goalLabel")
+        .textContent =
+        goalLabel;
+
+
+    const message =
+        document.getElementById("message");
+
+
+    message.textContent =
+        "Ces valeurs sont des estimations de départ. " +
+        "Le niveau d'activité, les pas et les calories réellement " +
+        "dépensées peuvent varier d'une personne à l'autre. " +
+        "Observe ton évolution sur plusieurs semaines et ajuste " +
+        "progressivement si nécessaire.";
+
+
+    updateGoalCards();
+
+}
+
+
+/* =========================================================
+   OBJECTIFS — AFFICHAGE
+   ========================================================= */
+
+function updateGoalCards() {
+
+    const cards =
+        document.querySelectorAll(".goal-card");
+
+    cards.forEach(card => {
+
+        const input =
+            card.querySelector("input");
+
+        card.classList.toggle(
+            "active",
+            input.checked
+        );
+
     });
 
 }
 
 
 /* =========================================================
-   BMR — MIFFLIN ST JEOR
+   VISIBILITE AJUSTEMENT
    ========================================================= */
 
-function calculateMifflin(
-    sex,
-    age,
-    height,
-    weight
-) {
+function updateAdjustmentVisibility() {
 
-    if (sex === "male") {
-
-        return (
-            10 * weight +
-            6.25 * height -
-            5 * age +
-            5
+    const goal =
+        document.querySelector(
+            'input[name="goal"]:checked'
         );
 
+    const field =
+        document.getElementById("adjustmentField");
+
+    if (!goal || !field) {
+        return;
     }
 
+    if (goal.value === "maintain") {
 
-    return (
-        10 * weight +
-        6.25 * height -
-        5 * age -
-        161
-    );
+        field.style.opacity = "0.45";
 
-}
+        const select =
+            document.getElementById("adjustment");
 
-
-/* =========================================================
-   BMR — KATCH-MCARDLE
-   ========================================================= */
-
-function calculateKatchMcArdle(
-    weight,
-    bodyFat
-) {
-
-    const leanMass =
-        weight *
-        (1 - bodyFat / 100);
-
-
-    return (
-        370 +
-        21.6 * leanMass
-    );
-
-}
-
-
-/* =========================================================
-   CALORIES SPORT
-   ========================================================= */
-
-function calculateTrainingCalories(
-    type,
-    sessions,
-    duration,
-    intensity,
-    weight
-) {
-
-    if (
-        type === "none" ||
-        sessions <= 0 ||
-        duration <= 0
-    ) {
-
-        return 0;
-
-    }
-
-
-    /*
-     * Valeurs MET approximatives.
-     */
-
-    const MET = {
-
-        strength: 5.5,
-
-        running: 8.5,
-
-        hyrox: 9,
-
-        hybrid: 7
-
-    };
-
-
-    const met =
-        MET[type] || 5;
-
-
-    /*
-     * kcal/min =
-     *
-     * MET × 3.5 × poids / 200
-     */
-
-    const caloriesSession =
-        (
-            met *
-            3.5 *
-            weight /
-            200
-        ) *
-        duration;
-
-
-    const caloriesWeek =
-        caloriesSession *
-        sessions *
-        intensity;
-
-
-    /*
-     * Moyenne quotidienne.
-     */
-
-    return caloriesWeek / 7;
-
-}
-
-
-/* =========================================================
-   PAS
-   ========================================================= */
-
-function calculateStepsCalories(
-    steps,
-    weight
-) {
-
-    if (!steps) {
-
-        return 0;
-
-    }
-
-
-    /*
-     * Estimation simplifiée.
-     */
-
-    const result =
-        steps *
-        weight *
-        0.00004;
-
-
-    /*
-     * Limite volontaire.
-     */
-
-    return Math.min(
-        result,
-        350
-    );
-
-}
-
-
-/* =========================================================
-   ARRONDI CALORIES
-   ========================================================= */
-
-function roundCalories(
-    calories
-) {
-
-    return Math.round(
-        calories / 10
-    ) * 10;
-
-}
-
-
-/* =========================================================
-   FORMAT
-   ========================================================= */
-
-function formatNumber(
-    number
-) {
-
-    return new Intl.NumberFormat(
-        "fr-FR"
-    ).format(
-        Math.round(number)
-    );
-
-}
-
-
-/* =========================================================
-   MACROS
-   ========================================================= */
-
-function calculateMacros(
-    calories,
-    weight,
-    goal,
-    trainingType
-) {
-
-    let proteinPerKg;
-
-
-    /*
-     * Point de départ :
-     */
-
-    if (goal === "cut") {
-
-        proteinPerKg = 2.0;
+        select.disabled = true;
 
     } else {
 
-        proteinPerKg = 1.8;
+        field.style.opacity = "1";
+
+        const select =
+            document.getElementById("adjustment");
+
+        select.disabled = false;
 
     }
 
+}
 
-    /*
-     * Sport hybride / HYROX :
-     * on conserve une quantité élevée
-     * de protéines.
-     */
 
-    if (
-        trainingType === "hyrox" ||
-        trainingType === "hybrid"
-    ) {
+/* =========================================================
+   PLANNER
+   ========================================================= */
 
-        proteinPerKg =
-            Math.max(
-                proteinPerKg,
-                1.8
-            );
+function updateMealPlanner() {
 
+    if (!nutritionPlan) {
+        return;
     }
 
 
-    const protein =
-        weight *
-        proteinPerKg;
+    const count =
+        nutritionPlan.mealCount;
 
 
-    /*
-     * Lipides.
-     */
-
-    const fat =
-        weight *
-        0.9;
+    document.getElementById("mealCountDisplay")
+        .textContent =
+        `${count} repas / jour`;
 
 
-    /*
-     * Conversion calorique.
-     */
-
-    const proteinCalories =
-        protein * 4;
+    document.getElementById("selectedMealCount")
+        .textContent =
+        `${selectedMeals.length} / ${count}`;
 
 
-    const fatCalories =
-        fat * 9;
+    updateMealTargetDisplay();
+
+    renderMealCatalog();
+
+    renderSelectedMeals();
+
+    updateDaySummary();
+
+}
 
 
-    /*
-     * Le reste est attribué aux glucides.
-     */
+/* =========================================================
+   TARGET DU PROCHAIN REPAS
+   ========================================================= */
 
-    let carbCalories =
-        calories -
-        proteinCalories -
-        fatCalories;
+function getMealTarget(index) {
 
+    const count =
+        nutritionPlan.mealCount;
 
-    if (carbCalories < 0) {
+    const distribution =
+        mealDistributions[count];
 
-        carbCalories = 0;
-
-    }
-
-
-    const carbs =
-        carbCalories / 4;
+    const percentage =
+        distribution[index] || 0;
 
 
     return {
 
-        protein:
-            Math.round(protein),
+        calories:
+            nutritionPlan.targetCalories *
+            percentage,
 
-        fat:
-            Math.round(fat),
+        protein:
+            nutritionPlan.protein *
+            percentage,
 
         carbs:
-            Math.round(carbs),
+            nutritionPlan.carbs *
+            percentage,
 
-        proteinCalories:
-            Math.round(proteinCalories),
-
-        fatCalories:
-            Math.round(fatCalories),
-
-        carbCalories:
-            Math.round(carbCalories)
+        fat:
+            nutritionPlan.fat *
+            percentage
 
     };
 
@@ -405,549 +1132,918 @@ function calculateMacros(
 
 
 /* =========================================================
-   MESSAGE
+   AFFICHAGE TARGET REPAS
    ========================================================= */
 
-function createMessage(
-    goal
-) {
+function updateMealTargetDisplay() {
 
-    if (goal === "cut") {
-
-        return `
-            Ton objectif correspond à un apport inférieur
-            à ton maintien estimé. Utilise cette valeur comme
-            point de départ et observe ton évolution avant
-            d'effectuer de nouveaux ajustements.
-        `;
-
+    if (!nutritionPlan) {
+        return;
     }
 
 
-    if (goal === "bulk") {
+    const index =
+        selectedMeals.length;
 
-        return `
-            Ton objectif correspond à un apport supérieur
-            à ton maintien estimé. L'évolution du poids,
-            des performances et de la récupération permettra
-            ensuite d'ajuster progressivement cet apport.
-        `;
 
+    if (
+        index >= nutritionPlan.mealCount
+    ) {
+
+        document.getElementById(
+            "mealTargetCalories"
+        ).textContent = "Journée complète";
+
+        document.getElementById(
+            "mealTargetProtein"
+        ).textContent = "";
+
+        document.getElementById(
+            "mealTargetCarbs"
+        ).textContent = "";
+
+        document.getElementById(
+            "mealTargetFat"
+        ).textContent = "";
+
+        return;
     }
 
 
-    return `
-        Ton objectif correspond à ton maintien estimé.
-        Cette valeur constitue une estimation de départ :
-        tes besoins réels peuvent évoluer avec ton activité,
-        ton poids et ton niveau d'entraînement.
-    `;
+    const target =
+        getMealTarget(index);
+
+
+    document.getElementById(
+        "mealTargetCalories"
+    ).textContent =
+        `${Math.round(target.calories)}`;
+
+
+    document.getElementById(
+        "mealTargetProtein"
+    ).textContent =
+        `${Math.round(target.protein)} g`;
+
+
+    document.getElementById(
+        "mealTargetCarbs"
+    ).textContent =
+        `${Math.round(target.carbs)} g`;
+
+
+    document.getElementById(
+        "mealTargetFat"
+    ).textContent =
+        `${Math.round(target.fat)} g`;
 
 }
 
 
 /* =========================================================
-   CALCUL PRINCIPAL
+   ADAPTATION AUTOMATIQUE
    ========================================================= */
 
-form.addEventListener(
-    "submit",
-    function(event) {
+function adaptMealToTarget(meal, target) {
 
-        event.preventDefault();
+    /*
+     * On part de la calorie de base du repas.
+     */
 
+    let scale =
+        target.calories /
+        meal.calories;
 
-        /* -------------------------------------------------
-           PROFIL
-           ------------------------------------------------- */
 
-        const sex =
-            document.querySelector(
-                'input[name="sex"]:checked'
-            ).value;
+    /*
+     * On évite des portions absurdes.
+     */
 
-
-        const age =
-            Number(
-                document.getElementById(
-                    "age"
-                ).value
-            );
-
-
-        const height =
-            Number(
-                document.getElementById(
-                    "height"
-                ).value
-            );
-
-
-        const weight =
-            Number(
-                document.getElementById(
-                    "weight"
-                ).value
-            );
-
-
-        const bodyFat =
-            Number(
-                document.getElementById(
-                    "bodyFat"
-                ).value
-            );
-
-
-        /* -------------------------------------------------
-           ACTIVITE
-           ------------------------------------------------- */
-
-        const activity =
-            Number(
-                document.getElementById(
-                    "activity"
-                ).value
-            );
-
-
-        const steps =
-            Number(
-                document.getElementById(
-                    "steps"
-                ).value
-            ) || 0;
-
-
-        /* -------------------------------------------------
-           SPORT
-           ------------------------------------------------- */
-
-        const trainingType =
-            document.getElementById(
-                "trainingType"
-            ).value;
-
-
-        const sessions =
-            Number(
-                document.getElementById(
-                    "sessions"
-                ).value
-            ) || 0;
-
-
-        const duration =
-            Number(
-                document.getElementById(
-                    "duration"
-                ).value
-            ) || 0;
-
-
-        const intensity =
-            Number(
-                document.getElementById(
-                    "intensity"
-                ).value
-            );
-
-
-        /* -------------------------------------------------
-           OBJECTIF
-           ------------------------------------------------- */
-
-        const goal =
-            document.querySelector(
-                'input[name="goal"]:checked'
-            ).value;
-
-
-        const adjustment =
-            Number(
-                document.getElementById(
-                    "adjustment"
-                ).value
-            );
-
-
-        /* -------------------------------------------------
-           VALIDATION
-           ------------------------------------------------- */
-
-        if (
-            !age ||
-            !height ||
-            !weight
-        ) {
-
-            alert(
-                "Remplis ton âge, ta taille et ton poids."
-            );
-
-            return;
-
-        }
-
-
-        /* -------------------------------------------------
-           BMR
-           ------------------------------------------------- */
-
-        let bmr;
-
-
-        if (
-            bodyFat >= 3 &&
-            bodyFat <= 60
-        ) {
-
-            bmr =
-                calculateKatchMcArdle(
-                    weight,
-                    bodyFat
-                );
-
-        } else {
-
-            bmr =
-                calculateMifflin(
-                    sex,
-                    age,
-                    height,
-                    weight
-                );
-
-        }
-
-
-        /* -------------------------------------------------
-           TDEE
-           ------------------------------------------------- */
-
-        let tdee =
-            bmr *
-            activity;
-
-
-        /* -------------------------------------------------
-           SPORT
-           ------------------------------------------------- */
-
-        const trainingCalories =
-            calculateTrainingCalories(
-                trainingType,
-                sessions,
-                duration,
-                intensity,
-                weight
-            );
-
-
-        /*
-         * Le facteur d'activité prend déjà en compte
-         * une partie du mouvement quotidien.
-         *
-         * On ajoute donc une fraction de la dépense
-         * d'entraînement pour limiter le double comptage.
-         */
-
-        tdee +=
-            trainingCalories * 0.5;
-
-
-        /* -------------------------------------------------
-           PAS
-           ------------------------------------------------- */
-
-        tdee +=
-            calculateStepsCalories(
-                steps,
-                weight
-            );
-
-
-        tdee =
-            roundCalories(tdee);
-
-
-        /* -------------------------------------------------
-           SCENARIOS
-           ------------------------------------------------- */
-
-        const maintainCalories =
-            tdee;
-
-
-        const cutCalories =
-            roundCalories(
-                tdee * 0.85
-            );
-
-
-        const bulkCalories =
-            roundCalories(
-                tdee * 1.10
-            );
-
-
-        /* -------------------------------------------------
-           OBJECTIF SELECTIONNE
-           ------------------------------------------------- */
-
-        let targetCalories;
-
-
-        if (goal === "cut") {
-
-            targetCalories =
-                roundCalories(
-                    tdee *
-                    (1 - adjustment)
-                );
-
-        }
-
-
-        else if (goal === "bulk") {
-
-            targetCalories =
-                roundCalories(
-                    tdee *
-                    (1 + adjustment)
-                );
-
-        }
-
-
-        else {
-
-            targetCalories =
-                tdee;
-
-        }
-
-
-        /* -------------------------------------------------
-           MACROS
-           ------------------------------------------------- */
-
-        const macros =
-            calculateMacros(
-                targetCalories,
-                weight,
-                goal,
-                trainingType
-            );
-
-
-        /* -------------------------------------------------
-           HYDRATATION
-           ------------------------------------------------- */
-
-        let water =
-            weight *
-            0.035;
-
-
-        if (sessions >= 4) {
-
-            water += 0.4;
-
-        }
-
-
-        if (
-            trainingType === "running" ||
-            trainingType === "hyrox" ||
-            trainingType === "hybrid"
-        ) {
-
-            water += 0.3;
-
-        }
-
-
-        water =
-            Math.round(
-                water * 10
-            ) / 10;
-
-
-        /* =================================================
-           AFFICHAGE
-           ================================================= */
-
-
-        document.getElementById(
-            "targetCalories"
-        ).textContent =
-            formatNumber(
-                targetCalories
-            );
-
-
-        document.getElementById(
-            "bmr"
-        ).textContent =
-            `${formatNumber(bmr)} kcal`;
-
-
-        document.getElementById(
-            "tdee"
-        ).textContent =
-            `${formatNumber(tdee)} kcal`;
-
-
-        /* -------------------------------------------------
-           SCENARIOS
-           ------------------------------------------------- */
-
-        document.getElementById(
-            "cutCalories"
-        ).textContent =
-            formatNumber(
-                cutCalories
-            );
-
-
-        document.getElementById(
-            "maintainCalories"
-        ).textContent =
-            formatNumber(
-                maintainCalories
-            );
-
-
-        document.getElementById(
-            "bulkCalories"
-        ).textContent =
-            formatNumber(
-                bulkCalories
-            );
-
-
-        /* -------------------------------------------------
-           MACROS
-           ------------------------------------------------- */
-
-        document.getElementById(
-            "protein"
-        ).textContent =
-            `${macros.protein} g`;
-
-
-        document.getElementById(
-            "fat"
-        ).textContent =
-            `${macros.fat} g`;
-
-
-        document.getElementById(
-            "carbs"
-        ).textContent =
-            `${macros.carbs} g`;
-
-
-        document.getElementById(
-            "proteinKcal"
-        ).textContent =
-            `${macros.proteinCalories} kcal`;
-
-
-        document.getElementById(
-            "fatKcal"
-        ).textContent =
-            `${macros.fatCalories} kcal`;
-
-
-        document.getElementById(
-            "carbsKcal"
-        ).textContent =
-            `${macros.carbCalories} kcal`;
-
-
-        /* -------------------------------------------------
-           EAU
-           ------------------------------------------------- */
-
-        document.getElementById(
-            "water"
-        ).textContent =
-            `${water.toFixed(1).replace(".", ",")} L / jour`;
-
-
-        /* -------------------------------------------------
-           MESSAGE
-           ------------------------------------------------- */
-
-        document.getElementById(
-            "message"
-        ).textContent =
-            createMessage(
-                goal
-            );
-
-
-        /* -------------------------------------------------
-           RESULTATS
-           ------------------------------------------------- */
-
-        results.classList.remove(
-            "hidden"
+    scale =
+        Math.max(
+            0.60,
+            Math.min(1.50, scale)
         );
 
 
-        setTimeout(
-            () => {
+    const adapted = {
 
-                results.scrollIntoView({
-                    behavior: "smooth"
-                });
+        ...meal,
 
-            },
-            100
+        calories:
+            meal.calories * scale,
+
+        protein:
+            meal.protein * scale,
+
+        carbs:
+            meal.carbs * scale,
+
+        fat:
+            meal.fat * scale,
+
+        ingredients:
+            meal.ingredients.map(
+                ingredient => {
+
+                    return [
+
+                        ingredient[0],
+
+                        ingredient[1] * scale,
+
+                        ingredient[2]
+
+                    ];
+
+                }
+            )
+
+    };
+
+
+    return adapted;
+
+}
+
+
+/* =========================================================
+   SCORE REPAS
+   ========================================================= */
+
+function getMealScore(meal, target) {
+
+    const calorieDifference =
+        Math.abs(
+            meal.calories -
+            target.calories
+        ) /
+        target.calories;
+
+
+    const proteinDifference =
+        Math.abs(
+            meal.protein -
+            target.protein
+        ) /
+        Math.max(
+            1,
+            target.protein
         );
+
+
+    const carbsDifference =
+        Math.abs(
+            meal.carbs -
+            target.carbs
+        ) /
+        Math.max(
+            1,
+            target.carbs
+        );
+
+
+    const fatDifference =
+        Math.abs(
+            meal.fat -
+            target.fat
+        ) /
+        Math.max(
+            1,
+            target.fat
+        );
+
+
+    return (
+        calorieDifference * 0.45 +
+        proteinDifference * 0.30 +
+        carbsDifference * 0.15 +
+        fatDifference * 0.10
+    );
+
+}
+
+
+/* =========================================================
+   REPAS COMPATIBLES
+   ========================================================= */
+
+function getMealsForCategory(
+    category,
+    target
+) {
+
+    let meals =
+        mealTemplates.filter(
+            meal =>
+                meal.categories.includes(category)
+        );
+
+
+    /*
+     * On place les repas qui correspondent
+     * le mieux aux objectifs en premier.
+     */
+
+    meals.sort(
+        (a, b) =>
+            getMealScore(a, target) -
+            getMealScore(b, target)
+    );
+
+
+    return meals;
+
+}
+
+
+/* =========================================================
+   CATALOGUE
+   ========================================================= */
+
+function renderMealCatalog() {
+
+    const catalog =
+        document.getElementById(
+            "mealCatalog"
+        );
+
+
+    if (!nutritionPlan) {
+        catalog.innerHTML = "";
+        return;
+    }
+
+
+    const nextIndex =
+        selectedMeals.length;
+
+
+    if (
+        nextIndex >=
+        nutritionPlan.mealCount
+    ) {
+
+        catalog.innerHTML = `
+            <div class="catalog-complete">
+                <h3>Journée complète ✓</h3>
+                <p>
+                    Tu as sélectionné ${nutritionPlan.mealCount}
+                    repas. Retire un repas si tu souhaites
+                    modifier ta journée.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const category =
+        mealTypes[
+            nutritionPlan.mealCount
+        ][nextIndex];
+
+
+    const target =
+        getMealTarget(nextIndex);
+
+
+    let meals =
+        getMealsForCategory(
+            category,
+            target
+        );
+
+
+    if (currentFilter !== "all") {
+
+        meals =
+            meals.filter(
+                meal =>
+                    meal.categories.includes(
+                        currentFilter
+                    )
+            );
 
     }
-);
+
+
+    /*
+     * On montre les 6 meilleures propositions.
+     */
+
+    meals =
+        meals.slice(0, 6);
+
+
+    catalog.innerHTML = "";
+
+
+    if (meals.length === 0) {
+
+        catalog.innerHTML = `
+            <div class="catalog-empty">
+                Aucun repas disponible pour ce filtre.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    meals.forEach(meal => {
+
+        const adapted =
+            adaptMealToTarget(
+                meal,
+                target
+            );
+
+
+        const card =
+            createMealCard(
+                adapted,
+                category
+            );
+
+
+        catalog.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   CREATION CARTE REPAS
+   ========================================================= */
+
+function createMealCard(
+    meal,
+    category
+) {
+
+    const article =
+        document.createElement("article");
+
+
+    article.className =
+        "meal-card";
+
+
+    const ingredients =
+        meal.ingredients
+            .map(
+                ingredient => {
+
+                    let quantity =
+                        ingredient[1];
+
+
+                    /*
+                     * Arrondi intelligent
+                     */
+
+                    if (quantity >= 100) {
+
+                        quantity =
+                            Math.round(
+                                quantity / 5
+                            ) * 5;
+
+                    }
+
+                    else if (quantity >= 10) {
+
+                        quantity =
+                            Math.round(
+                                quantity
+                            );
+
+                    }
+
+                    else {
+
+                        quantity =
+                            Math.round(
+                                quantity * 10
+                            ) / 10;
+
+                    }
+
+
+                    return `
+                        <li>
+                            <span>
+                                ${ingredient[0]}
+                            </span>
+
+                            <span>
+                                ${quantity}
+                                ${ingredient[2]}
+                            </span>
+                        </li>
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    article.innerHTML = `
+
+        <div class="meal-card-header">
+
+            <span class="meal-card-category">
+                ${mealTypeLabels[category]}
+            </span>
+
+            <h4>
+                ${meal.name}
+            </h4>
+
+        </div>
+
+
+        <div class="meal-card-body">
+
+            <div class="meal-macros">
+
+                <div>
+                    <span>KCAL</span>
+                    <strong>
+                        ${Math.round(meal.calories)}
+                    </strong>
+                </div>
+
+                <div>
+                    <span>PROT</span>
+                    <strong>
+                        ${Math.round(meal.protein)}g
+                    </strong>
+                </div>
+
+                <div>
+                    <span>GLUC</span>
+                    <strong>
+                        ${Math.round(meal.carbs)}g
+                    </strong>
+                </div>
+
+                <div>
+                    <span>LIP</span>
+                    <strong>
+                        ${Math.round(meal.fat)}g
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <ul class="ingredients">
+                ${ingredients}
+            </ul>
+
+
+            <button
+                type="button"
+                class="add-meal-button"
+            >
+                Ajouter à ma journée →
+            </button>
+
+        </div>
+
+    `;
+
+
+    article
+        .querySelector(".add-meal-button")
+        .addEventListener(
+            "click",
+            () => {
+
+                addMeal(
+                    meal,
+                    category
+                );
+
+            }
+        );
+
+
+    return article;
+
+}
+
+
+/* =========================================================
+   AJOUTER UN REPAS
+   ========================================================= */
+
+function addMeal(
+    meal,
+    category
+) {
+
+    if (!nutritionPlan) {
+        return;
+    }
+
+
+    if (
+        selectedMeals.length >=
+        nutritionPlan.mealCount
+    ) {
+
+        return;
+    }
+
+
+    const index =
+        selectedMeals.length;
+
+
+    const target =
+        getMealTarget(index);
+
+
+    /*
+     * Le repas reçu est déjà adapté.
+     */
+
+    const finalMeal = {
+
+        ...meal,
+
+        position: index,
+
+        category,
+
+        targetCalories:
+            target.calories
+
+    };
+
+
+    selectedMeals.push(
+        finalMeal
+    );
+
+
+    updateMealPlanner();
+
+}
+
+
+/* =========================================================
+   SUPPRIMER REPAS
+   ========================================================= */
+
+function removeMeal(index) {
+
+    selectedMeals.splice(
+        index,
+        1
+    );
+
+
+    /*
+     * On recalcule toutes les portions
+     * des repas restants en fonction
+     * de leur nouvelle position.
+     */
+
+    selectedMeals =
+        selectedMeals.map(
+            (meal, newIndex) => {
+
+                const original =
+                    mealTemplates.find(
+                        template =>
+                            template.id ===
+                            meal.id
+                    );
+
+
+                const target =
+                    getMealTarget(
+                        newIndex
+                    );
+
+
+                const adapted =
+                    adaptMealToTarget(
+                        original,
+                        target
+                    );
+
+
+                return {
+
+                    ...adapted,
+
+                    position:
+                        newIndex,
+
+                    category:
+                        meal.category,
+
+                    targetCalories:
+                        target.calories
+
+                };
+
+            }
+        );
+
+
+    updateMealPlanner();
+
+}
+
+
+/* =========================================================
+   REPAS SELECTIONNES
+   ========================================================= */
+
+function renderSelectedMeals() {
+
+    const container =
+        document.getElementById(
+            "selectedMeals"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        selectedMeals.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="empty-selected">
+                Aucun repas sélectionné pour le moment.
+                Choisis un repas dans le catalogue ci-dessus.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    selectedMeals.forEach(
+        (meal, index) => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "selected-meal";
+
+
+            item.innerHTML = `
+
+                <div class="selected-meal-number">
+                    ${index + 1}
+                </div>
+
+
+                <div class="selected-meal-info">
+
+                    <h4>
+                        ${meal.name}
+                    </h4>
+
+                    <span>
+                        ${mealTypeLabels[meal.category]}
+                        ·
+                        ${Math.round(meal.protein)}g prot
+                        ·
+                        ${Math.round(meal.carbs)}g gluc
+                        ·
+                        ${Math.round(meal.fat)}g lip
+                    </span>
+
+                </div>
+
+
+                <div class="selected-meal-calories">
+                    ${Math.round(meal.calories)} kcal
+                </div>
+
+
+                <button
+                    type="button"
+                    class="remove-meal"
+                >
+                    RETIRER
+                </button>
+
+            `;
+
+
+            item
+                .querySelector(".remove-meal")
+                .addEventListener(
+                    "click",
+                    () => {
+
+                        removeMeal(index);
+
+                    }
+                );
+
+
+            container.appendChild(item);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RESUME JOURNEE
+   ========================================================= */
+
+function updateDaySummary() {
+
+    if (!nutritionPlan) {
+        return;
+    }
+
+
+    let calories = 0;
+
+    let protein = 0;
+
+    let carbs = 0;
+
+    let fat = 0;
+
+
+    selectedMeals.forEach(meal => {
+
+        calories += meal.calories;
+
+        protein += meal.protein;
+
+        carbs += meal.carbs;
+
+        fat += meal.fat;
+
+    });
+
+
+    const remainingCalories =
+        nutritionPlan.targetCalories -
+        calories;
+
+    const remainingProtein =
+        nutritionPlan.protein -
+        protein;
+
+    const remainingCarbs =
+        nutritionPlan.carbs -
+        carbs;
+
+    const remainingFat =
+        nutritionPlan.fat -
+        fat;
+
+
+    document.getElementById(
+        "summaryTargetCalories"
+    ).textContent =
+        `${Math.round(
+            nutritionPlan.targetCalories
+        )} kcal`;
+
+
+    document.getElementById(
+        "summaryTargetProtein"
+    ).textContent =
+        Math.round(
+            nutritionPlan.protein
+        );
+
+
+    document.getElementById(
+        "summaryTargetCarbs"
+    ).textContent =
+        Math.round(
+            nutritionPlan.carbs
+        );
+
+
+    document.getElementById(
+        "summaryTargetFat"
+    ).textContent =
+        Math.round(
+            nutritionPlan.fat
+        );
+
+
+    document.getElementById(
+        "selectedCalories"
+    ).textContent =
+        `${Math.round(calories)} kcal`;
+
+
+    document.getElementById(
+        "remainingCalories"
+    ).textContent =
+        `${Math.round(
+            remainingCalories
+        )} kcal`;
+
+
+    document.getElementById(
+        "remainingProtein"
+    ).textContent =
+        `${Math.round(
+            remainingProtein
+        )} g prot`;
+
+
+    document.getElementById(
+        "remainingCarbs"
+    ).textContent =
+        `${Math.round(
+            remainingCarbs
+        )} g gluc`;
+
+
+    document.getElementById(
+        "remainingFat"
+    ).textContent =
+        `${Math.round(
+            remainingFat
+        )} g lip`;
+
+
+    document.getElementById(
+        "selectedMealCount"
+    ).textContent =
+        `${selectedMeals.length} / ${nutritionPlan.mealCount}`;
+
+}
 
 
 /* =========================================================
    RESET
    ========================================================= */
 
-resetButton.addEventListener(
-    "click",
-    function() {
+function resetPlanner() {
 
-        form.reset();
-        updateGoalInterface();
-        updateTrainingInterface();
-        results.classList.add(
-            "hidden"
-        );
+    selectedMeals = [];
+
+    nutritionPlan = null;
 
 
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    }
-);
+    document.getElementById("results")
+        .classList.add("hidden");
 
 
-/* =========================================================
-   INITIALISATION
-   ========================================================= */
+    document.getElementById("mealPlanner")
+        .classList.add("hidden");
 
-updateGoalInterface();
-trainingTypeInput.addEventListener(
-    "change",
-    updateTrainingInterface
-);
-updateTrainingInterface();
+
+    document.getElementById("nutritionForm")
+        .reset();
+
+
+    document.getElementById("mealCount").value = "3";
+
+    document.getElementById("activity").value = "1.55";
+
+    document.getElementById("steps").value = "7000";
+
+    document.getElementById("sessions").value = "4";
+
+    document.getElementById("duration").value = "60";
+
+    document.getElementById("intensity").value = "1";
+
+    document.querySelector(
+        'input[name="goal"][value="maintain"]'
+    ).checked = true;
+
+
+    updateGoalCards();
+
+    updateAdjustmentVisibility();
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
