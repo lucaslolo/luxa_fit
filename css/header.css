@@ -1,0 +1,390 @@
+header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: calc(var(--max-width) + 48px);
+	margin: auto;
+	padding: 20px 24px;
+	border-bottom: 1px solid var(--line);
+	background: rgba(13, 15, 14, .88);
+	backdrop-filter: blur(16px);
+}
+
+.logo {
+	color: var(--ink);
+	font-size: 17px;
+	font-weight: 700;
+	letter-spacing: .12em;
+	text-decoration: none;
+}
+
+.logo span {
+	color: var(--lime);
+}
+
+.site-nav {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.auth-only {
+	display: none !important;
+}
+
+body.authenticated .auth-only {
+	display: revert !important;
+}
+
+.nav-dropdown {
+	position: relative;
+}
+
+.nav-trigger,.nav-login {
+	display: block;
+	padding: 9px 12px;
+	color: var(--muted);
+	font-family: "DM Mono", monospace;
+	font-size: 11px;
+	text-decoration: none;
+	letter-spacing: .05em;
+}
+
+.nav-trigger span {
+	margin-left: 4px;
+	color: var(--lime);
+}
+
+.nav-trigger:hover,
+.nav-login:hover,
+.nav-dropdown:focus-within .nav-trigger {
+	color: var(--lime);
+}
+
+/* =========================================================
+   MENUS DÉROULANTS
+========================================================= */
+
+.nav-menu {
+
+    position: absolute;
+
+    top: calc(100% + 12px);
+    right: 0;
+
+    display: grid;
+
+    min-width: 245px;
+
+    padding: 7px;
+
+    border: 1px solid var(--line);
+
+    background: rgba(23, 25, 24, .98);
+
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .28);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform: translateY(-6px);
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+
+    z-index: 1000;
+}
+
+
+/* Petite zone invisible pour éviter que le menu
+   disparaisse quand on descend vers celui-ci */
+
+.nav-menu::before {
+
+    position: absolute;
+
+    top: -13px;
+    right: 0;
+
+    width: 100%;
+    height: 13px;
+
+    content: "";
+
+}
+
+
+/* AFFICHAGE DU MENU PRINCIPAL */
+
+.nav-dropdown:hover > .nav-menu,
+.nav-dropdown:focus-within > .nav-menu {
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform: translateY(0);
+
+}
+
+
+/* =========================================================
+   LIENS DES MENUS
+========================================================= */
+
+.nav-menu a {
+
+    display: grid;
+
+    gap: 5px;
+
+    padding: 12px;
+
+    color: var(--ink);
+
+    font-size: 13px;
+
+    text-decoration: none;
+
+}
+
+
+.nav-menu a:hover {
+
+    color: var(--lime);
+
+    background: rgba(234, 255, 63, .07);
+
+}
+
+
+.nav-menu small {
+
+    color: var(--muted);
+
+    font-family: "DM Mono", monospace;
+
+    font-size: 9px;
+
+    letter-spacing: .04em;
+
+}
+
+
+/* =========================================================
+   SOUS-MENU SALLE
+========================================================= */
+
+.nav-submenu {
+
+    position: relative;
+
+}
+
+
+/* Le menu Salle doit être un bloc
+   et non un lien qui englobe le sous-menu */
+
+.nav-submenu > .nav-trigger {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   MENU DES 4 PROGRAMMES
+========================================================= */
+
+.nav-submenu-menu {
+
+    position: absolute;
+
+    top: -7px;
+
+    left: calc(100% + 8px);
+
+    right: auto;
+
+    min-width: 245px;
+
+    transform: translateX(-6px);
+
+}
+
+
+/* Petite zone invisible entre Salle et le sous-menu */
+
+.nav-submenu-menu::before {
+
+    position: absolute;
+
+    top: 0;
+
+    left: -8px;
+
+    width: 8px;
+
+    height: 100%;
+
+    content: "";
+
+}
+
+
+/* Affichage du sous-menu */
+
+.nav-submenu:hover > .nav-submenu-menu,
+.nav-submenu:focus-within > .nav-submenu-menu {
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform: translateX(0);
+
+}
+
+/* Dashboard */
+.dashboard-page header {
+	max-width: none;
+	padding: 14px max(24px, calc((100vw - var(--max-width)) / 2));
+	border-bottom-color: rgba(234, 255, 63, .35);
+	box-shadow: inset 0 -1px 0 rgba(234, 255, 63, .08);
+}
+
+.dashboard-page .site-nav {
+	margin-left: auto;
+	margin-right: 24px;
+}
+
+.dashboard-page .nav-login {
+	padding: 8px 10px;
+	font-size: 10px;
+	text-transform: uppercase;
+}
+
+.dashboard-user {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+}
+
+.dashboard-user span {
+	color: var(--lime);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .08em;
+}
+
+.dashboard-user button {
+	padding: 8px 11px;
+	color: var(--ink);
+	background: transparent;
+	border-color: var(--line);
+}
+
+.dashboard-user button:hover {
+	color: var(--canvas);
+	background: var(--lime);
+}
+
+.dashboard {
+	max-width: var(--max-width);
+	padding-top: 56px;
+}
+
+.dashboard-header {
+	position: relative;
+	max-width: 760px;
+	margin-bottom: 42px;
+	padding: 20px 0 34px;
+	border-bottom: 1px solid var(--line);
+}
+
+.dashboard-header::after {
+	position: absolute;
+	right: 6%;
+	bottom: 24px;
+	width: 92px;
+	height: 92px;
+	border: 1px solid rgba(234, 255, 63, .3);
+	content: "";
+	transform: rotate(45deg);
+}
+
+.dashboard-kicker,
+.section-index {
+	color: var(--lime);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .1em;
+}
+
+.dashboard-header h1 {
+	position: relative;
+	z-index: 1;
+	margin-top: 18px;
+	font-size: clamp(50px, 8vw, 98px);
+	font-weight: 600;
+	line-height: .9;
+	letter-spacing: -.07em;
+}
+
+.dashboard-header h1 span {
+	color: var(--lime);
+}
+
+.dashboard-header p {
+	max-width: 480px;
+	margin-top: 23px;
+	color: var(--muted);
+	font-size: 15px;
+	line-height: 1.6;
+}
+
+.dashboard-overview {
+	display: grid;
+	grid-template-columns: minmax(0, 1.5fr) minmax(260px, .8fr);
+	gap: 12px;
+	margin-bottom: 38px;
+}
+
+.dashboard-overview .dashboard-card {
+	margin-bottom: 0;
+}
+
+.dashboard-page table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.dashboard-page th,
+.dashboard-page td {
+	padding: 13px 10px;
+	border-top: 1px solid var(--line);
+	text-align: left;
+}
+
+.dashboard-page td {
+	color: var(--muted);
+	font-size: 13px;
+}
+
+.dashboard-page td:nth-child(3) {
+	color: var(--lime);
+	font-family: "DM Mono", monospace;
+}

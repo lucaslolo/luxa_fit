@@ -1,229 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luxa_fit | LES 3 PILIERS</title>
-    <link rel="stylesheet" href="css/style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>luxa_fit | Maintien calorique</title>
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/header.css">
+	<link rel="stylesheet" href="css/components.css">
+	<link rel="stylesheet" href="css/programmes.css">
+	<link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body class="programme-page">
-<header>
+    <div id="header-container"></div>
+
+    <main class="resource-page">
+        <section class="resource-hero">
+            <div class="resource-kicker">PILIER 03 / MINDSET</div>
+            <h1>Récupérer.<br><span>Rester solide.</span></h1>
+            <p>La performance durable commence par un système nerveux reposé et un esprit capable de revenir à l'essentiel, même quand la motivation baisse.</p>
+        </section>
+
+        <section class="resource-grid" aria-label="Formations mindset">
+            <article class="resource-card" id="sommeil">
+                <div class="resource-card-label">FORMATION 01 / RÉCUPÉRATION</div>
+                <h2>Sommeil</h2>
+                <p>Construire une routine qui améliore la récupération, l'énergie et la qualité des entraînements.</p>
+                <ul class="resource-list">
+                    <li>Horaires réguliers et rituel du soir</li>
+                    <li>Lumière, caféine et environnement</li>
+                    <li>Récupération active après les grosses séances</li>
+                </ul>
+            </article>
+
+            <article class="resource-card" id="sante-mentale">
+                <div class="resource-card-label">FORMATION 02 / ÉQUILIBRE</div>
+                <h2>Santé mentale</h2>
+                <p>Développer une relation plus saine avec la performance, le corps et les périodes de baisse de régime.</p>
+                <ul class="resource-list">
+                    <li>Objectifs réalistes et identité hors sport</li>
+                    <li>Gérer la pression et le dialogue intérieur</li>
+                    <li>Savoir ralentir et demander du soutien</li>
+                </ul>
+            </article>
+        </section>
+
+        <p class="resource-note">Le mindset ne remplace pas un accompagnement médical ou psychologique. En cas de souffrance persistante, parle à un professionnel de santé.</p>
+    </main>
+
+    <footer>
+        luxa_fit / MINDSET / RECOVER WITH INTENT
+    </footer>
+    
+    <script src="js/app.js"></script>
+	<script src="js/components.js"></script>
 
-        <!-- LOGO -->
-        <a href="index.html" class="logo">
-            <span>luxa_fit</span>
-        </a>
-
-
-        <!-- NAVIGATION -->
-        <nav class="site-nav" aria-label="Navigation principale">
-
-
-            <!-- =========================================
-                ALIMENTATION
-            ========================================== -->
-            <div class="nav-dropdown auth-only">
-
-                <a class="nav-trigger" href="alimentation.html">
-                    Alimentation <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
-
-                    <a href="seche.html">
-                        Sèche
-                        <small>Perdre sans excès</small>
-                    </a>
-
-                    <a href="masse.html">
-                        Prise de masse
-                        <small>Construire sans excès</small>
-                    </a>
-
-                    <a href="maintien.html">
-                        Maintien calorique
-                        <small>Stabiliser et performer</small>
-                    </a>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =========================================
-                ENTRAÎNEMENT
-            ========================================== -->
-            <div class="nav-dropdown auth-only">
-
-                <a class="nav-trigger" href="entrainement.html">
-                    Entraînement <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
-
-
-                    <!-- SALLE -->
-                    <div class="nav-dropdown nav-submenu">
-
-                        <a class="nav-trigger" href="salle.html">
-                            Salle <span>→</span>
-                        </a>
-
-                        <div class="nav-menu nav-submenu-menu">
-
-                            <a href="salle-forme.html">
-                                Remise en forme
-                                <small>Reprendre et progresser</small>
-                            </a>
-
-                            <a href="salle-bodybuilding.html">
-                                BodyBuilding
-                                <small>volume</small>
-                            </a>
-
-                            <a href="salle-powerlifting.html">
-                                Powerlifting
-                                <small>Force</small>
-                            </a>
-
-                            <a href="salle-powerbuilding.html">
-                                Powerbuilding
-                                <small>Force et volume</small>
-                            </a>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- COURSE -->
-                    <a href="course.html">
-                        Course
-                        <small>Endurance et vitesse</small>
-                    </a>
-
-
-                    <!-- HYROX -->
-                    <a href="hyrox.html">
-                        Hyrox
-                        <small>Force et cardio</small>
-                    </a>
-
-
-                    <!-- HYBRIDE -->
-                    <a href="hybride.html">
-                        Hybride
-                        <small>Devenir complet</small>
-                    </a>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =========================================
-                MINDSET
-            ========================================== -->
-            <div class="nav-dropdown auth-only">
-
-                <a class="nav-trigger" href="sommeil-mindset.html">
-                    Mindset <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
-
-                    <a href="sommeil-mindset.html#sommeil">
-                        Sommeil
-                        <small>Récupérer vraiment</small>
-                    </a>
-
-                    <a href="sommeil-mindset.html#sante-mentale">
-                        Santé mentale
-                        <small>Garder le cap</small>
-                    </a>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =========================================
-                DASHBOARD
-            ========================================== -->
-            <a href="dashboard.html" class="nav-login auth-only">
-                dashboard
-            </a>
-
-        </nav>
-
-
-
-        <!-- =========================================
-            UTILISATEUR CONNECTÉ
-        ========================================== -->
-        <div class="dashboard-user auth-only" id="dashboard-user">
-
-            <span id="userName">ATHLETE</span>
-
-            <button id="logoutButton">
-                Déconnexion
-            </button>
-
-        </div>
-
-
-
-        <!-- =========================================
-            CONNEXION SI NON CONNECTÉ
-        ========================================== -->
-        <a href="connexion.html"
-        class="nav-login"
-        id="login-link">
-
-            connexion
-
-        </a>
-
-    </header>
-
-<main class="resource-page">
-    <section class="resource-hero">
-        <div class="resource-kicker">PILIER 03 / MINDSET</div>
-        <h1>Récupérer.<br><span>Rester solide.</span></h1>
-        <p>La performance durable commence par un système nerveux reposé et un esprit capable de revenir à l'essentiel, même quand la motivation baisse.</p>
-    </section>
-
-    <section class="resource-grid" aria-label="Formations mindset">
-        <article class="resource-card" id="sommeil">
-            <div class="resource-card-label">FORMATION 01 / RÉCUPÉRATION</div>
-            <h2>Sommeil</h2>
-            <p>Construire une routine qui améliore la récupération, l'énergie et la qualité des entraînements.</p>
-            <ul class="resource-list">
-                <li>Horaires réguliers et rituel du soir</li>
-                <li>Lumière, caféine et environnement</li>
-                <li>Récupération active après les grosses séances</li>
-            </ul>
-        </article>
-
-        <article class="resource-card" id="sante-mentale">
-            <div class="resource-card-label">FORMATION 02 / ÉQUILIBRE</div>
-            <h2>Santé mentale</h2>
-            <p>Développer une relation plus saine avec la performance, le corps et les périodes de baisse de régime.</p>
-            <ul class="resource-list">
-                <li>Objectifs réalistes et identité hors sport</li>
-                <li>Gérer la pression et le dialogue intérieur</li>
-                <li>Savoir ralentir et demander du soutien</li>
-            </ul>
-        </article>
-    </section>
-
-    <p class="resource-note">Le mindset ne remplace pas un accompagnement médical ou psychologique. En cas de souffrance persistante, parle à un professionnel de santé.</p>
-</main>
-<footer>luxa_fit / MINDSET / RECOVER WITH INTENT</footer>
-<script src="js/app.js"></script>
 </body>
 </html>

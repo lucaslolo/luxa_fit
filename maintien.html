@@ -1,59 +1,83 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>luxa_fit | Maintien calorique</title>
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/header.css">
+	<link rel="stylesheet" href="css/components.css">
+	<link rel="stylesheet" href="css/programmes.css">
+	<link rel="stylesheet" href="css/home.css">
+	<link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body class="programme-page">
-<header>
-	<a href="index.html" class="logo"><span>luxa_fit</span></a>
-	<nav class="site-nav" aria-label="Navigation principale">
-		<div class="nav-dropdown auth-only">
-			<a class="nav-trigger" href="alimentation.html">Alimentation <span>↓</span></a>
-			<div class="nav-menu">
-				<a href="seche.html">Sèche<small>Perdre sans excès</small></a>
-				<a href="masse.html">Prise de masse<small>Construire sans excès</small></a>
-				<a href="maintien.html">Maintien calorique<small>Stabiliser et performer</small></a>
-			</div>
-		</div>
-		<div class="nav-dropdown auth-only">
-			<a class="nav-trigger" href="entrainement.html">Entraînement <span>↓</span></a>
-			<div class="nav-menu">
-				<a href="salle.html">Salle<small>Force et volume</small></a>
-				<a href="course.html">Course<small>Endurance et vitesse</small></a>
-				<a href="hyrox.html">Hyrox<small>Force et cardio</small></a>
-				<a href="hybride.html">Hybride<small>Devenir complet</small></a>
-			</div>
-		</div>
-		<div class="nav-dropdown auth-only">
-			<a class="nav-trigger" href="sommeil-mindset.html">Mindset <span>↓</span></a>
-			<div class="nav-menu">
-				<a href="sommeil-mindset.html#sommeil">Sommeil<small>Récupérer vraiment</small></a>
-				<a href="sommeil-mindset.html#sante-mentale">Santé mentale<small>Garder le cap</small></a>
-			</div>
-		</div>
-		<a href="dashboard.html" class="nav-login auth-only">dashboard</a>
-	</nav>
-	<div class="dashboard-user auth-only" id="dashboard-user"><span id="userName">ATHLETE</span><button id="logoutButton">Déconnexion</button></div>
-	<a href="connexion.html" class="nav-login" id="login-link">connexion</a>
-</header>
-<main class="resource-page">
-	<section class="resource-hero">
-		<div class="resource-kicker">PILIER 01 / MAINTIEN CALORIQUE</div>
-		<h1>Stabiliser pour<br><span>progresser.</span></h1>
-		<p>Garder un poids stable, soutenir tes performances et construire une alimentation souple que tu peux tenir toute l’année.</p>
-	</section>
-	<section class="resource-grid" aria-label="Principes du maintien calorique">
-		<article class="discipline-card discipline"><div class="resource-card-label">01 / CALORIES</div><span class="discipline-icon">✦</span><h2>L’équilibre</h2><p>Pars d’un apport proche de tes besoins, puis ajuste selon l’évolution de ton poids et ton niveau d’activité.</p><ul class="resource-list"><li>Observer la moyenne du poids</li><li>Ajuster par petites étapes</li><li>Prendre en compte l’activité</li></ul></article>
-		<article class="discipline-card discipline"><div class="resource-card-label">02 / ASSIETTE</div><span class="discipline-icon">✦</span><h2>La structure</h2><p>Des repas complets rendent le maintien plus simple, rassasiant et compatible avec la vie quotidienne.</p><ul class="resource-list"><li>Une source de protéines à chaque repas</li><li>Des fruits et légumes variés</li><li>Des glucides selon l’effort</li></ul></article>
-		<article class="discipline-card discipline"><div class="resource-card-label">03 / PERFORMANCE</div><span class="discipline-icon">✦</span><h2>L’énergie</h2><p>Répartis tes apports autour de tes entraînements pour mieux récupérer et garder de bonnes sensations.</p><ul class="resource-list"><li>Manger avant les séances exigeantes</li><li>Récupérer avec protéines et glucides</li><li>Boire régulièrement</li></ul></article>
-		<article class="discipline-card discipline"><div class="resource-card-label">04 / FLEXIBILITÉ</div><span class="discipline-icon">✦</span><h2>La durée</h2><p>Un cadre utile laisse de la place aux repas sociaux et aux écarts ponctuels sans culpabilité.</p><ul class="resource-list"><li>Raisonner sur la semaine</li><li>Éviter les compensations</li><li>Garder des habitudes simples</li></ul></article>
-	</section>
-	<p class="resource-note">Le maintien n’est pas l’absence d’objectif : c’est la base qui permet de performer, récupérer et rester constant.</p>
-</main>
-<footer>luxa_fit / MAINTIEN / BUILD A BASE</footer>
-<script src="js/app.js"></script>
+	<div id="header-container"></div>
+
+	<main class="resource-page">
+		<section class="resource-hero">
+			<div class="resource-kicker">PILIER 01 / MAINTIEN CALORIQUE</div>
+			<h1>Stabiliser pour<br><span>progresser.</span></h1>
+			<p>Garder un poids stable, soutenir tes performances et construire une alimentation souple que tu peux tenir toute l’année.</p>
+		</section>
+
+		<section class="resource-grid" aria-label="Principes du maintien calorique">
+			<article class="discipline-card discipline">
+				<div class="resource-card-label">01 / CALORIES</div>
+				<span class="discipline-icon">✦</span>
+				<h3>L’équilibre</h3>
+				<p>Pars d’un apport proche de tes besoins, puis ajuste selon l’évolution de ton poids et ton niveau d’activité.</p>
+				<ul class="resource-list">
+					<li>Observer la moyenne du poids</li>
+					<li>Ajuster par petites étapes</li>
+					<li>Prendre en compte l’activité</li>
+				</ul>
+			</article>
+			<article class="discipline-card discipline">
+				<div class="resource-card-label">02 / ASSIETTE</div>
+				<span class="discipline-icon">✦</span>
+				<h3>La structure</h3>
+				<p>Des repas complets rendent le maintien plus simple, rassasiant et compatible avec la vie quotidienne.</p>
+				<ul class="resource-list">
+					<li>Une source de protéines à chaque repas</li>
+					<li>Des fruits et légumes variés</li>
+					<li>Des glucides selon l’effort</li>
+				</ul>
+			</article>
+			<article class="discipline-card discipline">
+				<div class="resource-card-label">03 / PERFORMANCE</div>
+				<span class="discipline-icon">✦</span>
+				<h3>L’énergie</h3>
+				<p>Répartis tes apports autour de tes entraînements pour mieux récupérer et garder de bonnes sensations.</p>
+				<ul class="resource-list">
+					<li>Manger avant les séances exigeantes</li>
+					<li>Récupérer avec protéines et glucides</li>
+					<li>Boire régulièrement</li>
+				</ul>
+			</article>
+			<article class="discipline-card discipline">
+				<div class="resource-card-label">04 / FLEXIBILITÉ</div>
+				<span class="discipline-icon">✦</span>
+				<h3>La durée</h3>
+				<p>Un cadre utile laisse de la place aux repas sociaux et aux écarts ponctuels sans culpabilité.</p>
+				<ul class="resource-list">
+					<li>Raisonner sur la semaine</li>
+					<li>Éviter les compensations</li>
+					<li>Garder des habitudes simples</li>
+				</ul>
+			</article>
+		</section>
+
+		<p class="resource-note">Le maintien n’est pas l’absence d’objectif : c’est la base qui permet de performer, récupérer et rester constant.</p>
+	</main>
+
+	<footer>
+		luxa_fit / MAINTIEN / BUILD A BASE
+	</footer>
+
+	<script src="js/app.js"></script>
+	<script src="js/components.js"></script>
 </body>
 </html>

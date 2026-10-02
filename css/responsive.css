@@ -1,0 +1,346 @@
+@media (max-width: 900px) {
+	.grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.charts {
+		grid-template-columns: 1fr;
+	}
+
+	.form {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.days {
+		grid-template-columns: 1fr;
+	}
+
+	.weeks {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	#performanceForm {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	#performanceForm .primary-button {
+		grid-column: 1 / -1;
+	}
+
+	.stats-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.dashboard-overview {
+		grid-template-columns: 1fr;
+	}
+
+	.category-summary {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.endurance-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	header {
+		padding: 17px 18px;
+	}
+
+	.logo {
+		font-size: 14px;
+	}
+
+	main {
+		padding: 34px 18px 42px;
+	}
+
+	.hero {
+		display: block;
+		min-height: 0;
+		padding: 18px 0 30px;
+	}
+
+	.hero h1 {
+		font-size: clamp(50px, 17vw, 78px);
+	}
+
+	.countdown {
+		display: inline-block;
+		margin-top: 28px;
+	}
+
+	.grid,
+	.form {
+		grid-template-columns: 1fr;
+	}
+
+	.grid {
+		gap: 8px;
+		margin-bottom: 38px;
+	}
+
+	.card {
+		padding: 20px;
+	}
+
+	.section-header {
+		align-items: flex-start;
+		gap: 12px;
+	}
+
+	.section h2 {
+		font-size: 20px;
+	}
+
+	.card:has(table) {
+		overflow-x: auto;
+	}
+
+	table {
+		min-width: 480px;
+	}
+
+	.date {
+		font-size: 9px;
+	}
+
+	.dashboard-page header {
+		align-items: flex-start;
+		gap: 14px;
+		padding: 15px 18px;
+	}
+
+	.dashboard-page .site-nav {
+		order: 3;
+		margin: 0;
+	}
+
+	.dashboard-user {
+		position: absolute;
+		top: 14px;
+		right: 18px;
+	}
+
+	.dashboard-user button {
+		font-size: 9px;
+	}
+
+	.dashboard-user span {
+		display: none;
+	}
+
+	.dashboard {
+		padding-top: 34px;
+	}
+
+	.dashboard-header::after {
+		right: -24px;
+		width: 70px;
+		height: 70px;
+	}
+
+	.dashboard-card {
+		padding: 18px;
+	}
+
+	.category-browser-toolbar {
+		align-items: stretch;
+		flex-direction: column;
+	}
+
+	.category-browser-toolbar select,
+	.category-summary {
+		width: 100%;
+	}
+
+	.questionnaire-modal {
+		padding: 12px;
+	}
+
+	.questionnaire-panel {
+		max-height: calc(100vh - 24px);
+		padding: 20px;
+	}
+
+	.questionnaire-fields,
+	.questionnaire-footer {
+		grid-template-columns: 1fr;
+	}
+
+	.questionnaire-footer .primary-button {
+		width: 100%;
+	}
+
+	#questionnaireMessage {
+		margin: 0;
+	}
+
+	.profile-info,
+	.stats-grid,
+	.endurance-grid,
+	.category-summary,
+	.goals-grid,
+	.charts-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.category-heading {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.category-heading p {
+		text-align: left;
+	}
+
+	#performanceForm {
+		grid-template-columns: 1fr;
+	}
+
+	#performanceForm .primary-button {
+		grid-column: auto;
+	}
+
+	.chart-container canvas {
+		height: 180px;
+	}
+
+	.home-main,
+	.program-main {
+		padding: 35px 18px 45px;
+	}
+
+	.home-intro {
+		padding: 35px 0 52px;
+	}
+
+	.home-intro::after {
+		right: -30px;
+		width: 110px;
+		height: 110px;
+	}
+
+	.home-intro h1 {
+		font-size: clamp(48px, 15vw, 72px);
+	}
+
+	.home-meta {
+		flex-wrap: wrap;
+		gap: 12px 20px;
+	}
+
+	.home-label {
+		display: none;
+	}
+
+	.discipline-grid,
+	.program-stats,
+	.week-list,
+	.race-list {
+		grid-template-columns: 1fr;
+	}
+
+	.muscu-stats {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.course-stats {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.course-stats .program-stat {
+		min-width: 0;
+	}
+
+	.course-stats .stat-history {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.course-stats .stat-history span {
+		text-align: left;
+	}
+
+	.discipline-card {
+		min-height: 285px;
+	}
+
+	.program-hero {
+		padding: 60px 0 45px;
+	}
+
+	.program-hero h1 {
+		font-size: clamp(58px, 18vw, 88px);
+	}
+
+	.program-story {
+		padding: 22px 18px;
+	}
+
+	.race-card summary {
+		padding: 20px 18px;
+	}
+
+	.race-details {
+		padding: 0 18px 16px;
+	}
+
+	.split-head,
+	.split-row {
+		gap: 10px;
+	}
+
+	.split-head span:last-child,
+	.split-row .split-time,
+	.split-row .split-cumulative {
+		min-width: 58px;
+	}
+}
+
+@media (max-width: 760px) {
+	header {
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 14px;
+	padding: 16px 18px;
+	}
+
+	.site-nav {
+		align-items: stretch;
+		flex-wrap: wrap;
+		gap: 2px;
+	}
+
+	.nav-trigger,
+	.nav-login {
+		padding: 7px 8px;
+		font-size: 10px;
+	}
+
+	.nav-menu {
+		left: 0;
+		right: auto;
+		min-width: 220px;
+	}
+
+	.resource-page {
+		padding: 38px 18px 55px;
+	}
+
+	.resource-hero {
+		padding-top: 20px;
+	}
+
+	.resource-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.resource-card {
+		min-height: auto;
+	}
+}

@@ -2373,7 +2373,18 @@ document.addEventListener(
    DÉCONNEXION
    ========================================================= */
 
-if (logoutButton) {
+/* =========================================================
+   DÉCONNEXION
+   ========================================================= */
+
+function setupLogout() {
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+    if (!logoutButton) {
+        return;
+    }
 
     logoutButton.addEventListener(
         "click",
@@ -2390,22 +2401,17 @@ if (logoutButton) {
                         }
                     );
 
-
                 const data =
                     await response.json();
 
 
                 if (data.success) {
 
-                    localStorage.removeItem(
-                        "user"
-                    );
-
+                    localStorage.removeItem("user");
 
                     document.body.classList.remove(
                         "authenticated"
                     );
-
 
                     window.location.href =
                         "index.html";
@@ -2414,7 +2420,10 @@ if (logoutButton) {
 
             } catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Erreur lors de la déconnexion :",
+                    error
+                );
 
             }
 
@@ -2547,14 +2556,22 @@ loadStrengthStats();
 
 async function updateAuthenticatedNavigation() {
 
-    const authLinks = document.querySelectorAll(".auth-only");
-    const dashboardUser = document.querySelector(".dashboard-user");
-    const userName = document.getElementById("userName");
-    const loginLink = document.getElementById("login-link");
+    const authLinks =
+        document.querySelectorAll(".auth-only");
 
-    // État par défaut : utilisateur non connecté
-    authLinks.forEach(link => {
-        link.style.display = "none";
+    const dashboardUser =
+        document.querySelector(".dashboard-user");
+
+    const loginLink =
+        document.getElementById("login-link");
+
+
+    // ========================================
+    // ÉTAT PAR DÉFAUT : NON CONNECTÉ
+    // ========================================
+
+    authLinks.forEach(element => {
+        element.style.display = "none";
     });
 
     if (dashboardUser) {
@@ -2565,23 +2582,27 @@ async function updateAuthenticatedNavigation() {
         loginLink.style.display = "inline-flex";
     }
 
+
     try {
 
-        const response = await fetch("/api/me", {
-            method: "GET",
-            credentials: "same-origin"
-        });
+        const response =
+            await fetch("/api/me", {
+                method: "GET",
+                credentials: "same-origin"
+            });
 
-        const data = await response.json();
+        const data =
+            await response.json();
+
+
+        // ========================================
+        // UTILISATEUR CONNECTÉ
+        // ========================================
 
         if (data.success === true && data.user) {
 
-            // ========================================
-            // UTILISATEUR CONNECTÉ
-            // ========================================
-
-            authLinks.forEach(link => {
-                link.style.display = "inline-flex";
+            authLinks.forEach(element => {
+                element.style.display = "inline-flex";
             });
 
             if (dashboardUser) {
@@ -2592,12 +2613,10 @@ async function updateAuthenticatedNavigation() {
                 loginLink.style.display = "none";
             }
 
-            if (userName) {
-                userName.textContent =
-                    data.user.prenom + " " + data.user.nom;
-            }
+            document.body.classList.add(
+                "authenticated"
+            );
 
-            document.body.classList.add("authenticated");
 
         } else {
 
@@ -2605,8 +2624,8 @@ async function updateAuthenticatedNavigation() {
             // UTILISATEUR NON CONNECTÉ
             // ========================================
 
-            authLinks.forEach(link => {
-                link.style.display = "none";
+            authLinks.forEach(element => {
+                element.style.display = "none";
             });
 
             if (dashboardUser) {
@@ -2617,8 +2636,11 @@ async function updateAuthenticatedNavigation() {
                 loginLink.style.display = "inline-flex";
             }
 
-            document.body.classList.remove("authenticated");
+            document.body.classList.remove(
+                "authenticated"
+            );
         }
+
 
     } catch (error) {
 
@@ -2627,8 +2649,8 @@ async function updateAuthenticatedNavigation() {
             error
         );
 
-        authLinks.forEach(link => {
-            link.style.display = "none";
+        authLinks.forEach(element => {
+            element.style.display = "none";
         });
 
         if (dashboardUser) {
@@ -2639,13 +2661,21 @@ async function updateAuthenticatedNavigation() {
             loginLink.style.display = "inline-flex";
         }
 
-        document.body.classList.remove("authenticated");
+        document.body.classList.remove(
+            "authenticated"
+        );
     }
 }
 
 
 /* =========================================================
-   LANCEMENT
+   HEADER CHARGÉ
    ========================================================= */
 
-updateAuthenticatedNavigation();
+document.addEventListener("headerLoaded", () => {
+
+    updateAuthenticatedNavigation();
+
+    setupLogout();
+
+});

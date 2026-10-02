@@ -1,318 +1,428 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>luxa_fit | LES 3 PILIERS</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="luxa_fit — entraînement, alimentation, sommeil et mindset pour construire un corps fort et sain.">
+    <title>Accueil | luxa_fit</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body class="home-page">
-    <header>
+    <div id="header-container"></div>
 
-        <!-- LOGO -->
-        <a href="index.html" class="logo">
-            <span>luxa_fit</span>
-        </a>
+    <main class="home-main">
+        <section class="home-intro">
 
+            <h1>Construire un corps<br><span>fort et sain</span></h1>
 
-        <!-- NAVIGATION -->
-        <nav class="site-nav" aria-label="Navigation principale">
+            <p>
+                Bienvenue dans l'univers <strong>luxa_fit</strong>.
+                Une approche complète basée sur trois piliers essentiels :
+                l'alimentation, l'entraînement et le sommeil &amp; mindset.
+            </p>
 
+            <div class="home-meta">
+                <span>ALIMENTATION</span>
+                <span>ENTRAÎNEMENT</span>
+                <span>SOMMEIL &amp; MINDSET</span>
+            </div>
+        </section>
 
-            <!-- =========================================
-                ALIMENTATION
-            ========================================== -->
-            <div class="nav-dropdown auth-only">
+        <section class="formation-finder" id="formation-finder">
 
-                <a class="nav-trigger" href="alimentation.html">
-                    Alimentation <span>↓</span>
+            <div class="formation-finder-header">
+                <h2>Les 3 piliers</h2>
+                <p>Un corps performant ne repose pas uniquement sur l'entraînement. Chaque pilier joue un rôle essentiel dans la progression, la récupération et la santé</p>
+            </div>
+
+            <div class="discipline-grid">
+                <a class="discipline-card discipline" href="alimentation.html" aria-label="Découvrir le pilier alimentation">
+                    <span class="discipline-number">01</span>
+                    <span class="discipline-icon" aria-hidden="true">🍴</span>
+                    <h3>ALIMENTATION</h3>
+                    <p>
+                        Nourrir son corps correctement pour soutenir
+                        la performance, la récupération et construire
+                        un physique sain.
+                    </p>
+                    <span class="discipline-link"> Découvrir <span aria-hidden="true">→</span> </span>
                 </a>
 
-                <div class="nav-menu">
+                <a class="discipline-card discipline" href="entrainement.html" aria-label="Découvrir le pilier entraînement">
+                    <span class="discipline-number">02</span>
+                    <span class="discipline-icon" aria-hidden="true">🏆</span>
+                    <h3>ENTRAÎNEMENT</h3>
+                    <p>
+                        Développer sa force, son endurance et ses
+                        capacités physiques grâce à un entraînement
+                        structuré et progressif.
+                    </p>
+                    <span class="discipline-link">Découvrir<span aria-hidden="true">→</span></span>
+                </a>
 
-                    <a href="seche.html">
-                        Sèche
-                        <small>Perdre sans excès</small>
-                    </a>
+                <a class="discipline-card discipline" href="sommeil-mindset.html" aria-label="Découvrir le pilier sommeil et mindset">
+                    <span class="discipline-number">03</span>
+                    <span class="discipline-icon" aria-hidden="true">🧘</span>
+                    <h3>MINDSET</h3>
+                    <p>
+                        Améliorer son sommeil, gérer son stress et
+                        développer un état d'esprit solide pour
+                        progresser durablement.
+                    </p>
+                    <span class="discipline-link">Découvrir<span aria-hidden="true">→</span></span>
+                </a>
+            </div>
+        </section>
 
-                    <a href="masse.html">
-                        Prise de masse
-                        <small>Construire sans excès</small>
-                    </a>
+        <!-- =====================================================
+     TROUVER SA FORMATION
+====================================================== -->
 
-                    <a href="maintien.html">
-                        Maintien calorique
-                        <small>Stabiliser et performer</small>
-                    </a>
+        <section class="formation-finder" id="formation-finder">
+
+            <div class="formation-finder-header">
+                <h2>Trouve ta formation</h2>
+                <p>Réponds à quelques questions pour découvrir le parcours luxa_fit qui correspond à tes objectifs.</p>
+            </div>
+
+            <div class="formation-quiz" id="formationQuiz">
+                <div class="quiz-step active" data-step="1">
+                    <div class="quiz-step-number">01 / 04</div>
+                    <h3>Quel est ton objectif physique ?</h3>
+
+                    <p class="quiz-question-description">
+                        Choisis ce qui correspond le mieux à ton objectif actuel. 
+                    </p>
+
+                    <div class="quiz-options">
+                        <button type="button" class="quiz-option" data-question="alimentation" data-value="seche">
+                            <strong>Sèche</strong>
+                            <span>Perdre du gras tout en conservant un maximum de muscle.</span>
+                        </button>
+
+                        <button type="button" class="quiz-option" data-question="alimentation" data-value="maintien">
+                            <strong>Maintien calorique</strong>
+                            <span>Maintenir mon poids et améliorer mes performances.</span>
+                        </button>
+
+                        <button type="button" class="quiz-option" data-question="alimentation" data-value="prise-masse">
+                            <strong>Prise de masse</strong>
+                            <span>Construire du muscle et augmenter progressivement mon poids.</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quiz-step" data-step="2">
+
+                    <div class="quiz-step-number">
+                        02 / 04
+                    </div>
+
+                    <h3>
+                        Quel entraînement veux-tu pratiquer ?
+                    </h3>
+
+                    <p class="quiz-question-description">
+                        Choisis le type de formation qui t'intéresse le plus.
+                    </p>
+
+
+                    <div class="quiz-options">
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="entrainement"
+                            data-value="remise-forme"
+                        >
+                            <strong>Remise en forme</strong>
+                            <span>Reprendre progressivement et construire une bonne base.</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="entrainement"
+                            data-value="bodybuilding"
+                        >
+                            <strong>Bodybuilding</strong>
+                            <span>Développer principalement la masse musculaire.</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="entrainement"
+                            data-value="powerlifting"
+                        >
+                            <strong>Powerlifting</strong>
+                            <span>Développer principalement la force sur les mouvements principaux.</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="entrainement"
+                            data-value="powerbuilding"
+                        >
+                            <strong>Powerbuilding</strong>
+                            <span>Mélanger développement de la force et hypertrophie.</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="entrainement"
+                            data-value="course"
+                        >
+                            <strong>Course à pied</strong>
+                            <span>Développer mon endurance et améliorer mes performances en course.</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="entrainement"
+                            data-value="hyrox"
+                        >
+                            <strong>HYROX</strong>
+                            <span>Combiner course, force et exercices fonctionnels.</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="entrainement"
+                            data-value="hybride"
+                        >
+                            <strong>Hybride</strong>
+                            <span>Développer plusieurs qualités physiques en même temps.</span>
+                        </button>
+
+                    </div>
 
                 </div>
 
-            </div>
+
+                <!-- QUESTION 3 -->
+
+                <div class="quiz-step" data-step="3">
+
+                    <div class="quiz-step-number">
+                        03 / 04
+                    </div>
+
+                    <h3>
+                        Combien de séances peux-tu faire par semaine ?
+                    </h3>
+
+                    <p class="quiz-question-description">
+                        Choisis le nombre de séances que tu peux réellement tenir chaque semaine.
+                    </p>
 
 
+                    <div class="quiz-options quiz-options-small">
 
-            <!-- =========================================
-                ENTRAÎNEMENT
-            ========================================== -->
-            <div class="nav-dropdown auth-only">
-
-                <a class="nav-trigger" href="entrainement.html">
-                    Entraînement <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="sessions"
+                            data-value="2"
+                        >
+                            <strong>2 séances</strong>
+                        </button>
 
 
-                    <!-- SALLE -->
-                    <div class="nav-dropdown nav-submenu">
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="sessions"
+                            data-value="3"
+                        >
+                            <strong>3 séances</strong>
+                        </button>
 
-                        <a class="nav-trigger" href="salle.html">
-                            Salle <span>→</span>
-                        </a>
 
-                        <div class="nav-menu nav-submenu-menu">
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="sessions"
+                            data-value="4"
+                        >
+                            <strong>4 séances</strong>
+                        </button>
 
-                            <a href="salle-forme.html">
-                                Remise en forme
-                                <small>Reprendre et progresser</small>
-                            </a>
 
-                            <a href="salle-bodybuilding.html">
-                                BodyBuilding
-                                <small>volume</small>
-                            </a>
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="sessions"
+                            data-value="5"
+                        >
+                            <strong>5 séances</strong>
+                        </button>
 
-                            <a href="salle-powerlifting.html">
-                                Powerlifting
-                                <small>Force</small>
-                            </a>
 
-                            <a href="salle-powerbuilding.html">
-                                Powerbuilding
-                                <small>Force et volume</small>
-                            </a>
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="sessions"
+                            data-value="6"
+                        >
+                            <strong>6 séances</strong>
+                        </button>
 
+                    </div>
+
+                </div>
+
+
+                <!-- QUESTION 4 -->
+
+                <div class="quiz-step" data-step="4">
+
+                    <div class="quiz-step-number">
+                        04 / 04
+                    </div>
+
+                    <h3>
+                        Combien de temps veux-tu suivre ta formation ?
+                    </h3>
+
+                    <p class="quiz-question-description">
+                        Choisis la durée de ton parcours.
+                    </p>
+
+
+                    <div class="quiz-options quiz-options-small">
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="duree"
+                            data-value="4"
+                        >
+                            <strong>4 semaines</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="duree"
+                            data-value="8"
+                        >
+                            <strong>8 semaines</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="duree"
+                            data-value="12"
+                        >
+                            <strong>12 semaines</strong>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="quiz-option"
+                            data-question="duree"
+                            data-value="16"
+                        >
+                            <strong>16 semaines</strong>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                    RÉSULTAT
+                ================================================== -->
+
+                <div
+                    class="quiz-result"
+                    id="quizResult"
+                >
+
+                    <div class="quiz-result-number">
+                        TON PARCOURS
+                    </div>
+
+                    <h3 id="resultTitle">
+                        Ton parcours luxa_fit
+                    </h3>
+
+                    <div class="quiz-result-details">
+
+                        <div>
+                            <span>OBJECTIF</span>
+                            <strong id="resultAlimentation">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>ENTRAÎNEMENT</span>
+                            <strong id="resultEntrainement">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>SÉANCES</span>
+                            <strong id="resultSessions">
+                                —
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>DURÉE</span>
+                            <strong id="resultDuree">
+                                —
+                            </strong>
                         </div>
 
                     </div>
 
 
-                    <!-- COURSE -->
-                    <a href="course.html">
-                        Course
-                        <small>Endurance et vitesse</small>
-                    </a>
-
-
-                    <!-- HYROX -->
-                    <a href="hyrox.html">
-                        Hyrox
-                        <small>Force et cardio</small>
-                    </a>
-
-
-                    <!-- HYBRIDE -->
-                    <a href="hybride.html">
-                        Hybride
-                        <small>Devenir complet</small>
+                    <a
+                        href="#"
+                        id="resultButton"
+                        class="primary-button"
+                    >
+                        Découvrir ma formation →
                     </a>
 
                 </div>
 
             </div>
 
-
-
-            <!-- =========================================
-                MINDSET
-            ========================================== -->
-            <div class="nav-dropdown auth-only">
-
-                <a class="nav-trigger" href="sommeil-mindset.html">
-                    Mindset <span>↓</span>
-                </a>
-
-                <div class="nav-menu">
-
-                    <a href="sommeil-mindset.html#sommeil">
-                        Sommeil
-                        <small>Récupérer vraiment</small>
-                    </a>
-
-                    <a href="sommeil-mindset.html#sante-mentale">
-                        Santé mentale
-                        <small>Garder le cap</small>
-                    </a>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =========================================
-                DASHBOARD
-            ========================================== -->
-            <a href="dashboard.html" class="nav-login auth-only">
-                dashboard
-            </a>
-
-        </nav>
-
-
-
-        <!-- =========================================
-            UTILISATEUR CONNECTÉ
-        ========================================== -->
-        <div class="dashboard-user auth-only" id="dashboard-user">
-
-            <span id="userName">ATHLETE</span>
-
-            <button id="logoutButton">
-                Déconnexion
-            </button>
-
-        </div>
-
-
-
-        <!-- =========================================
-            CONNEXION SI NON CONNECTÉ
-        ========================================== -->
-        <a href="connexion.html"
-        class="nav-login"
-        id="login-link">
-
-            connexion
-
-        </a>
-
-    </header>
-
-<main class="home-main">
-
-<!-- INTRODUCTION -->
-<section class="home-intro">
-
-    <div class="home-kicker">
-        luxa_fit / PERFORMANCE & SANTÉ
-    </div>
-
-    <h1>
-        Construire un corps<br>
-        <span>fort et sain</span>
-    </h1>
-
-    <p>
-        Bienvenue dans l'univers <strong>luxa_fit</strong>.
-        Une approche complète basée sur trois piliers essentiels :
-        l'alimentation, l'entraînement et le sommeil & mindset.
-    </p>
-
-    <div class="home-meta">
-        <span>ALIMENTATION</span>
-        <span>ENTRAÎNEMENT</span>
-        <span>SOMMEIL & MINDSET</span>
-    </div>
-
-</section>
-
-
-<!-- LES 3 PILIERS -->
-<section class="discipline-section">
-
-    <div class="section-header">
-        <h2>Les 3 piliers</h2>
-    </div>
-
-    <div class="section-description">
-        <p>
-            Un corps performant ne repose pas uniquement sur l'entraînement.
-            Chaque pilier joue un rôle essentiel dans la progression,
-            la récupération et la santé.
-        </p>
-    </div>
-
-
-    <div class="discipline-grid">
-
-
-        <!-- PILIER 01 : ALIMENTATION -->
-        <a class="discipline-card discipline" href="alimentation.html">
-
-            <span class="discipline-number">01</span>
-
-            <span class="discipline-icon">✦</span>
-
-            <h3>ALIMENTATION</h3>
-
-            <p>
-                Nourrir son corps correctement pour soutenir la performance,
-                la récupération et construire un physique sain.
-            </p>
-
-            <span class="discipline-link">
-                Découvrir <b>→</b>
-            </span>
-
-        </a>
-
-
-        <!-- PILIER 02 : ENTRAINEMENT -->
-        <a class="discipline-card discipline" href="entrainement.html">
-
-            <span class="discipline-number">02</span>
-
-            <span class="discipline-icon">✦</span>
-
-            <h3>ENTRAÎNEMENT</h3>
-
-            <p>
-                Développer sa force, son endurance et ses capacités physiques
-                grâce à un entraînement structuré et progressif.
-            </p>
-
-            <span class="discipline-link">
-                Découvrir <b>→</b>
-            </span>
-
-        </a>
-
-
-        <!-- PILIER 03 : SOMMEIL & MINDSET -->
-        <a class="discipline-card discipline" href="sommeil-mindset.html">
-
-            <span class="discipline-number">03</span>
-
-            <span class="discipline-icon">✦</span>
-
-            <h3>MINDSET</h3>
-
-            <p>
-                Améliorer son sommeil, gérer son stress et développer
-                un état d'esprit solide pour progresser durablement.
-            </p>
-
-            <span class="discipline-link">
-                Découvrir <b>→</b>
-            </span>
-
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- FOOTER -->
-<footer class="home-footer">
-    luxa_fit / TRAIN WITH INTENT / 2026—27
-</footer>
-
-</main>
-
-<script src="js/app.js"></script>
-
+        </section>
+    </main>
+
+    <footer class="home-footer">
+        luxa_fit / TRAIN WITH INTENT / 2026—27
+    </footer>
+
+    <script src="js/app.js" defer></script>
+    <script src="js/components.js"></script>
+    <script src="js/formation-finder.js"></script>
 </body>
 </html>

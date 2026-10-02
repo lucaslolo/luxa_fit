@@ -1,2439 +1,767 @@
-/* =====================================================
-   LUXA_FIT — PROGRAMMES POWERLIFTING
-   3 niveaux × 4 fréquences × 4 semaines
-   Structure explicite
-   ===================================================== */
+/* =========================================================
+   LUXA_FIT
+   PROGRAMME POWERLIFTING
+   STRUCTURE DES SÉANCES
+   ========================================================= */
 
-window.sallePrograms = window.sallePrograms || {};
-window.sallePrograms.powerlifting = {
-    "debutant": {
-        "2": {
-            "title": "Powerlifting — Débutant — 2 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5-6",
-                                "Développé couché — 3×5-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×4-5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×6-8",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×6",
-                                "Développé couché — 3×6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×6-8",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×4-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×5-8",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×5-8",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                }
+
+/* =========================================================
+   PROGRAMMES PAR NOMBRE DE SÉANCES
+   ========================================================= */
+
+const powerliftingPrograms = {
+
+
+    /* =====================================================
+       3 SÉANCES
+       FULL BODY
+    ===================================================== */
+
+    3: {
+
+        title: "Powerlifting — 3 séances",
+
+        description:
+            "Un programme Full Body permettant de développer régulièrement le squat, le bench press et le deadlift avec une récupération suffisante.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Squat + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 4,
+                        reps: 5,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 4,
+                        reps: 5,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Leg Curl",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 10
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Mercredi",
+                title: "Deadlift + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 3,
+                        reps: 5,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 4,
+                        reps: 6,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 3,
+                        reps: 6,
+                        percentage: 0.65
+                    },
+
+                    {
+                        name: "Tractions",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Vendredi",
+                title: "Squat + Deadlift",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 4,
+                        reps: 4,
+                        percentage: 0.80
+                    },
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 3,
+                        reps: 5,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 4,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
             }
-        },
-        "3": {
-            "title": "Powerlifting — Débutant — 3 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×4-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×6",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×6",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4",
-                                "Développé couché — 4×4",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 4×4",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×5",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4",
-                                "Développé couché — 3×4",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×4",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×5",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                }
-            }
-        },
-        "4": {
-            "title": "Powerlifting — Débutant — 4 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5-6",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×6",
-                                "Développé couché — 4×6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×6",
-                                "Développé couché — 4×6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×5-6",
-                                "Développé couché — 4×5-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                }
-            }
-        },
-        "5": {
-            "title": "Powerlifting — Débutant — 5 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×5",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×6",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 4×6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×5",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×6",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×5-6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×5",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 4×4",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4",
-                                "Développé couché — 3×4-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×4",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
+
+        ]
     },
-    "reprise": {
-        "2": {
-            "title": "Powerlifting — Reprise — 2 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5-6",
-                                "Développé couché — 3×5-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×4-5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×6-8",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×6",
-                                "Développé couché — 3×6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×6-8",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×4-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×5-8",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×5-8",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                }
+
+
+
+    /* =====================================================
+       4 SÉANCES
+       UPPER / LOWER
+    ===================================================== */
+
+    4: {
+
+        title: "Powerlifting — 4 séances",
+
+        description:
+            "Une organisation équilibrée permettant de travailler les trois mouvements plusieurs fois par semaine tout en répartissant la fatigue.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Squat + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 4,
+                        reps: 5,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 4,
+                        reps: 5,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Romanian Deadlift",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Mardi",
+                title: "Deadlift + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 3,
+                        reps: 5,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 5,
+                        percentage: 0.72
+                    },
+
+                    {
+                        name: "Tractions",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Leg Curl",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 10
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Jeudi",
+                title: "Squat Volume + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 4,
+                        reps: 6,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 4,
+                        reps: 6,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Bulgarian Split Squat",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 10
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Samedi",
+                title: "Deadlift + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 4,
+                        reps: 3,
+                        percentage: 0.80
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 3,
+                        percentage: 0.80
+                    },
+
+                    {
+                        name: "Romanian Deadlift",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 6
+                    },
+
+                    {
+                        name: "Tractions",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
             }
-        },
-        "3": {
-            "title": "Powerlifting — Reprise — 3 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×4-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×6",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×6",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4",
-                                "Développé couché — 4×4",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 4×4",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×5",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4",
-                                "Développé couché — 3×4",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×4",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×5",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                }
-            }
-        },
-        "4": {
-            "title": "Powerlifting — Reprise — 4 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5-6",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×6",
-                                "Développé couché — 4×6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×6",
-                                "Développé couché — 4×6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×5-6",
-                                "Développé couché — 4×5-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                }
-            }
-        },
-        "5": {
-            "title": "Powerlifting — Reprise — 5 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×5",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×6",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 4×6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×5",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×6",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×5-6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×5",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 4×4",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4",
-                                "Développé couché — 3×4-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×4",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
+
+        ]
     },
-    "regulier": {
-        "2": {
-            "title": "Powerlifting — Régulier — 2 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5-6",
-                                "Développé couché — 3×5-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×4-5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×6-8",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×6",
-                                "Développé couché — 3×6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×6-8",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×4-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×5-8",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Rowing barre ou machine — 3×8-10",
-                                "Soulevé de terre — 2×5",
-                                "Gainage — 3×30-45 s"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger ou presse — 3×5-8",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Tirage vertical — 3×8-10",
-                                "Triceps poulie — 2×10-12"
-                            ]
-                        }
-                    ]
-                }
+
+
+
+    /* =====================================================
+       5 SÉANCES
+    ===================================================== */
+
+    5: {
+
+        title: "Powerlifting — 5 séances",
+
+        description:
+            "Une fréquence élevée permettant de pratiquer régulièrement les mouvements principaux avec une spécialisation supplémentaire du bench press.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Squat lourd + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 4,
+                        reps: 4,
+                        percentage: 0.80
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 4,
+                        reps: 5,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Leg Curl",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 10
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Mardi",
+                title: "Deadlift + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 3,
+                        reps: 4,
+                        percentage: 0.80
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 3,
+                        percentage: 0.80
+                    },
+
+                    {
+                        name: "Tractions",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Triceps",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 10
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Jeudi",
+                title: "Squat Volume + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 4,
+                        reps: 6,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 4,
+                        reps: 6,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Romanian Deadlift",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 10
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Vendredi",
+                title: "Deadlift lourd",
+
+                exercises: [
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 4,
+                        reps: 2,
+                        percentage: 0.85
+                    },
+
+                    {
+                        name: "Bench Press pause",
+                        type: "bench",
+                        sets: 4,
+                        reps: 5,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Leg Curl",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 10
+                    },
+
+                    {
+                        name: "Tractions",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Samedi",
+                title: "Bench Volume",
+
+                exercises: [
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 5,
+                        percentage: 0.72
+                    },
+
+                    {
+                        name: "Incline Bench Press",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Élévations latérales",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 12
+                    }
+
+                ]
             }
-        },
-        "3": {
-            "title": "Powerlifting — Régulier — 3 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×4-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×6",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×6",
-                                "Développé couché — 3×6-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4",
-                                "Développé couché — 4×4",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 4×4",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×5",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4",
-                                "Développé couché — 3×4",
-                                "Rowing — 3×8-10",
-                                "Leg curl — 2×10-12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×4",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Fentes — 2×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat léger — 3×5",
-                                "Développé couché — 3×5-8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Triceps — 2×10-12"
-                            ]
-                        }
-                    ]
-                }
+
+        ]
+    },
+
+
+
+    /* =====================================================
+       6 SÉANCES
+    ===================================================== */
+
+    6: {
+
+        title: "Powerlifting — 6 séances",
+
+        description:
+            "Une fréquence élevée destinée aux pratiquants capables de récupérer correctement entre les séances.",
+
+        days: [
+
+            {
+                day: "Lundi",
+                title: "Squat lourd + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 5,
+                        reps: 3,
+                        percentage: 0.82
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 4,
+                        percentage: 0.77
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Mardi",
+                title: "Deadlift + Bench",
+
+                exercises: [
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 4,
+                        reps: 3,
+                        percentage: 0.80
+                    },
+
+                    {
+                        name: "Bench Press pause",
+                        type: "bench",
+                        sets: 4,
+                        reps: 5,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Tractions",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Mercredi",
+                title: "Squat Volume",
+
+                exercises: [
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 4,
+                        reps: 6,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 4,
+                        reps: 6,
+                        percentage: 0.70
+                    },
+
+                    {
+                        name: "Romanian Deadlift",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Jeudi",
+                title: "Bench lourd",
+
+                exercises: [
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 3,
+                        percentage: 0.82
+                    },
+
+                    {
+                        name: "Close Grip Bench",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 6
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 8
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Vendredi",
+                title: "Deadlift + Squat léger",
+
+                exercises: [
+
+                    {
+                        name: "Deadlift",
+                        type: "deadlift",
+                        sets: 3,
+                        reps: 3,
+                        percentage: 0.75
+                    },
+
+                    {
+                        name: "Squat",
+                        type: "squat",
+                        sets: 3,
+                        reps: 5,
+                        percentage: 0.65
+                    },
+
+                    {
+                        name: "Leg Curl",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 10
+                    }
+
+                ]
+            },
+
+
+            {
+                day: "Samedi",
+                title: "Bench Volume",
+
+                exercises: [
+
+                    {
+                        name: "Bench Press",
+                        type: "bench",
+                        sets: 5,
+                        reps: 5,
+                        percentage: 0.72
+                    },
+
+                    {
+                        name: "Incline Bench Press",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 8
+                    },
+
+                    {
+                        name: "Rowing",
+                        type: "accessory",
+                        sets: 4,
+                        reps: 10
+                    },
+
+                    {
+                        name: "Biceps",
+                        type: "accessory",
+                        sets: 3,
+                        reps: 10
+                    }
+
+                ]
             }
-        },
-        "4": {
-            "title": "Powerlifting — Régulier — 4 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5-6",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×6",
-                                "Développé couché — 4×6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×6",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×6",
-                                "Développé couché — 4×6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×6-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×5-6",
-                                "Développé couché — 4×5-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 3×5",
-                                "Tirage vertical — 3×8-10",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre roumain — 3×5-8",
-                                "Développé couché — 3×8",
-                                "Rowing — 3×8-10",
-                                "Gainage — 3×45 s"
-                            ]
-                        }
-                    ]
-                }
-            }
-        },
-        "5": {
-            "title": "Powerlifting — Régulier — 5 séances",
-            "kicker": "SALLE / POWERLIFTING",
-            "description": "Développer les performances sur squat, développé couché et soulevé de terre. Programme construit sur 4 semaines avec une progression contrôlée et une technique prioritaire.",
-            "note": "Reste généralement à 1 à 3 répétitions en réserve. Les charges doivent rester adaptées au niveau et à la qualité technique.",
-            "weeks": {
-                "1": {
-                    "title": "Construction technique",
-                    "phase": "Phase 1 — Technique",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4-6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×5",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×6",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "2": {
-                    "title": "Progression",
-                    "phase": "Phase 1 — Progression",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×5",
-                                "Développé couché — 4×6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×5",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×6",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "3": {
-                    "title": "Intensification",
-                    "phase": "Phase 2 — Intensification",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×5-6",
-                                "Développé couché — 4×5",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×5",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 4×4",
-                                "Développé couché — 4×5-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 4×4",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                },
-                "4": {
-                    "title": "Consolidation",
-                    "phase": "Phase 2 — Consolidation",
-                    "days": [
-                        {
-                            "day": "Lundi",
-                            "type": "POWERLIFTING",
-                            "title": "Force A",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4-6",
-                                "Développé couché — 3×4",
-                                "Rowing — 3×8",
-                                "Abdos — 3×12"
-                            ]
-                        },
-                        {
-                            "day": "Mardi",
-                            "type": "POWERLIFTING",
-                            "title": "Force B",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre — 3×3-5",
-                                "Développé couché — 4×6",
-                                "Tirage vertical — 3×8",
-                                "Leg curl — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Mercredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force C",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat — 3×4",
-                                "Développé couché — 3×4-6",
-                                "Presse — 3×10",
-                                "Triceps — 3×10"
-                            ]
-                        },
-                        {
-                            "day": "Jeudi",
-                            "type": "POWERLIFTING",
-                            "title": "Force D",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Squat pause — 3×4",
-                                "Développé couché — 3×8",
-                                "Soulevé de terre roumain — 3×8",
-                                "Gainage — 3×45 s"
-                            ]
-                        },
-                        {
-                            "day": "Vendredi",
-                            "type": "POWERLIFTING",
-                            "title": "Force E",
-                            "description": "Priorité aux mouvements de compétition et à la technique.",
-                            "exercises": [
-                                "Soulevé de terre technique — 3×4",
-                                "Développé couché — 3×5",
-                                "Rowing — 3×10",
-                                "Curl — 2×12"
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
+
+        ]
     }
+
 };
