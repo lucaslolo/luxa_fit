@@ -1,10 +1,13 @@
-Tache a faire 
 Le 3/10/26:
-Faire le css d'alimentation
+
 Faire l'analyse du site
+
+Faire le css d'alimentation
+ameliorer le css de salle-forme le formulaire + completer les informations directement si possible
+
 Faire la bdd d'alimentation 
 Faire la bdd de l'user
+
 Mettre des images des plats dans alimentation
 Regler problemem connexion sur tel je sais pas si ca fonctionne sur ordi
 Changer le formulaire d'accueil avec trouve ta formation
-ameliorer le css de salle-forme le formulaire + completer les informations directement si possible
