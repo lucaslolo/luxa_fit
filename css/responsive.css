@@ -344,3 +344,175 @@
 		min-height: auto;
 	}
 }
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+
+    .main-nav {
+
+        display: none;
+
+    }
+
+
+    .hero {
+
+        padding-top: 70px;
+
+        padding-bottom: 70px;
+
+    }
+
+
+    .form-section {
+
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+    }
+
+
+    .section-number {
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .three-fields {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .goal-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .scenario-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .macro-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .extra-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .energy-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .energy-card {
+
+        border-right: none;
+
+        border-bottom: 1px solid #333;
+
+    }
+
+
+    .energy-card:last-child {
+
+        border-bottom: none;
+
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+
+    .site-header {
+
+        min-height: 65px;
+
+        padding: 0 20px;
+
+    }
+
+
+    .hero {
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+
+    }
+
+
+    .calculator-section,
+    .results-section {
+
+        padding-left: 20px;
+
+        padding-right: 20px;
+
+    }
+
+
+    .section-content h2 {
+
+        font-size: 34px;
+
+    }
+
+
+    .calorie-main {
+
+        padding: 40px 15px;
+
+    }
+
+
+    .calorie-main strong {
+
+        font-size: 70px;
+
+    }
+
+}
+
+
+@media (max-width: 700px) {
+	.alimentation-page .hero { min-height: 360px; padding: 64px 18px 58px; }
+	.alimentation-page .hero::after { right: -44px; bottom: 42px; width: 110px; height: 110px; }
+	.alimentation-page .calculator-section,
+	.alimentation-page .results-section { padding-right: 18px; padding-left: 18px; }
+	.alimentation-page .form-section { grid-template-columns: 1fr; gap: 10px; padding: 42px 0; }
+	.alimentation-page .section-number { padding: 0; }
+	.alimentation-page .three-fields,
+	.alimentation-page .goal-grid,
+	.alimentation-page .scenario-grid,
+	.alimentation-page .macro-grid,
+	.alimentation-page .energy-grid,
+	.alimentation-page .extra-grid { grid-template-columns: 1fr; }
+	.alimentation-page .radio-grid { grid-template-columns: 1fr 1fr; }
+	.alimentation-page .goal-card > div { min-height: 110px; }
+}
+

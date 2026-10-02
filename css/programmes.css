@@ -12,17 +12,6 @@
 	border-bottom: 1px solid var(--line);
 }
 
-.hero::before {
-	display: block;
-	margin-bottom: 22px;
-	color: var(--lime);
-	content: "// ATHLETE OPERATING SYSTEM / 2026—27";
-	font-family: "DM Mono", monospace;
-	font-size: 11px;
-	letter-spacing: .1em;
-	grid-column: 1 / -1;
-}
-
 .hero h1 {
 	max-width: 700px;
 	color: var(--ink);
