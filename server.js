@@ -24,6 +24,9 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+// Render est derrière un reverse proxy
+app.set("trust proxy", 1);
+
 const isProduction =
     process.env.NODE_ENV === "production";
 
@@ -302,6 +305,295 @@ app.get(
     }
 );
 
+/* =========================================================
+   ADMIN — VISUALISATION DE LA BASE DE DONNÉES
+   ========================================================= */
+
+app.get(
+    "/admin/database",
+    async (req, res) => {
+
+        try {
+
+            /* -----------------------------------------
+               Récupérer toutes les tables
+            ----------------------------------------- */
+
+            const [tables] = await db.query(
+                "SHOW TABLES"
+            );
+
+            const databaseName = "defaultdb";
+
+            const tableKey =
+                `Tables_in_${databaseName}`;
+
+
+            /* -----------------------------------------
+               Début de la page HTML
+            ----------------------------------------- */
+
+            let html = `
+
+                <!DOCTYPE html>
+
+                <html lang="fr">
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1.0"
+                    >
+
+                    <title>
+                        luxa_fit | Base de données
+                    </title>
+
+                    <style>
+
+                        * {
+                            box-sizing: border-box;
+                        }
+
+                        body {
+                            margin: 0;
+                            padding: 40px;
+                            font-family: Arial, sans-serif;
+                            background: #111;
+                            color: white;
+                        }
+
+                        h1 {
+                            margin-bottom: 10px;
+                        }
+
+                        .database-name {
+                            color: #aaa;
+                            margin-bottom: 40px;
+                        }
+
+                        h2 {
+                            margin-top: 40px;
+                            margin-bottom: 15px;
+                        }
+
+                        .table-container {
+                            overflow-x: auto;
+                            background: #1b1b1b;
+                            border-radius: 10px;
+                            padding: 15px;
+                        }
+
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        th,
+                        td {
+                            border: 1px solid #444;
+                            padding: 10px;
+                            text-align: left;
+                            white-space: nowrap;
+                        }
+
+                        th {
+                            background: #292929;
+                        }
+
+                        tr:nth-child(even) {
+                            background: #202020;
+                        }
+
+                        .empty {
+                            color: #888;
+                            padding: 15px 0;
+                        }
+
+                    </style>
+
+                </head>
+
+                <body>
+
+                    <h1>
+                        luxa_fit — Base de données
+                    </h1>
+
+                    <div class="database-name">
+                        Base : ${databaseName}
+                    </div>
+
+            `;
+
+
+            /* -----------------------------------------
+               Parcourir toutes les tables
+            ----------------------------------------- */
+
+            for (const table of tables) {
+
+                const tableName =
+                    table[tableKey];
+
+
+                /* -------------------------------------
+                   Récupérer les données de la table
+                ------------------------------------- */
+
+                const [rows] =
+                    await db.query(
+                        `SELECT * FROM \`${tableName}\``
+                    );
+
+
+                html += `
+                    <h2>
+                        ${tableName}
+                    </h2>
+                `;
+
+
+                /* -------------------------------------
+                   Table vide
+                ------------------------------------- */
+
+                if (rows.length === 0) {
+
+                    html += `
+                        <div class="empty">
+                            Cette table est vide.
+                        </div>
+                    `;
+
+                    continue;
+                }
+
+
+                /* -------------------------------------
+                   Création du tableau
+                ------------------------------------- */
+
+                html += `
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                `;
+
+
+                /* Colonnes */
+
+                Object.keys(
+                    rows[0]
+                ).forEach(
+                    column => {
+
+                        html += `
+                            <th>
+                                ${column}
+                            </th>
+                        `;
+
+                    }
+                );
+
+
+                html += `
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                `;
+
+
+                /* -------------------------------------
+                   Lignes
+                ------------------------------------- */
+
+                rows.forEach(
+                    row => {
+
+                        html += `
+                            <tr>
+                        `;
+
+
+                        Object.values(
+                            row
+                        ).forEach(
+                            value => {
+
+                                html += `
+                                    <td>
+                                        ${value ?? ""}
+                                    </td>
+                                `;
+
+                            }
+                        );
+
+
+                        html += `
+                            </tr>
+                        `;
+
+                    }
+                );
+
+
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+            }
+
+
+            /* -----------------------------------------
+               Fin de la page
+            ----------------------------------------- */
+
+            html += `
+
+                </body>
+
+                </html>
+
+            `;
+
+
+            res.send(html);
+
+
+        } catch (error) {
+
+            console.error(
+                "Erreur lecture BDD :",
+                error
+            );
+
+
+            res.status(500).send(`
+
+                <h1>
+                    Erreur lors de la lecture de la BDD
+                </h1>
+
+                <pre>
+                    ${error.message}
+                </pre>
+
+            `);
+
+        }
+
+    }
+);
 
 /* =========================================================
    INSCRIPTION
