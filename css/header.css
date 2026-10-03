@@ -25,10 +25,73 @@ header {
 	color: var(--lime);
 }
 
+.profile-button {
+	display: grid;
+	width: 34px;
+	height: 34px;
+	place-items: center;
+	border: 1px solid var(--line);
+	color: var(--ink);
+	background: transparent;
+	font-size: 15px;
+	line-height: 1;
+	text-decoration: none;
+	transition: border-color .2s ease, color .2s ease, background .2s ease;
+}
+
+.profile-button:hover {
+	border-color: var(--lime);
+	color: var(--canvas);
+	background: var(--lime);
+}
+
+.profile-button:focus-visible {
+	outline-offset: 4px;
+}
+
 .site-nav {
 	display: flex;
 	align-items: center;
 	gap: 6px;
+}
+
+.nav-toggle {
+	display: none;
+	width: 40px;
+	height: 40px;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+	border: 1px solid var(--line);
+	color: var(--ink);
+	background: transparent;
+	cursor: pointer;
+}
+
+.nav-toggle span {
+	display: block;
+	width: 16px;
+	height: 1px;
+	margin: 0 auto;
+	background: currentColor;
+	transition: transform .2s ease, opacity .2s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) {
+	transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(2) {
+	opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(3) {
+	transform: translateY(-6px) rotate(-45deg);
+}
+
+.nav-toggle:focus-visible {
+	outline: 2px solid var(--orange);
+	outline-offset: 3px;
 }
 
 .auth-only {
@@ -61,6 +124,11 @@ body.authenticated .auth-only {
 .nav-trigger:hover,
 .nav-login:hover,
 .nav-dropdown:focus-within .nav-trigger {
+	color: var(--lime);
+}
+
+.nav-trigger[aria-current="page"],
+.nav-login[aria-current="page"] {
 	color: var(--lime);
 }
 
@@ -130,6 +198,61 @@ body.authenticated .auth-only {
 
     transform: translateY(0);
 
+}
+
+@media (max-width: 760px) {
+	header {
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.nav-toggle {
+		display: flex;
+		margin-left: auto;
+	}
+
+	.site-nav {
+		display: none;
+		flex-basis: 100%;
+		align-items: stretch;
+		flex-direction: column;
+		padding-top: 10px;
+		border-top: 1px solid var(--line);
+	}
+
+	.site-nav.is-open {
+		display: flex;
+	}
+
+	.site-nav .nav-dropdown,
+	.site-nav .nav-trigger,
+	.site-nav .nav-login {
+		width: 100%;
+	}
+
+	.nav-menu {
+		position: static;
+		display: none;
+		margin: 4px 0 0 12px;
+		opacity: 1;
+		pointer-events: auto;
+		transform: none;
+		box-shadow: none;
+	}
+
+	.nav-dropdown:focus-within > .nav-menu,
+	.nav-dropdown:hover > .nav-menu {
+		display: grid;
+	}
+
+	.nav-submenu-menu {
+		position: static;
+		margin-left: 12px;
+	}
+
+	.dashboard-user {
+		margin-left: 0;
+	}
 }
 
 

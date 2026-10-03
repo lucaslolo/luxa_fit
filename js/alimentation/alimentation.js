@@ -14,6 +14,293 @@ let selectedMeals = [];
 let currentFilter = "all";
 
 
+function nutritionHasValue(value) {
+
+    return (
+        value !== null &&
+        value !== undefined &&
+        String(value).trim() !== ""
+    );
+
+}
+
+
+function nutritionLockControl(control, locked) {
+
+    if (!control) {
+        return;
+    }
+
+    const wrapper =
+        control.closest(
+            ".form-group, .radio-card"
+        );
+
+    if (locked) {
+
+        control.disabled = true;
+
+        if (wrapper) {
+            wrapper.classList.add(
+                "nutrition-form-control-locked",
+                "is-locked"
+            );
+        }
+
+        return;
+    }
+
+    control.disabled = false;
+
+    if (wrapper) {
+        wrapper.classList.remove(
+            "nutrition-form-control-locked",
+            "is-locked"
+        );
+    }
+
+}
+
+
+function nutritionCalculateAge(dateValue) {
+
+    if (!nutritionHasValue(dateValue)) {
+        return null;
+    }
+
+    const birthDate = new Date(dateValue);
+
+    if (Number.isNaN(birthDate.getTime())) {
+        return null;
+    }
+
+    const today = new Date();
+    let age =
+        today.getFullYear() -
+        birthDate.getFullYear();
+
+    const birthdayNotReached =
+        today.getMonth() < birthDate.getMonth() ||
+        (
+            today.getMonth() === birthDate.getMonth() &&
+            today.getDate() < birthDate.getDate()
+        );
+
+    if (birthdayNotReached) {
+        age -= 1;
+    }
+
+    return age > 0 ? age : null;
+
+}
+
+
+function nutritionSetRadio(name, value) {
+
+    const radio =
+        document.querySelector(
+            `input[name="${name}"][value="${value}"]`
+        );
+
+    if (!radio) {
+        return false;
+    }
+
+    radio.checked = true;
+    nutritionLockControl(radio, true);
+
+    return true;
+
+}
+
+
+function nutritionApplyProfile(profile, measurements) {
+
+    const latestMeasurement =
+        Array.isArray(measurements) ?
+            measurements[0] :
+            null;
+
+    const weight =
+        nutritionHasValue(profile.poids) ?
+            profile.poids :
+            latestMeasurement &&
+            latestMeasurement.poids;
+
+    const age =
+        nutritionCalculateAge(
+            profile.date_naissance
+        );
+
+    const filledFields = [];
+
+    if (nutritionHasValue(age)) {
+        const ageInput =
+            document.getElementById("age");
+
+        ageInput.value = age;
+        nutritionLockControl(ageInput, true);
+        filledFields.push("âge");
+    }
+
+    if (nutritionHasValue(profile.taille)) {
+        const heightInput =
+            document.getElementById("height");
+
+        heightInput.value = profile.taille;
+        nutritionLockControl(heightInput, true);
+        filledFields.push("taille");
+    }
+
+    if (nutritionHasValue(weight)) {
+        const weightInput =
+            document.getElementById("weight");
+
+        weightInput.value = weight;
+        nutritionLockControl(weightInput, true);
+        filledFields.push("poids");
+    }
+
+    const sex =
+        String(profile.sexe || "").toLowerCase();
+
+    const normalizedSex =
+        sex === "homme" || sex === "male" ?
+            "male" :
+            sex === "femme" || sex === "female" ?
+                "female" :
+                null;
+
+    if (
+        normalizedSex &&
+        nutritionSetRadio("sex", normalizedSex)
+    ) {
+        filledFields.push("sexe");
+    }
+
+    const objective =
+        String(
+            profile.objectif_principal || ""
+        ).toLowerCase();
+
+    const normalizedObjective =
+        objective.includes("perte") ||
+        objective.includes("cut") ?
+            "cut" :
+            objective.includes("prise") ||
+            objective.includes("bulk") ||
+            objective.includes("muscle") ?
+                "bulk" :
+                null;
+
+    if (
+        normalizedObjective &&
+        nutritionSetRadio("goal", normalizedObjective)
+    ) {
+        filledFields.push("objectif");
+    }
+
+    const notice =
+        document.getElementById(
+            "nutritionProfileNotice"
+        );
+
+    if (!notice) {
+        return;
+    }
+
+    if (filledFields.length) {
+        notice.innerHTML =
+            `Informations enregistrées verrouillées : ` +
+            `${filledFields.join(", ")}. ` +
+            `<a href="dashboard.html#dashboard-profile">` +
+            `Modifier depuis le dashboard</a>. ` +
+            `Les champs manquants restent éditables.`;
+    } else {
+        notice.innerHTML =
+            `Aucune information personnelle enregistrée. ` +
+            `Complète les champs puis retrouve-les dans le ` +
+            `<a href="dashboard.html#dashboard-profile">dashboard</a>.`;
+    }
+
+}
+
+
+async function nutritionLoadProfile() {
+
+    const notice =
+        document.getElementById(
+            "nutritionProfileNotice"
+        );
+
+    try {
+
+        const profileResponse =
+            await fetch(
+                "/api/profile",
+                {
+                    credentials: "same-origin"
+                }
+            );
+
+        if (profileResponse.status === 401) {
+            notice.textContent =
+                "Connecte-toi pour récupérer tes informations. " +
+                "Les champs restent éditables.";
+            return;
+        }
+
+        if (!profileResponse.ok) {
+            throw new Error(
+                `Profil indisponible (${profileResponse.status}).`
+            );
+        }
+
+        const profileData =
+            await profileResponse.json();
+
+        let measurements = [];
+
+        const measurementsResponse =
+            await fetch(
+                "/api/body-measurements",
+                {
+                    credentials: "same-origin"
+                }
+            );
+
+        if (measurementsResponse.ok) {
+            const measurementsData =
+                await measurementsResponse.json();
+
+            measurements =
+                measurementsData.measurements || [];
+        }
+
+        nutritionApplyProfile(
+            profileData.profile || {},
+            measurements
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Erreur chargement profil nutrition :",
+            error
+        );
+
+        if (notice) {
+            notice.classList.add("is-error");
+            notice.textContent =
+                "Impossible de charger tes informations. " +
+                "Les champs restent éditables.";
+        }
+
+    }
+
+}
+
+
 /* =========================================================
    CATALOGUE DES REPAS
    ========================================================= */
@@ -493,6 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateGoalCards();
     updateAdjustmentVisibility();
+    nutritionLoadProfile();
 
 });
 

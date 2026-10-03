@@ -66,6 +66,76 @@ document.addEventListener("DOMContentLoaded", () => {
     const options =
         document.querySelectorAll(".quiz-option");
 
+    const steps =
+        document.querySelectorAll(".quiz-step");
+
+    const result =
+        document.getElementById("quizResult");
+
+    const progressLabel =
+        document.getElementById("quizProgressLabel");
+
+    const progressPercent =
+        document.getElementById("quizProgressPercent");
+
+    const progressBar =
+        document.getElementById("quizProgressBar");
+
+    const resetButton =
+        document.getElementById("quizReset");
+
+    function updateProgress(stepNumber) {
+
+        const total =
+            steps.length;
+
+        const percent =
+            Math.round(
+                (stepNumber / total) * 100
+            );
+
+        if (progressLabel) {
+            progressLabel.textContent =
+                `QUESTION ${stepNumber} SUR ${total}`;
+        }
+
+        if (progressPercent) {
+            progressPercent.textContent =
+                `${percent}%`;
+        }
+
+        if (progressBar) {
+            progressBar.style.width =
+                `${percent}%`;
+        }
+
+    }
+
+    function showStep(step) {
+
+        steps.forEach(
+            currentStep => {
+                currentStep.classList.toggle(
+                    "active",
+                    currentStep === step
+                );
+            }
+        );
+
+        if (step) {
+            updateProgress(
+                Number(step.dataset.step)
+            );
+
+            step.querySelector(
+                ".quiz-option"
+            )?.focus();
+        }
+
+    }
+
+    updateProgress(1);
+
     options.forEach(option => {
 
         option.addEventListener("click", () => {
@@ -79,6 +149,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Enregistrer la réponse
             formationAnswers[question] = value;
+
+            const currentOptions =
+                currentStepOptions(option);
+
+            currentOptions.forEach(
+                currentOption => {
+                    const selected =
+                        currentOption === option;
+
+                    currentOption.classList.toggle(
+                        "selected",
+                        selected
+                    );
+
+                    currentOption.setAttribute(
+                        "aria-pressed",
+                        String(selected)
+                    );
+                }
+            );
 
 
             // Trouver l'étape actuelle
@@ -105,9 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (nextStep) {
 
-                currentStep.classList.remove("active");
-
-                nextStep.classList.add("active");
+                showStep(nextStep);
 
             } else {
 
@@ -119,6 +207,70 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     });
+
+    function currentStepOptions(option) {
+        const step =
+            option.closest(".quiz-step");
+
+        return step
+            ? step.querySelectorAll(".quiz-option")
+            : [];
+    }
+
+    options.forEach(
+        option => {
+            option.setAttribute(
+                "aria-pressed",
+                "false"
+            );
+        }
+    );
+
+    if (resetButton) {
+        resetButton.addEventListener(
+            "click",
+            () => {
+
+                Object.keys(
+                    formationAnswers
+                ).forEach(
+                    key => {
+                        formationAnswers[key] =
+                            null;
+                    }
+                );
+
+                options.forEach(
+                    option => {
+                        option.classList.remove(
+                            "selected"
+                        );
+
+                        option.setAttribute(
+                            "aria-pressed",
+                            "false"
+                        );
+                    }
+                );
+
+                result?.classList.remove(
+                    "active"
+                );
+
+                showStep(
+                    steps[0]
+                );
+
+                document.getElementById(
+                    "formationQuiz"
+                )?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+    }
 
 });
 

@@ -1,13 +1,14 @@
 Le 3/10/26:
 
-Faire l'analyse du site
+Faire l'analyse du site sur draw.io
 
-Faire le css d'alimentation
-ameliorer le css de salle-forme le formulaire + completer les informations directement si possible
+optimiser le css d'alimentation
+ameliorer le css de salle-forme le formulaire 
+completer les informations directement si possible
 
 Faire la bdd d'alimentation 
 Faire la bdd de l'user
 
 Mettre des images des plats dans alimentation
-Regler problemem connexion sur tel je sais pas si ca fonctionne sur ordi
+Regler problemem connexion                                        OK
 Changer le formulaire d'accueil avec trouve ta formation

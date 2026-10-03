@@ -32,6 +32,29 @@ let trainingMax = {
 let totalWeeks = 4;
 
 
+document.addEventListener(
+    "luxa:training-data-ready",
+    event => {
+        const latest =
+            event.detail || {};
+
+        userPR = {
+            squat: Number(
+                latest.squat_actuel?.value || 0
+            ),
+            bench: Number(
+                latest.bench_actuel?.value || 0
+            ),
+            deadlift: Number(
+                latest.deadlift_actuel?.value || 0
+            )
+        };
+
+        updatePowerliftingStats();
+    }
+);
+
+
 /* =========================================================
    ARRONDIR LES CHARGES
    ========================================================= */

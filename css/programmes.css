@@ -217,6 +217,28 @@
 	padding: 50px 24px 80px;
 }
 
+.training-profile-notice {
+	max-width: 760px;
+	margin: 0 0 28px;
+	padding: 12px 14px;
+	border-left: 2px solid var(--lime);
+	color: var(--muted);
+	background: rgba(234, 255, 63, .07);
+	font-family: "DM Mono", monospace;
+	font-size: 11px;
+	line-height: 1.55;
+}
+
+.training-profile-notice a {
+	color: var(--lime);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.training-profile-notice.is-error {
+	border-left-color: var(--orange);
+}
+
 .back-link {
 	color: var(--muted);
 	font-family: "DM Mono", monospace;
@@ -271,6 +293,152 @@
 	color: var(--muted);
 	font-size: 17px;
 	line-height: 1.6;
+}
+
+.questionnaire-section {
+	max-width: 920px;
+	margin-top: 34px;
+	padding: 30px;
+	border: 1px solid var(--line);
+	border-top: 3px solid var(--lime);
+	background: linear-gradient(
+		135deg,
+		rgba(23, 25, 24, .96),
+		rgba(13, 15, 14, .9)
+	);
+}
+
+.week-program-section {
+	margin-top: 34px;
+	padding: 30px;
+	border: 1px solid var(--line);
+	border-top: 3px solid var(--lime);
+	background: rgba(13, 15, 14, .72);
+}
+
+.week-program-section .week-header {
+	margin-top: 24px;
+}
+
+.questionnaire-section .selector-title {
+	margin-bottom: 8px;
+	color: var(--lime);
+	font-size: 12px;
+}
+
+.questionnaire-intro {
+	max-width: 620px;
+	margin: 0 0 26px;
+	color: var(--muted);
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.questionnaire-section form {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
+.question-block {
+	display: flex;
+	min-width: 0;
+	flex-direction: column;
+	gap: 9px;
+	padding: 18px;
+	border: 1px solid var(--line);
+	background: rgba(28, 31, 29, .72);
+}
+
+.question-block label {
+	color: var(--ink);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .06em;
+	line-height: 1.5;
+	text-transform: uppercase;
+}
+
+.question-block input,
+.question-block select {
+	width: 100%;
+	min-height: 46px;
+	border: 1px solid var(--line);
+	border-radius: 0;
+	padding: 11px 12px;
+	color: var(--ink);
+	background: var(--panel-raised);
+	font: inherit;
+	outline: none;
+}
+
+.question-block input:focus,
+.question-block select:focus {
+	border-color: var(--lime);
+	box-shadow: 0 0 0 2px rgba(234, 255, 63, .1);
+}
+
+.questionnaire-submit {
+	grid-column: 1 / -1;
+	margin-top: 4px;
+}
+
+.program-submit {
+	width: 100%;
+	border: 1px solid var(--lime);
+	border-radius: 0;
+	padding: 15px 18px;
+	color: var(--canvas);
+	background: var(--lime);
+	font: inherit;
+	font-size: 12px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background .2s ease, transform .2s ease;
+}
+
+.program-submit:hover {
+	background: #e2ff80;
+	transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+	.program-main {
+		padding: 30px 18px 60px;
+	}
+
+	.program-hero {
+		padding: 52px 0 42px;
+	}
+
+	.questionnaire-section {
+		padding: 20px 16px;
+	}
+
+	.week-program-section {
+		padding: 20px 16px;
+	}
+
+	.questionnaire-section form {
+		grid-template-columns: 1fr;
+	}
+
+	.questionnaire-submit {
+		grid-column: auto;
+	}
+
+	.program-day-header {
+		display: block;
+	}
+
+	.program-day-header h3 {
+		margin-top: 10px;
+		text-align: left;
+	}
+
+	.program-exercise {
+		align-items: flex-start;
+	}
 }
 
 .program-story {
@@ -705,12 +873,13 @@
 
 .weeks {
 	display: grid;
-	grid-template-columns: repeat(6, minmax(0, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
 	gap: 8px;
 	margin-bottom: 30px;
 }
 
 .week-btn {
+	min-height: 44px;
 	padding: 12px 10px;
 	border: 1px solid var(--line);
 	background: rgba(23, 25, 24, .9);
@@ -721,6 +890,28 @@
 	text-transform: uppercase;
 	cursor: pointer;
 	transition: all .2s ease;
+}
+
+.week-button {
+	min-height: 44px;
+	padding: 12px 10px;
+	border: 1px solid var(--line);
+	background: rgba(23, 25, 24, .9);
+	color: var(--muted);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: all .2s ease;
+}
+
+.week-button:hover,
+.week-button.active {
+	border-color: var(--lime);
+	color: var(--ink);
+	background: linear-gradient(180deg, var(--lime), #d9ff66);
+	box-shadow: 0 10px 22px rgba(234, 255, 63, .18);
 }
 
 .week-btn:hover {
@@ -773,6 +964,112 @@
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 12px;
+}
+
+.program-day {
+	position: relative;
+	padding: 22px 24px;
+	border: 1px solid var(--line);
+	background: linear-gradient(
+		180deg,
+		rgba(23, 25, 24, .96),
+		rgba(17, 18, 18, .96)
+	);
+	transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.program-day:hover {
+	border-color: rgba(234, 255, 63, .45);
+	box-shadow: 0 12px 28px rgba(0, 0, 0, .14);
+	transform: translateY(-2px);
+}
+
+.program-day::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 3px;
+	background: linear-gradient(
+		90deg,
+		var(--lime),
+		rgba(234, 255, 63, .14)
+	);
+	content: "";
+}
+
+.program-day-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 18px;
+}
+
+.program-day-header span {
+	color: var(--lime);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+}
+
+.program-day-header h3 {
+	margin: 0;
+	color: var(--ink);
+	font-size: clamp(22px, 2.6vw, 30px);
+	font-weight: 500;
+	letter-spacing: -.05em;
+	text-align: right;
+}
+
+.program-exercises {
+	display: grid;
+	gap: 0;
+}
+
+.program-exercise {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 0;
+	border-top: 1px solid rgba(42, 43, 43, .8);
+}
+
+.exercise-main {
+	display: grid;
+	gap: 5px;
+	min-width: 0;
+}
+
+.exercise-main strong {
+	color: var(--muted);
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.45;
+}
+
+.exercise-main span {
+	color: var(--muted);
+	font-family: "DM Mono", monospace;
+	font-size: 10px;
+	letter-spacing: .04em;
+}
+
+.exercise-load {
+	flex: 0 0 auto;
+	color: var(--lime);
+	font-family: "DM Mono", monospace;
+	font-size: 12px;
+	text-align: right;
+}
+
+.exercise-load small {
+	display: block;
+	margin-top: 4px;
+	color: var(--muted);
+	font-size: 9px;
 }
 
 .day-card {

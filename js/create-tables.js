@@ -1087,12 +1087,12 @@ async function createTables() {
 
         ["poids", "Mensurations", "kg"],
         ["taille", "Mensurations", "cm"],
-        ["tour_de_taille", "Mensurations", "cm"],
-        ["tour_de_hanche", "Mensurations", "cm"],
-        ["tour_de_bras", "Mensurations", "cm"],
-        ["tour_de_cuisse", "Mensurations", "cm"],
-        ["tour_de_mollet", "Mensurations", "cm"],
-        ["tour_de_torse", "Mensurations", "cm"],
+        ["tour_taille", "Mensurations", "cm"],
+        ["tour_hanche", "Mensurations", "cm"],
+        ["tour_bras", "Mensurations", "cm"],
+        ["tour_cuisse", "Mensurations", "cm"],
+        ["tour_mollet", "Mensurations", "cm"],
+        ["tour_torse", "Mensurations", "cm"],
 
         ["bench_actuel", "Powerlifting", "kg"],
         ["squat_actuel", "Powerlifting", "kg"],

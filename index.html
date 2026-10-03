@@ -84,14 +84,24 @@
      TROUVER SA FORMATION
 ====================================================== -->
 
-        <section class="formation-finder" id="formation-finder">
+        <section class="formation-finder" id="formation-quiz" aria-labelledby="formation-quiz-title">
 
             <div class="formation-finder-header">
-                <h2>Trouve ta formation</h2>
+                <h2 id="formation-quiz-title">Trouve ta formation</h2>
                 <p>Réponds à quelques questions pour découvrir le parcours luxa_fit qui correspond à tes objectifs.</p>
             </div>
 
             <div class="formation-quiz" id="formationQuiz">
+                <div class="quiz-progress" aria-label="Progression du quiz">
+                    <div class="quiz-progress-meta">
+                        <span id="quizProgressLabel">QUESTION 1 SUR 4</span>
+                        <span id="quizProgressPercent">25%</span>
+                    </div>
+                    <div class="quiz-progress-track">
+                        <div class="quiz-progress-bar" id="quizProgressBar"></div>
+                    </div>
+                </div>
+
                 <div class="quiz-step active" data-step="1">
                     <div class="quiz-step-number">01 / 04</div>
                     <h3>Quel est ton objectif physique ?</h3>
@@ -409,6 +419,14 @@
                     >
                         Découvrir ma formation →
                     </a>
+
+                    <button
+                        type="button"
+                        id="quizReset"
+                        class="quiz-reset"
+                    >
+                        Recommencer le quiz
+                    </button>
 
                 </div>
 

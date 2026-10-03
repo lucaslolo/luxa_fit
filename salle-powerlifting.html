@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>luxa_fit | Maintien calorique</title>
+	<title>luxa_fit | Powerlifting</title>
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/header.css">
 	<link rel="stylesheet" href="css/components.css">
@@ -21,6 +21,10 @@
             <p>
                 Développer le squat, le développé couché et le soulevé de terre
                 avec une progression structurée.
+            </p>
+            <p>
+                Le programme sera adapté à tes performances actuelles,
+                à ton nombre de séances disponibles et à la durée de ton cycle.
             </p>
         </section>
 
@@ -59,6 +63,18 @@
 
         <section class="section questionnaire-section">
             <div class="selector-title">Ton profil</div>
+            <p class="questionnaire-intro">
+                Renseigne tes max actuels pour construire un programme
+                progressif et adapté à ton niveau.
+            </p>
+            <div
+                class="training-profile-notice"
+                id="trainingProfileNotice"
+                role="status"
+                aria-live="polite"
+            >
+                Chargement de tes performances enregistrées...
+            </div>
             <form id="powerliftingForm">
                 <div class="question-block">
                     <label for="squatPR">1. Quel est ton PR au squat ?</label>
@@ -167,6 +183,7 @@
 
     <script src="js/app.js"></script>
 	<script src="js/components.js"></script>
+    <script src="js/entrainement/profile-data.js"></script>
     <script src="js/entrainement/salle/prog_powerlifting.js"></script>
     <script src="js/entrainement/salle/salle-powerlifting.js"></script>
 
