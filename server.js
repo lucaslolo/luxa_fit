@@ -2285,8 +2285,249 @@ app.delete(
     }
 );
 
+
 /* =========================================================
-   17.5 QUESTIONNAIRE COMPLET
+   17.5 TÂCHES DU CALENDRIER
+   ========================================================= */
+
+app.get(
+    "/api/tasks",
+    requireLogin,
+    async (req, res) => {
+
+        try {
+
+            const [tasks] =
+                await db.execute(
+                    `SELECT
+                        id,
+                        titre,
+                        description,
+                        DATE_FORMAT(date_tache, '%Y-%m-%d') AS date_tache,
+                        termine,
+                        date_creation
+                     FROM tasks
+                     WHERE user_id = ?
+                     ORDER BY date_tache ASC, id ASC`,
+                    [req.session.userId]
+                );
+
+            res.json({
+                success: true,
+                tasks
+            });
+
+        } catch (error) {
+
+            console.error("Erreur récupération tâches :", error);
+
+            res.status(500).json({
+                success: false,
+                message: "Erreur lors de la récupération des tâches."
+            });
+
+        }
+
+    }
+);
+
+
+app.post(
+    "/api/tasks",
+    requireLogin,
+    async (req, res) => {
+
+        const titre =
+            typeof req.body.titre === "string"
+                ? req.body.titre.trim()
+                : "";
+
+        const description =
+            typeof req.body.description === "string"
+                ? req.body.description.trim()
+                : "";
+
+        const dateTache =
+            typeof req.body.date_tache === "string"
+                ? req.body.date_tache
+                : "";
+
+        const parsedDate =
+            /^\d{4}-\d{2}-\d{2}$/.test(dateTache)
+                ? new Date(dateTache + "T00:00:00Z")
+                : null;
+
+        if (
+            !titre ||
+            titre.length > 180 ||
+            !parsedDate ||
+            Number.isNaN(parsedDate.getTime()) ||
+            parsedDate.toISOString().slice(0, 10) !== dateTache
+        ) {
+
+            return res.status(400).json({
+                success: false,
+                message: "Le titre et une date valide sont obligatoires."
+            });
+
+        }
+
+        try {
+
+            const [result] =
+                await db.execute(
+                    `INSERT INTO tasks
+                        (user_id, titre, description, date_tache)
+                     VALUES (?, ?, ?, ?)`,
+                    [
+                        req.session.userId,
+                        titre,
+                        description || null,
+                        dateTache
+                    ]
+                );
+
+            res.status(201).json({
+                success: true,
+                message: "Tâche ajoutée.",
+                taskId: result.insertId
+            });
+
+        } catch (error) {
+
+            console.error("Erreur ajout tâche :", error);
+
+            res.status(500).json({
+                success: false,
+                message: "Erreur lors de l'ajout de la tâche."
+            });
+
+        }
+
+    }
+);
+
+
+app.put(
+    "/api/tasks/:id",
+    requireLogin,
+    async (req, res) => {
+
+        const taskId = Number(req.params.id);
+        const termine = req.body.termine === true;
+
+        if (!Number.isInteger(taskId)) {
+
+            return res.status(400).json({
+                success: false,
+                message: "ID de tâche invalide."
+            });
+
+        }
+
+        try {
+
+            const [result] =
+                await db.execute(
+                    `UPDATE tasks
+                     SET termine = ?
+                     WHERE id = ? AND user_id = ?`,
+                    [
+                        termine,
+                        taskId,
+                        req.session.userId
+                    ]
+                );
+
+            if (result.affectedRows === 0) {
+
+                return res.status(404).json({
+                    success: false,
+                    message: "Tâche introuvable."
+                });
+
+            }
+
+            res.json({
+                success: true,
+                message: termine
+                    ? "Tâche terminée."
+                    : "Tâche réouverte."
+            });
+
+        } catch (error) {
+
+            console.error("Erreur modification tâche :", error);
+
+            res.status(500).json({
+                success: false,
+                message: "Erreur lors de la modification de la tâche."
+            });
+
+        }
+
+    }
+);
+
+
+app.delete(
+    "/api/tasks/:id",
+    requireLogin,
+    async (req, res) => {
+
+        const taskId = Number(req.params.id);
+
+        if (!Number.isInteger(taskId)) {
+
+            return res.status(400).json({
+                success: false,
+                message: "ID de tâche invalide."
+            });
+
+        }
+
+        try {
+
+            const [result] =
+                await db.execute(
+                    `DELETE FROM tasks
+                     WHERE id = ? AND user_id = ?`,
+                    [
+                        taskId,
+                        req.session.userId
+                    ]
+                );
+
+            if (result.affectedRows === 0) {
+
+                return res.status(404).json({
+                    success: false,
+                    message: "Tâche introuvable."
+                });
+
+            }
+
+            res.json({
+                success: true,
+                message: "Tâche supprimée."
+            });
+
+        } catch (error) {
+
+            console.error("Erreur suppression tâche :", error);
+
+            res.status(500).json({
+                success: false,
+                message: "Erreur lors de la suppression de la tâche."
+            });
+
+        }
+
+    }
+);
+
+/* =========================================================
+   17.6 QUESTIONNAIRE COMPLET
    ========================================================= */
 
 app.post(

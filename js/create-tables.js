@@ -629,7 +629,36 @@ async function createTables() {
 
 
     /* =========================================================
-       17. BODY MEASUREMENTS
+       17. TASKS
+       ========================================================= */
+
+    await db.execute(`
+        CREATE TABLE IF NOT EXISTS tasks (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+
+            user_id INT NOT NULL,
+
+            titre VARCHAR(180) NOT NULL,
+
+            description TEXT NULL,
+
+            date_tache DATE NOT NULL,
+
+            termine BOOLEAN NOT NULL DEFAULT FALSE,
+
+            date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+            FOREIGN KEY (user_id)
+                REFERENCES users(id)
+                ON DELETE CASCADE
+        )
+    `);
+
+    console.log("✓ Table tasks");
+
+
+    /* =========================================================
+       18. BODY MEASUREMENTS
        ========================================================= */
 
     await db.execute(`

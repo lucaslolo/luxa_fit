@@ -1,4 +1,4 @@
-﻿/* Dashboard */
+/* Dashboard */
 .dashboard-page header {
 	max-width: none;
 	padding: 14px max(24px, calc((100vw - var(--max-width)) / 2));
@@ -1310,9 +1310,7 @@
 	.measurements-grid,
 	.goals-list,
 	.charts-grid,
-	.dashboard-form {
-		grid-template-columns: 1fr;
-	}
+	.dashboard-form,
 
 	#performanceForm {
 		grid-template-columns: 1fr;

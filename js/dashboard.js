@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    LUXA_FIT
    DASHBOARD.JS
    ========================================================= */
@@ -17,6 +17,14 @@ let bodyMeasurements = [];
 let performances = [];
 
 let goals = [];
+
+
+
+let selectedTaskDate = todayString();
+
+let displayedTaskMonth = new Date(
+    selectedTaskDate + "T00:00:00"
+);
 
 
 /* =========================================================
@@ -480,6 +488,7 @@ const logoutButton =
     document.getElementById(
         "logoutButton"
     );
+
 
 
 /* =========================================================
@@ -2629,6 +2638,7 @@ async function deleteGoal(
 }
 
 
+
 /* =========================================================
    29. SÉLECTEUR PERFORMANCE
    ========================================================= */
@@ -3442,7 +3452,6 @@ document.addEventListener(
             loadBodyMeasurements(),
 
             loadPerformances(),
-
             loadGoals()
 
         ]);

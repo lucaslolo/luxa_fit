@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>luxa_fit | Tâches</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/tasks.css">
+</head>
+
+<body class="tasks-page">
+    <div id="header-container"></div>
+
+    <main class="tasks-main">
+        <section class="tasks-hero">
+            <div>
+                <div class="tasks-kicker">LUXA_FIT / ORGANISATION</div>
+                <h1>Tâches<span>.</span></h1>
+                <p>Planifie tes actions et garde le contrôle sur ta progression.</p>
+            </div>
+        </section>
+
+        <section class="task-workspace" aria-labelledby="task-page-title">
+            <div class="task-section-heading">
+                <div>
+                    <span class="section-index">01 / CALENDRIER</span>
+                    <h2 id="task-page-title">Mon calendrier</h2>
+                </div>
+                <p id="taskCount">0 tâche</p>
+            </div>
+
+            <div class="tasks-layout">
+                <div class="task-calendar-card">
+                    <div class="task-calendar-header">
+                        <button type="button" class="calendar-button" id="previousMonth" aria-label="Mois précédent">←</button>
+                        <strong id="taskCalendarTitle">Calendrier</strong>
+                        <button type="button" class="calendar-button" id="nextMonth" aria-label="Mois suivant">→</button>
+                    </div>
+                    <div class="task-calendar-weekdays" aria-hidden="true">
+                        <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+                    </div>
+                    <div class="task-calendar-grid" id="taskCalendarGrid"></div>
+                </div>
+
+                <div class="task-list-card">
+                    <div class="task-list-heading">
+                        <div>
+                            <span class="section-index">JOUR SÉLECTIONNÉ</span>
+                            <h3 id="selectedTaskDate">--</h3>
+                        </div>
+                    </div>
+                    <div class="tasks-list" id="tasksList">
+                        <div class="empty-state">Chargement...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="task-workspace" aria-labelledby="new-task-title">
+            <div class="task-section-heading">
+                <div>
+                    <span class="section-index">02 / AJOUTER</span>
+                    <h2 id="new-task-title">Nouvelle tâche</h2>
+                </div>
+            </div>
+
+            <form id="taskForm" class="task-form">
+                <div>
+                    <label for="taskTitle">Tâche</label>
+                    <input type="text" id="taskTitle" maxlength="180" placeholder="Exemple : séance jambes" required>
+                </div>
+                <div>
+                    <label for="taskDate">Date</label>
+                    <input type="date" id="taskDate" required>
+                </div>
+                <div class="form-full">
+                    <label for="taskDescription">Note (facultatif)</label>
+                    <textarea id="taskDescription" rows="3" maxlength="1000" placeholder="Ajoute un détail ou un rappel..."></textarea>
+                </div>
+                <div class="form-message" id="taskMessage" role="status" aria-live="polite"></div>
+                <button type="submit" class="form-submit">Ajouter la tâche</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="js/components.js" defer></script>
+    <script src="js/tasks.js" defer></script>
+</body>
+
+</html>
