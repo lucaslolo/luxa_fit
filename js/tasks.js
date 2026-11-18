@@ -1,5 +1,5 @@
 let tasks = [];
-let selectedTaskDate = new Date().toISOString().split("T")[0];
+let selectedTaskDate = taskDateString(new Date());
 let displayedTaskMonth = new Date(selectedTaskDate + "T00:00:00");
 
 function taskDateString(date) {
@@ -63,7 +63,7 @@ function renderTaskCalendar() {
     const mondayOffset = (firstDay.getDay() + 6) % 7;
     const daysInMonth = new Date(displayedTaskMonth.getFullYear(), displayedTaskMonth.getMonth() + 1, 0).getDate();
     const previousMonthDays = new Date(displayedTaskMonth.getFullYear(), displayedTaskMonth.getMonth(), 0).getDate();
-    const today = new Date().toISOString().split("T")[0];
+    const today = taskDateString(new Date());
 
     for (let index = 0; index < 42; index += 1) {
         let date;

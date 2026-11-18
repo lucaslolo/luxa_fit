@@ -14,8 +14,79 @@ const express = require("express");
 const path = require("path");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const crypto = require("crypto");
 
 const db = require("./js/database");
+
+// Store MySQL persistant : les sessions ne disparaissent pas au redémarrage
+// du serveur (contrairement au MemoryStore fourni par défaut).
+class MySQLSessionStore extends session.Store {
+    constructor(pool) {
+        super();
+        this.pool = pool;
+        this.ready = pool.execute(`
+            CREATE TABLE IF NOT EXISTS web_sessions (
+                session_id VARCHAR(128) NOT NULL PRIMARY KEY,
+                expires BIGINT UNSIGNED NOT NULL,
+                data MEDIUMTEXT NOT NULL,
+                INDEX idx_web_sessions_expires (expires)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+        `);
+        this.ready.catch(() => {});
+        this.writeCount = 0;
+    }
+
+    getExpiry(sess) {
+        const expires = sess?.cookie?.expires
+            ? new Date(sess.cookie.expires).getTime()
+            : Date.now() + Number(sess?.cookie?.maxAge || 86400000);
+        return Number.isFinite(expires) ? expires : Date.now() + 86400000;
+    }
+
+    get(sessionId, callback) {
+        this.ready
+            .then(() => this.pool.execute(
+                `SELECT data FROM web_sessions WHERE session_id = ? AND expires > ?`,
+                [sessionId, Date.now()]
+            ))
+            .then(([rows]) => callback(null, rows.length ? JSON.parse(rows[0].data) : null))
+            .catch(callback);
+    }
+
+    set(sessionId, sess, callback = () => {}) {
+        this.ready
+            .then(() => this.pool.execute(
+                `INSERT INTO web_sessions (session_id, expires, data) VALUES (?, ?, ?)
+                 ON DUPLICATE KEY UPDATE expires = VALUES(expires), data = VALUES(data)`,
+                [sessionId, this.getExpiry(sess), JSON.stringify(sess)]
+            ))
+            .then(() => {
+                this.writeCount += 1;
+                if (this.writeCount % 100 === 0) {
+                    this.pool.execute(`DELETE FROM web_sessions WHERE expires <= ? LIMIT 500`, [Date.now()]).catch(() => {});
+                }
+                callback(null);
+            })
+            .catch(callback);
+    }
+
+    touch(sessionId, sess, callback = () => {}) {
+        this.ready
+            .then(() => this.pool.execute(
+                `UPDATE web_sessions SET expires = ? WHERE session_id = ?`,
+                [this.getExpiry(sess), sessionId]
+            ))
+            .then(() => callback(null))
+            .catch(callback);
+    }
+
+    destroy(sessionId, callback = () => {}) {
+        this.ready
+            .then(() => this.pool.execute(`DELETE FROM web_sessions WHERE session_id = ?`, [sessionId]))
+            .then(() => callback(null))
+            .catch(callback);
+    }
+}
 
 
 /* =========================================================
@@ -28,6 +99,10 @@ const PORT = process.env.PORT || 3000;
 
 const isProduction =
     process.env.NODE_ENV === "production";
+
+if (isProduction && (!process.env.SESSION_SECRET || process.env.SESSION_SECRET.length < 32)) {
+    throw new Error("SESSION_SECRET doit être défini en production avec au moins 32 caractères.");
+}
 
 
 /*
@@ -127,9 +202,21 @@ app.use(
     })
 );
 
-app.use(
-    express.static(__dirname)
-);
+// Le dossier du projet contient aussi le backend : ne jamais servir ces fichiers au navigateur.
+const PRIVATE_STATIC_PATHS = new Set([
+    "/server.js",
+    "/package.json",
+    "/package-lock.json",
+    "/js/database.js",
+    "/js/create-tables.js"
+]);
+
+app.use((req, res, next) => {
+    if (PRIVATE_STATIC_PATHS.has(req.path)) return res.sendStatus(404);
+    next();
+});
+
+app.use(express.static(__dirname, { dotfiles: "ignore", index: false }));
 
 
 /* =========================================================
@@ -139,9 +226,11 @@ app.use(
 app.use(
     session({
 
+        store: new MySQLSessionStore(db),
+
         secret:
             process.env.SESSION_SECRET ||
-            "luxa_fit_dev_secret",
+            crypto.randomBytes(48).toString("hex"),
 
         resave: false,
 
@@ -171,6 +260,57 @@ app.use(
 /* =========================================================
    7. MIDDLEWARE AUTHENTIFICATION
    ========================================================= */
+
+function requireAdmin(req, res, next) {
+    const expected = process.env.ADMIN_DATABASE_TOKEN;
+    const authorization = req.get("authorization") || "";
+
+    if (!expected) {
+        return res.sendStatus(404);
+    }
+    if (isProduction && !req.secure) {
+        return res.status(403).send("HTTPS est obligatoire pour cette page.");
+    }
+    if (!authorization.startsWith("Basic ")) {
+        res.set("WWW-Authenticate", 'Basic realm="LuxaFit admin", charset="UTF-8"');
+        return res.status(401).send("Authentification administrateur requise.");
+    }
+
+    let supplied = "";
+    try {
+        const decoded = Buffer.from(authorization.slice(6), "base64").toString("utf8");
+        const separator = decoded.indexOf(":");
+        if (separator >= 0 && decoded.slice(0, separator) === "admin") {
+            supplied = decoded.slice(separator + 1);
+        }
+    } catch (_) {
+        return res.sendStatus(404);
+    }
+
+    const expectedBuffer = Buffer.from(expected);
+    const suppliedBuffer = Buffer.from(supplied);
+    if (expectedBuffer.length !== suppliedBuffer.length || !crypto.timingSafeEqual(expectedBuffer, suppliedBuffer)) {
+        return res.sendStatus(404);
+    }
+
+    next();
+}
+
+function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
+function isValidDateOnly(value) {
+    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    const parsed = new Date(`${value}T00:00:00.000Z`);
+    return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
+}
 
 function requireLogin(req, res, next) {
 
@@ -219,6 +359,7 @@ app.get(
 
 app.get(
     "/api/test-db",
+    requireAdmin,
     async (req, res) => {
 
         try {
@@ -282,8 +423,11 @@ app.post(
         ------------------------------------------------- */
 
         if (
-            !prenom ||
-            !nom ||
+            typeof prenom !== "string" ||
+            typeof nom !== "string" ||
+            typeof password !== "string" ||
+            !prenom.trim() ||
+            !nom.trim() ||
             !password
         ) {
 
@@ -300,7 +444,8 @@ app.post(
 
 
         if (
-            password.length < 6
+            password.length < 10 ||
+            Buffer.byteLength(password, "utf8") > 72
         ) {
 
             return res.status(400).json({
@@ -308,7 +453,7 @@ app.post(
                 success: false,
 
                 message:
-                    "Le mot de passe doit contenir au moins 6 caractères."
+                    "Le mot de passe doit contenir au moins 10 caractères et ne pas dépasser 72 octets UTF-8."
 
             });
 
@@ -318,116 +463,59 @@ app.post(
         try {
 
             const cleanPrenom =
-                prenom.trim();
+                prenom.trim().replace(/\s+/g, " ");
 
             const cleanNom =
-                nom.trim();
+                nom.trim().replace(/\s+/g, " ");
 
-
-            /* -------------------------------------------------
-               Vérifier si le compte existe
-            ------------------------------------------------- */
-
-            const [existingUsers] =
-                await db.execute(
-
-                    `SELECT id
-                     FROM users
-                     WHERE prenom = ?
-                     AND nom = ?`,
-
-                    [
-                        cleanPrenom,
-                        cleanNom
-                    ]
-
-                );
-
-
-            if (
-                existingUsers.length > 0
-            ) {
-
-                return res.status(409).json({
-
+            if (cleanPrenom.length > 50 || cleanNom.length > 50) {
+                return res.status(400).json({
                     success: false,
-
-                    message:
-                        "Cet utilisateur existe déjà."
-
+                    message: "Le prénom et le nom ne peuvent pas dépasser 50 caractères."
                 });
-
             }
 
 
-            /* -------------------------------------------------
-               Hasher le mot de passe
-            ------------------------------------------------- */
+            const connection = await db.getConnection();
+            try {
+                await connection.beginTransaction();
 
-            const passwordHash =
-                await bcrypt.hash(
-                    password,
-                    10
+                const [existingUsers] = await connection.execute(
+                    `SELECT id FROM users WHERE LOWER(prenom) = LOWER(?) AND LOWER(nom) = LOWER(?) LIMIT 1`,
+                    [cleanPrenom, cleanNom]
                 );
 
+                if (existingUsers.length > 0) {
+                    await connection.rollback();
+                    return res.status(409).json({
+                        success: false,
+                        message: "Cet utilisateur existe déjà."
+                    });
+                }
 
-            /* -------------------------------------------------
-               Créer utilisateur
-            ------------------------------------------------- */
-
-            const [result] =
-                await db.execute(
-
-                    `INSERT INTO users
-                     (
-                         prenom,
-                         nom,
-                         password_hash
-                     )
-                     VALUES (?, ?, ?)`,
-
-                    [
-                        cleanPrenom,
-                        cleanNom,
-                        passwordHash
-                    ]
-
+                const passwordHash = await bcrypt.hash(password, 12);
+                const [result] = await connection.execute(
+                    `INSERT INTO users (prenom, nom, password_hash) VALUES (?, ?, ?)`,
+                    [cleanPrenom, cleanNom, passwordHash]
                 );
 
+                await connection.execute(
+                    `INSERT INTO profiles (user_id) VALUES (?)`,
+                    [result.insertId]
+                );
 
-            const userId =
-                result.insertId;
-
-
-            /* -------------------------------------------------
-               Créer automatiquement son profil
-            ------------------------------------------------- */
-
-            await db.execute(
-
-                `INSERT INTO profiles
-                 (
-                     user_id
-                 )
-                 VALUES (?)`,
-
-                [
-                    userId
-                ]
-
-            );
-
-
-            res.status(201).json({
-
-                success: true,
-
-                message:
-                    "Compte créé avec succès !",
-
-                userId
-
-            });
+                await connection.commit();
+                return res.status(201).json({
+                    success: true,
+                    message: "Compte créé avec succès !",
+                    userId: result.insertId
+                });
+            } catch (transactionError) {
+                await connection.rollback();
+                throw transactionError;
+            } finally {
+                connection.release();
+            }
 
         } catch (error) {
 
@@ -467,8 +555,11 @@ app.post(
 
 
         if (
-            !prenom ||
-            !nom ||
+            typeof prenom !== "string" ||
+            typeof nom !== "string" ||
+            typeof password !== "string" ||
+            !prenom.trim() ||
+            !nom.trim() ||
             !password
         ) {
 
@@ -504,7 +595,8 @@ app.post(
                         id,
                         prenom,
                         nom,
-                        password_hash
+                        password_hash,
+                        statut_compte
                      FROM users
                      WHERE prenom = ?
                      AND nom = ?`,
@@ -536,6 +628,12 @@ app.post(
             const user =
                 users[0];
 
+            if (user.statut_compte && user.statut_compte !== "actif") {
+                return res.status(403).json({
+                    success: false,
+                    message: "Ce compte est désactivé. Contacte l'administrateur."
+                });
+            }
 
             /* -------------------------------------------------
                Vérification mot de passe
@@ -952,6 +1050,13 @@ app.put(
         }
 
 
+        if (date_naissance && !isValidDateOnly(date_naissance)) {
+            return res.status(400).json({
+                success: false,
+                message: "La date de naissance est invalide."
+            });
+        }
+
         /* -------------------------------------------------
            Vérification taille
         ------------------------------------------------- */
@@ -1187,14 +1292,14 @@ app.post(
         } = req.body;
 
 
-        if (!date) {
+        if (!isValidDateOnly(date)) {
 
             return res.status(400).json({
 
                 success: false,
 
                 message:
-                    "La date est obligatoire."
+                    "Une date valide au format AAAA-MM-JJ est obligatoire."
 
             });
 
@@ -1296,60 +1401,36 @@ app.post(
 
         try {
 
-            const [result] =
-                await db.execute(
-
+            const connection = await db.getConnection();
+            let result;
+            try {
+                await connection.beginTransaction();
+                [result] = await connection.execute(
                     `INSERT INTO body_measurements
-                     (
-                         user_id,
-                         date,
-                         poids,
-                         tour_taille,
-                         tour_bras,
-                         tour_cuisse,
-                         tour_mollet,
-                         tour_hanche,
-                         tour_torse
-                     )
+                     (user_id, date, poids, tour_taille, tour_bras, tour_cuisse, tour_mollet, tour_hanche, tour_torse)
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-
                     [
-                        req.session.userId,
-                        date,
-                        cleanValues.poids,
-                        cleanValues.tour_taille,
-                        cleanValues.tour_bras,
-                        cleanValues.tour_cuisse,
-                        cleanValues.tour_mollet,
-                        cleanValues.tour_hanche,
-                        cleanValues.tour_torse
+                        req.session.userId, date, cleanValues.poids,
+                        cleanValues.tour_taille, cleanValues.tour_bras,
+                        cleanValues.tour_cuisse, cleanValues.tour_mollet,
+                        cleanValues.tour_hanche, cleanValues.tour_torse
                     ]
-
                 );
 
-
-            /*
-               Synchroniser le poids avec profiles.poids
-               lorsqu'un poids est fourni.
-            */
-
-            if (
-                cleanValues.poids !== null
-            ) {
-
-                await db.execute(
-
-                    `UPDATE profiles
-                     SET poids = ?
-                     WHERE user_id = ?`,
-
-                    [
-                        cleanValues.poids,
-                        req.session.userId
-                    ]
-
-                );
-
+                // Synchroniser le poids du profil dans la même transaction.
+                if (cleanValues.poids !== null) {
+                    await connection.execute(
+                        `INSERT INTO profiles (user_id, poids) VALUES (?, ?)
+                         ON DUPLICATE KEY UPDATE poids = VALUES(poids)`,
+                        [req.session.userId, cleanValues.poids]
+                    );
+                }
+                await connection.commit();
+            } catch (transactionError) {
+                await connection.rollback();
+                throw transactionError;
+            } finally {
+                connection.release();
             }
 
 
@@ -1479,7 +1560,7 @@ app.post(
             !type ||
             value === undefined ||
             value === null ||
-            !date
+            !isValidDateOnly(date)
         ) {
 
             return res.status(400).json({
@@ -1487,7 +1568,7 @@ app.post(
                 success: false,
 
                 message:
-                    "Le type, la valeur et la date sont obligatoires."
+                    "Le type, la valeur et une date valide (AAAA-MM-JJ) sont obligatoires."
 
             });
 
@@ -1675,9 +1756,7 @@ app.delete(
 
 
         if (
-            !Number.isInteger(
-                performanceId
-            )
+            !Number.isInteger(performanceId) || performanceId <= 0
         ) {
 
             return res.status(400).json({
@@ -1879,6 +1958,13 @@ app.post(
         const cleanStatut =
             statut || "actif";
 
+        if (date_cible && !isValidDateOnly(date_cible)) {
+            return res.status(400).json({
+                success: false,
+                message: "La date cible est invalide."
+            });
+        }
+
 
         if (
             !allowedStatuses.includes(
@@ -2052,9 +2138,7 @@ app.put(
 
 
         if (
-            !Number.isInteger(
-                goalId
-            )
+            !Number.isInteger(goalId) || goalId <= 0
         ) {
 
             return res.status(400).json({
@@ -2205,9 +2289,7 @@ app.delete(
 
 
         if (
-            !Number.isInteger(
-                goalId
-            )
+            !Number.isInteger(goalId) || goalId <= 0
         ) {
 
             return res.status(400).json({
@@ -2414,9 +2496,16 @@ app.put(
     async (req, res) => {
 
         const taskId = Number(req.params.id);
-        const termine = req.body.termine === true;
+        const termine = req.body.termine;
 
-        if (!Number.isInteger(taskId)) {
+        if (typeof termine !== "boolean") {
+            return res.status(400).json({
+                success: false,
+                message: "Le statut de la tâche doit être un booléen."
+            });
+        }
+
+        if (!Number.isInteger(taskId) || taskId <= 0) {
 
             return res.status(400).json({
                 success: false,
@@ -2477,7 +2566,7 @@ app.delete(
 
         const taskId = Number(req.params.id);
 
-        if (!Number.isInteger(taskId)) {
+        if (!Number.isInteger(taskId) || taskId <= 0) {
 
             return res.status(400).json({
                 success: false,
@@ -2596,6 +2685,13 @@ app.post(
             /* =================================================
                1. PROFIL
                ================================================= */
+
+            if (date && !isValidDateOnly(date)) {
+                throw validationError("La date du questionnaire est invalide.");
+            }
+            if (date_naissance && !isValidDateOnly(date_naissance)) {
+                throw validationError("La date de naissance est invalide.");
+            }
 
             const allowedSexes = [
                 "homme",
@@ -2798,6 +2894,14 @@ app.post(
 
             }
 
+
+            if (cleanBodyValues.poids !== null) {
+                await connection.execute(
+                    `INSERT INTO profiles (user_id, poids) VALUES (?, ?)
+                     ON DUPLICATE KEY UPDATE poids = VALUES(poids)`,
+                    [userId, cleanBodyValues.poids]
+                );
+            }
 
             /* =================================================
                3. PERFORMANCES
@@ -3042,6 +3146,7 @@ app.post(
 
 app.get(
     "/admin/database",
+    requireAdmin,
     async (req, res) => {
 
         try {
@@ -3168,21 +3273,34 @@ app.get(
 
                 const [rows] =
                     await db.query(
-                        `SELECT * FROM \`${tableName}\``
+                        `SELECT * FROM \`${tableName}\` LIMIT 100`
                     );
+
+                const hiddenColumns = new Set([
+                    "password_hash", "mot_de_passe", "access_token", "refresh_token",
+                    "token", "secret", "session_id", "api_key", "private_key",
+                    "client_secret", "authorization", "cookie"
+                ]);
+                const safeRows = rows.map(row => {
+                    const safe = {};
+                    for (const [key, value] of Object.entries(row)) {
+                        if (!hiddenColumns.has(key.toLowerCase())) safe[key] = value;
+                    }
+                    return safe;
+                });
 
 
                 html += `
 
                     <h2>
-                        ${tableName}
+                        ${escapeHtml(tableName)}
                     </h2>
 
                 `;
 
 
                 if (
-                    rows.length === 0
+                    safeRows.length === 0
                 ) {
 
                     html += `
@@ -3211,14 +3329,14 @@ app.get(
 
 
                 Object.keys(
-                    rows[0]
+                    safeRows[0]
                 ).forEach(
                     column => {
 
                         html += `
 
                             <th>
-                                ${column}
+                                ${escapeHtml(column)}
                             </th>
 
                         `;
@@ -3238,7 +3356,7 @@ app.get(
                 `;
 
 
-                rows.forEach(
+                safeRows.forEach(
                     row => {
 
                         html += `
@@ -3256,7 +3374,7 @@ app.get(
                                 html += `
 
                                     <td>
-                                        ${value ?? ""}
+                                        ${escapeHtml(value instanceof Date ? value.toISOString() : value)}
                                     </td>
 
                                 `;
@@ -3297,9 +3415,12 @@ app.get(
             `;
 
 
-            res.send(
-                html
-            );
+            res.set({
+                "Cache-Control": "no-store, private",
+                "X-Content-Type-Options": "nosniff",
+                "Referrer-Policy": "no-referrer"
+            });
+            res.send(html);
 
         } catch (error) {
 

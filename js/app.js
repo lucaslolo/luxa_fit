@@ -157,10 +157,10 @@ if (registerForm) {
             }
 
 
-            if (password.length < 6) {
+            if (password.length < 10 || new TextEncoder().encode(password).length > 72) {
 
                 message.textContent =
-                    "Le mot de passe doit contenir au moins 6 caractères.";
+                    "Le mot de passe doit contenir au moins 10 caractères et ne pas dépasser 72 octets UTF-8.";
 
                 return;
 
@@ -799,9 +799,12 @@ document.addEventListener(
 
 function getToday() {
 
-    return new Date()
-        .toISOString()
-        .split("T")[0];
+    const now = new Date();
+    return [
+        now.getFullYear(),
+        String(now.getMonth() + 1).padStart(2, "0"),
+        String(now.getDate()).padStart(2, "0")
+    ].join("-");
 
 }
 

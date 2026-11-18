@@ -7,17 +7,18 @@ const mysql = require("mysql2/promise");
    ========================================================= */
 
 async function createTables() {
-
-    const db = await mysql.createConnection({
+    let db;
+    try {
+    db = await mysql.createConnection({
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
 
-        ssl: {
-            rejectUnauthorized: false
-        }
+        ssl: process.env.DB_SSL === "false"
+            ? undefined
+            : { rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false" }
     });
 
     console.log("Connexion MySQL réussie.");
@@ -1019,6 +1020,21 @@ async function createTables() {
 
     console.log("✓ Table notifications");
 
+    /* =========================================================
+       29. SESSIONS WEB (EXPRESS)
+       ========================================================= */
+
+    await db.execute(`
+        CREATE TABLE IF NOT EXISTS web_sessions (
+            session_id VARCHAR(128) NOT NULL PRIMARY KEY,
+            expires BIGINT UNSIGNED NOT NULL,
+            data MEDIUMTEXT NOT NULL,
+            INDEX idx_web_sessions_expires (expires)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    `);
+
+    console.log("✓ Table web_sessions");
+
 
     /* =========================================================
        SEED — DISCIPLINES
@@ -1173,8 +1189,9 @@ async function createTables() {
     console.log("Les migrations nécessaires ont été appliquées.");
     console.log("");
 
-
-    await db.end();
+    } finally {
+        if (db) await db.end();
+    }
 }
 
 
@@ -1297,28 +1314,26 @@ async function addForeignKeyIfNotExists(
     );
 
     if (rows[0].count === 0) {
+        // Les anciennes lignes peuvent contenir un identifiant de type devenu invalide.
+        // La colonne est nullable : on neutralise ces références avant d'ajouter la FK.
+        await db.execute(`
+            UPDATE \`${tableName}\` child
+            LEFT JOIN \`${referencedTable}\` parent
+                ON parent.\`${referencedColumn}\` = child.\`${columnName}\`
+            SET child.\`${columnName}\` = NULL
+            WHERE child.\`${columnName}\` IS NOT NULL
+              AND parent.\`${referencedColumn}\` IS NULL
+        `);
 
-        try {
+        await db.execute(`
+            ALTER TABLE \`${tableName}\`
+            ADD CONSTRAINT \`${constraintName}\`
+            FOREIGN KEY (\`${columnName}\`)
+            REFERENCES \`${referencedTable}\`(\`${referencedColumn}\`)
+            ON DELETE SET NULL
+        `);
 
-            await db.execute(`
-                ALTER TABLE \`${tableName}\`
-                ADD CONSTRAINT \`${constraintName}\`
-                FOREIGN KEY (\`${columnName}\`)
-                REFERENCES \`${referencedTable}\`(\`${referencedColumn}\`)
-                ON DELETE SET NULL
-            `);
-
-            console.log(
-                `  + Foreign key ${constraintName} ajoutée`
-            );
-
-        } catch (error) {
-
-            console.log(
-                `  ! Foreign key ${constraintName} non ajoutée : ${error.message}`
-            );
-
-        }
+        console.log(`  + Foreign key ${constraintName} ajoutée`);
     }
 }
 
