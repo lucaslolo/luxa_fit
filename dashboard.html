@@ -76,6 +76,7 @@
             class="dashboard-quick-nav"
             aria-label="Accès rapide au dashboard"
         >
+            <a href="#dashboard-overview">Vue d’ensemble</a>
             <a href="#dashboard-profile">Profil</a>
             <a href="#dashboard-performances">Performances</a>
             <a href="#dashboard-measurements">Mensurations</a>
@@ -86,6 +87,58 @@
             <a href="#dashboard-goals">Objectifs</a>
         </nav>
 
+
+        <!-- Vue d'ensemble : indicateurs calculés à partir des données du compte -->
+        <section id="dashboard-overview" class="dashboard-overview" aria-labelledby="overview-title">
+            <div class="overview-heading">
+                <div>
+                    <span class="overview-eyebrow">TON ESPACE ATHLÈTE</span>
+                    <h2 id="overview-title">Vue d'ensemble<span>.</span></h2>
+                    <p id="overviewMessage" aria-live="polite">Récupération de tes données...</p>
+                </div>
+                <div class="overview-date">
+                    <span>AUJOURD'HUI</span>
+                    <strong id="overviewToday">--</strong>
+                </div>
+            </div>
+            <div class="overview-stats">
+                <article class="overview-stat">
+                    <span class="overview-stat-label">Dernier poids</span>
+                    <strong id="overviewWeight">--</strong>
+                    <small id="overviewWeightDate">Aucune mesure</small>
+                </article>
+                <article class="overview-stat">
+                    <span class="overview-stat-label">Performances</span>
+                    <strong id="overviewPerformanceCount">0</strong>
+                    <small>enregistrements</small>
+                </article>
+                <article class="overview-stat">
+                    <span class="overview-stat-label">Objectifs</span>
+                    <strong id="overviewGoalCount">0</strong>
+                    <small>objectifs enregistrés</small>
+                </article>
+                <article class="overview-stat">
+                    <span class="overview-stat-label">Séances terminées</span>
+                    <strong id="overviewSessions30d">0</strong>
+                    <small>sur les 30 derniers jours</small>
+                </article>
+                <article class="overview-stat">
+                    <span class="overview-stat-label">Running</span>
+                    <strong id="overviewRunDistance">0 km</strong>
+                    <small id="overviewRunSessions">0 sorties · 30 jours</small>
+                </article>
+                <article class="overview-stat">
+                    <span class="overview-stat-label">Challenges actifs</span>
+                    <strong id="overviewChallenges">0</strong>
+                    <small>challenges en cours</small>
+                </article>
+            </div>
+            <div class="overview-actions" aria-label="Actions rapides">
+                <a href="#dashboard-add-performance">+ Ajouter une performance</a>
+                <a href="#dashboard-goals">Voir mes objectifs <span aria-hidden="true">↗</span></a>
+                <a href="#dashboard-progress">Suivre ma progression <span aria-hidden="true">↗</span></a>
+            </div>
+        </section>
 
         <section
             id="dashboard-profile"
@@ -1523,6 +1576,7 @@
 
     <script src="js/app.js" defer></script>
     <script src="js/components.js" defer></script>
+    <script src="shared/fitness-metrics.js" defer></script>
     <script src="js/dashboard.js" defer></script>
 
 

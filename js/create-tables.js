@@ -1275,11 +1275,9 @@ async function modifyColumnIfExists(
             );
 
         } catch (error) {
-
-            console.log(
-                `  ! Impossible de modifier ${tableName}.${columnName} : ${error.message}`
-            );
-
+            // Une migration qui échoue ne doit jamais être annoncée comme réussie.
+            error.message = `Migration impossible pour ${tableName}.${columnName}: ${error.message}`;
+            throw error;
         }
     }
 }
@@ -1352,5 +1350,6 @@ createTables()
         console.error("");
         console.error(error);
         console.error("");
+        process.exitCode = 1;
 
     });

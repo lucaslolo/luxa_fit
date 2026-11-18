@@ -1,4 +1,4 @@
-﻿/* =========================================================
+/* =========================================================
    LUXA_FIT
    DASHBOARD.JS
    ========================================================= */
@@ -3419,6 +3419,104 @@ function setupQuestionnaireSections() {
 
 
 /* =========================================================
+   VUE D'ENSEMBLE
+   ========================================================= */
+
+async function loadDashboardSummary() {
+    try {
+        const response = await fetch("/api/dashboard/summary", {
+            method: "GET",
+            credentials: "same-origin",
+            headers: { "Accept": "application/json" }
+        });
+        const payload = await response.json();
+        if (!response.ok || !payload.success || !payload.summary) {
+            throw new Error(payload.message || "Réponse de statistiques invalide.");
+        }
+
+        const summary = payload.summary;
+        const setText = (id, value) => {
+            const element = document.getElementById(id);
+            if (element) element.textContent = String(value);
+        };
+        const integer = value => Number(value || 0).toLocaleString("fr-BE");
+        const distance = Number(summary.running30d?.distanceKm || 0);
+
+        setText("overviewPerformanceCount", integer(summary.performances));
+        setText("overviewGoalCount", integer(summary.goals?.total));
+        setText("overviewSessions30d", integer(summary.completedSessions30d));
+        setText("overviewRunDistance", `${distance.toLocaleString("fr-BE", { maximumFractionDigits: 1 })} km`);
+        setText("overviewRunSessions", `${integer(summary.running30d?.sessions)} sorties · 30 jours`);
+        setText("overviewChallenges", integer(summary.activeChallenges));
+
+        // Le poids provient de la même requête serveur que les autres statistiques.
+        if (summary.latestWeight) {
+            setText("overviewWeight", `${Number(summary.latestWeight.value).toLocaleString("fr-BE", { maximumFractionDigits: 1 })} kg`);
+            setText("overviewWeightDate", `Mesuré le ${dashboardFormatDate(summary.latestWeight.date)}`);
+        }
+    } catch (error) {
+        console.error("Chargement des statistiques dashboard impossible :", error);
+        const message = document.getElementById("overviewMessage");
+        if (message) message.textContent = "Certaines statistiques ne sont pas disponibles pour le moment.";
+    }
+}
+
+
+function updateDashboardOverview() {
+    const today = document.getElementById("overviewToday");
+    const message = document.getElementById("overviewMessage");
+    const weight = document.getElementById("overviewWeight");
+    const weightDate = document.getElementById("overviewWeightDate");
+    const performanceCount = document.getElementById("overviewPerformanceCount");
+    const goalCount = document.getElementById("overviewGoalCount");
+
+    if (today) {
+        today.textContent = new Intl.DateTimeFormat("fr-BE", {
+            weekday: "long", day: "2-digit", month: "long", year: "numeric"
+        }).format(new Date());
+    }
+
+    // Une mesure récente peut ne contenir que des tours de mensuration.
+    // Pour le poids affiché, chercher la dernière ligne qui contient vraiment
+    // un poids plutôt que de prendre aveuglément la première mesure.
+    const latestMeasurement = window.LuxaFitnessMetrics
+        ? window.LuxaFitnessMetrics.latestWeightMeasurement(bodyMeasurements)
+        : (Array.isArray(bodyMeasurements) ? bodyMeasurements[0] : null);
+    const measuredWeight = Number(latestMeasurement?.poids);
+    if (weight) {
+        weight.textContent = Number.isFinite(measuredWeight) && measuredWeight > 0
+            ? `${measuredWeight.toLocaleString("fr-BE", { maximumFractionDigits: 1 })} kg`
+            : "--";
+    }
+    if (weightDate) {
+        const dateValue = latestMeasurement?.date_mesure || latestMeasurement?.date || latestMeasurement?.created_at;
+        weightDate.textContent = dateValue ? `Mesuré le ${dashboardFormatDate(dateValue)}` : "Aucune mesure enregistrée";
+    }
+    if (performanceCount) {
+        performanceCount.textContent = String(Array.isArray(performances) ? performances.length : 0);
+    }
+    if (goalCount) {
+        goalCount.textContent = String(Array.isArray(goals) ? goals.length : 0);
+    }
+
+    if (message) {
+        const hasMeasurements = Array.isArray(bodyMeasurements) && bodyMeasurements.length > 0;
+        const hasPerformances = Array.isArray(performances) && performances.length > 0;
+        const hasGoals = Array.isArray(goals) && goals.length > 0;
+        if (!hasMeasurements && !hasPerformances && !hasGoals) {
+            message.textContent = "Bienvenue ! Commence par enregistrer une mesure, une performance ou ton premier objectif.";
+        } else if (!hasGoals) {
+            message.textContent = "Tes données sont là. Définis un objectif pour donner une direction à ta progression.";
+        } else if (!hasPerformances) {
+            message.textContent = "Tes objectifs sont définis. Ajoute tes premières performances pour suivre leur évolution.";
+        } else {
+            message.textContent = "Voici un aperçu de tes données. Continue à enregistrer tes séances pour suivre ta progression.";
+        }
+    }
+}
+
+
+/* =========================================================
    35. INITIALISATION
    ========================================================= */
 
@@ -3449,15 +3547,14 @@ document.addEventListener(
 
 
         await Promise.all([
-
             loadProfile(),
-
             loadBodyMeasurements(),
-
             loadPerformances(),
-            loadGoals()
-
+            loadGoals(),
+            loadDashboardSummary()
         ]);
+
+        updateDashboardOverview();
 
     }
 );

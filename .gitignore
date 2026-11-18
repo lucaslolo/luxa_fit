@@ -11,5 +11,3 @@ yarn-debug.log*
 
 # Git internals must never be included in deployment archives
 .git/
-
-*.pem

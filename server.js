@@ -17,6 +17,8 @@ const session = require("express-session");
 const crypto = require("crypto");
 
 const db = require("./js/database");
+const { isValidDateOnly } = require("./shared/validation");
+const { shouldSyncProfileWeight } = require("./shared/fitness-metrics");
 
 // Store MySQL persistant : les sessions ne disparaissent pas au redémarrage
 // du serveur (contrairement au MemoryStore fourni par défaut).
@@ -192,15 +194,64 @@ const BODY_MEASUREMENT_TYPES = [
    5. MIDDLEWARES
    ========================================================= */
 
-app.use(
-    express.json()
-);
+// Limite la taille des payloads pour éviter les requêtes démesurées.
+app.use(express.json({ limit: "256kb" }));
+app.use(express.urlencoded({ extended: true, limit: "256kb" }));
+app.use((req, res, next) => {
+    if (!req.body || typeof req.body !== "object" || Array.isArray(req.body)) req.body = {};
+    next();
+});
 
-app.use(
-    express.urlencoded({
-        extended: true
-    })
-);
+// En-têtes de sécurité de base et absence de cache pour les réponses privées.
+app.use((req, res, next) => {
+    res.set({
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+    });
+    if (req.path.startsWith("/api/") || req.path.startsWith("/admin/")) {
+        res.set("Cache-Control", "no-store");
+    }
+    next();
+});
+
+// Limiteur simple par adresse IP pour les routes sensibles.
+// Pour plusieurs instances, remplacer ce stockage mémoire par Redis.
+function createRateLimiter({ windowMs, max, message }) {
+    const attempts = new Map();
+    return (req, res, next) => {
+        const now = Date.now();
+        const key = req.ip || req.socket.remoteAddress || "unknown";
+        const entry = attempts.get(key);
+        if (attempts.size > 5000) {
+            for (const [address, record] of attempts) {
+                if (record.resetAt <= now) attempts.delete(address);
+            }
+        }
+        if (!entry || entry.resetAt <= now) {
+            attempts.set(key, { count: 1, resetAt: now + windowMs });
+            return next();
+        }
+        entry.count += 1;
+        if (entry.count > max) {
+            res.set("Retry-After", String(Math.ceil((entry.resetAt - now) / 1000)));
+            return res.status(429).json({ success: false, message });
+        }
+        next();
+    };
+}
+
+const loginRateLimit = createRateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 10,
+    message: "Trop de tentatives de connexion. Réessaie dans quelques minutes."
+});
+const registerRateLimit = createRateLimiter({
+    windowMs: 60 * 60 * 1000,
+    max: 5,
+    message: "Trop de créations de comptes depuis cette connexion. Réessaie plus tard."
+});
 
 // Le dossier du projet contient aussi le backend : ne jamais servir ces fichiers au navigateur.
 const PRIVATE_STATIC_PATHS = new Set([
@@ -306,12 +357,6 @@ function escapeHtml(value) {
     })[character]);
 }
 
-function isValidDateOnly(value) {
-    if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
-    const parsed = new Date(`${value}T00:00:00.000Z`);
-    return Number.isFinite(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
-}
-
 function requireLogin(req, res, next) {
 
     if (
@@ -356,6 +401,107 @@ app.get(
 /* =========================================================
    9. TEST MYSQL
    ========================================================= */
+
+app.get("/api/health", async (req, res) => {
+    try {
+        await db.query("SELECT 1");
+        res.json({ success: true, status: "ok" });
+    } catch (error) {
+        console.error("Health check MySQL échoué :", error.message);
+        res.status(503).json({ success: false, status: "unavailable" });
+    }
+});
+
+/*
+ * Synthèse du dashboard : les agrégats sont calculés côté serveur,
+ * toujours à partir de l'identifiant de session (jamais depuis le client).
+ * Fenêtre d'activité : 30 jours glissants selon l'heure MySQL.
+ */
+app.get("/api/dashboard/summary", requireLogin, async (req, res) => {
+    const userId = Number(req.session.userId);
+    if (!Number.isInteger(userId) || userId <= 0) {
+        return res.status(401).json({ success: false, message: "Session invalide." });
+    }
+
+    try {
+        const [
+            [performanceRows],
+            [goalRows],
+            [sessionRows],
+            [runRows],
+            [challengeRows],
+            [weightRows]
+        ] = await Promise.all([
+            db.execute(
+                "SELECT COUNT(*) AS total FROM performances WHERE user_id = ?",
+                [userId]
+            ),
+            db.execute(
+                "SELECT COUNT(*) AS total, SUM(statut = 'actif') AS active FROM goals WHERE user_id = ?",
+                [userId]
+            ),
+            db.execute(
+                `SELECT COUNT(*) AS total
+                 FROM completed_sessions
+                 WHERE user_id = ? AND date >= DATE_SUB(NOW(), INTERVAL 30 DAY)`,
+                [userId]
+            ),
+            db.execute(
+                `SELECT COUNT(*) AS total,
+                        COALESCE(SUM(distance), 0) AS distance_km,
+                        COALESCE(SUM(duree), 0) AS duration_seconds
+                 FROM runs
+                 WHERE user_id = ? AND date >= DATE_SUB(NOW(), INTERVAL 30 DAY)`,
+                [userId]
+            ),
+            db.execute(
+                `SELECT COUNT(*) AS total
+                 FROM challenge_participants
+                 WHERE user_id = ? AND statut = 'actif'`,
+                [userId]
+            ),
+            db.execute(
+                `SELECT poids, date
+                 FROM body_measurements
+                 WHERE user_id = ? AND poids IS NOT NULL AND poids > 0
+                 ORDER BY date DESC, id DESC
+                 LIMIT 1`,
+                [userId]
+            )
+        ]);
+
+        const number = value => Number(value || 0);
+        res.set("Cache-Control", "no-store");
+        return res.json({
+            success: true,
+            periodDays: 30,
+            summary: {
+                performances: number(performanceRows[0]?.total),
+                goals: {
+                    total: number(goalRows[0]?.total),
+                    active: number(goalRows[0]?.active)
+                },
+                completedSessions30d: number(sessionRows[0]?.total),
+                running30d: {
+                    sessions: number(runRows[0]?.total),
+                    distanceKm: Number(number(runRows[0]?.distance_km).toFixed(2)),
+                    durationSeconds: number(runRows[0]?.duration_seconds)
+                },
+                activeChallenges: number(challengeRows[0]?.total),
+                latestWeight: weightRows[0] ? {
+                    value: Number(weightRows[0].poids),
+                    date: weightRows[0].date
+                } : null
+            }
+        });
+    } catch (error) {
+        console.error("Erreur synthèse dashboard :", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "Impossible de charger les statistiques du dashboard."
+        });
+    }
+});
 
 app.get(
     "/api/test-db",
@@ -409,6 +555,7 @@ app.get(
 
 app.post(
     "/api/register",
+    registerRateLimit,
     async (req, res) => {
 
         const {
@@ -545,6 +692,7 @@ app.post(
 
 app.post(
     "/api/login",
+    loginRateLimit,
     async (req, res) => {
 
         const {
@@ -598,8 +746,8 @@ app.post(
                         password_hash,
                         statut_compte
                      FROM users
-                     WHERE prenom = ?
-                     AND nom = ?`,
+                     WHERE LOWER(TRIM(prenom)) = LOWER(?)
+                     AND LOWER(TRIM(nom)) = LOWER(?)`,
 
                     [
                         cleanPrenom,
@@ -1417,13 +1565,30 @@ app.post(
                     ]
                 );
 
-                // Synchroniser le poids du profil dans la même transaction.
+                // Le profil reflète la dernière mesure de poids connue, pas
+                // simplement la dernière mesure ajoutée. Une saisie rétroactive
+                // ne doit donc jamais écraser un poids plus récent.
                 if (cleanValues.poids !== null) {
-                    await connection.execute(
-                        `INSERT INTO profiles (user_id, poids) VALUES (?, ?)
-                         ON DUPLICATE KEY UPDATE poids = VALUES(poids)`,
-                        [req.session.userId, cleanValues.poids]
+                    const [latestWeightRows] = await connection.execute(
+                        `SELECT date, id
+                         FROM body_measurements
+                         WHERE user_id = ? AND poids IS NOT NULL
+                         ORDER BY date DESC, id DESC
+                         LIMIT 1`,
+                        [req.session.userId]
                     );
+                    const shouldUpdateProfile = shouldSyncProfileWeight(
+                        { date, id: result.insertId, poids: cleanValues.poids },
+                        latestWeightRows[0] || null
+                    );
+
+                    if (shouldUpdateProfile) {
+                        await connection.execute(
+                            `INSERT INTO profiles (user_id, poids) VALUES (?, ?)
+                             ON DUPLICATE KEY UPDATE poids = VALUES(poids)`,
+                            [req.session.userId, cleanValues.poids]
+                        );
+                    }
                 }
                 await connection.commit();
             } catch (transactionError) {
@@ -3430,15 +3595,8 @@ app.get(
             );
 
             res.status(500).send(`
-
-                <h1>
-                    Erreur lors de la lecture de la BDD
-                </h1>
-
-                <pre>
-                    ${error.message}
-                </pre>
-
+                <h1>Erreur lors de la lecture de la BDD</h1>
+                <p>Une erreur interne est survenue. Consulte les journaux du serveur.</p>
             `);
 
         }
@@ -3480,19 +3638,17 @@ app.use(
         next
     ) => {
 
-        console.error(
-            "Erreur serveur :",
-            error
-        );
-
-
-        res.status(500).json({
-
+        console.error("Erreur serveur :", error);
+        const status = Number.isInteger(error.status) && error.status >= 400 && error.status < 500
+            ? error.status
+            : 500;
+        res.status(status).json({
             success: false,
-
-            message:
-                "Une erreur serveur est survenue."
-
+            message: status === 413
+                ? "La requête est trop volumineuse."
+                : status === 400
+                    ? "La requête envoyée est invalide."
+                    : "Une erreur serveur est survenue."
         });
 
     }
@@ -3503,7 +3659,7 @@ app.use(
    21. DÉMARRAGE
    ========================================================= */
 
-app.listen(
+const server = app.listen(
     PORT,
     () => {
 
@@ -3537,3 +3693,20 @@ app.listen(
 
     }
 );
+
+// Arrêt propre : termine les requêtes HTTP en cours puis ferme le pool MySQL.
+async function shutdown(signal) {
+    console.log(`${signal} reçu : arrêt de LUXA_FIT...`);
+    server.close(async () => {
+        try {
+            await db.end();
+            process.exit(0);
+        } catch (error) {
+            console.error("Erreur fermeture MySQL :", error.message);
+            process.exit(1);
+        }
+    });
+    setTimeout(() => process.exit(1), 10000).unref();
+}
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
