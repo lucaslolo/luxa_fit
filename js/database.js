@@ -1,6 +1,9 @@
+
 require("dotenv").config();
 
 const mysql = require("mysql2/promise");
+const fs = require("fs");
+const path = require("path");
 
 const requiredVariables = ["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME"];
 const missingVariables = requiredVariables.filter(name => !process.env[name]);
@@ -10,8 +13,15 @@ if (missingVariables.length) {
 }
 
 const sslEnabled = process.env.DB_SSL !== "false";
+
 const ssl = sslEnabled
-    ? { rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED !== "false" }
+    ? {
+        ca: fs.readFileSync(
+            path.resolve(__dirname, "../ca.pem"),
+            "utf8"
+        ),
+        rejectUnauthorized: true
+    }
     : undefined;
 
 const db = mysql.createPool({
